@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+
+  "id": "rottencreatures",
+  "version": "${version}",
+  "license": "Insert License Here",
+
+  "name": "Rotten Creatures",
+  "icon": "assets/rottencreatures/icon.png",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+
+  "authors": [
+    "Me!"
+  ],
+  "contributors": [
+
+  ],
+  "contact": {
+    "homepage": "https://github.com/teamfusion/rottencreatures",
+    "sources": "https://github.com/teamfusion/rottencreatures/issues"
+  },
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.github.teamfusion.rottencreatures.fabric.RottenCreaturesFabric"
+    ]
+  },
+  "mixins": [
+    "rottencreatures.mixins.json",
+    "rottencreatures-common.mixins.json"
+  ],
+
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.18.2"
+  }
+}
