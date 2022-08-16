@@ -5,6 +5,7 @@
   "client": [
   ],
   "mixins": [
+    "common.ExplosionMixin"
   ],
   "injectors": {
     "defaultRequire": 1
