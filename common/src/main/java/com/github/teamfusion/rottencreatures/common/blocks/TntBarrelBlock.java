@@ -1,7 +1,9 @@
 package com.github.teamfusion.rottencreatures.common.blocks;
 
 import com.github.teamfusion.rottencreatures.common.entities.PrimedTntBarrel;
+import com.github.teamfusion.rottencreatures.mixin.access.FireworkRocketEntityAccessor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -10,6 +12,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -101,6 +104,30 @@ public class TntBarrelBlock extends Block {
             }
 
             player.awardStat(Stats.ITEM_USED.get(item));
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (stack.is(Items.FIREWORK_ROCKET)) {
+            Direction direction = hitResult.getDirection().getOpposite();
+            if (!level.isClientSide) {
+                FireworkRocketEntity firework = new FireworkRocketEntity(level, stack, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, true);
+                ((FireworkRocketEntityAccessor)firework).setLifetime(150);
+                firework.shoot(direction.getStepX(), direction.getStepY() + 0.5D, direction.getStepZ(), 0.5F, 1.0F);
+                level.addFreshEntity(firework);
+
+                PrimedTntBarrel tnt = new PrimedTntBarrel(level, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, player);
+                tnt.startRiding(firework);
+                level.addFreshEntity(tnt);
+
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
+
+                level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(player, GameEvent.PRIME_FUSE, pos);
+            }
+
+            if (!player.isCreative()) stack.shrink(1);
+
+            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 

@@ -5,6 +5,7 @@
   "client": [
   ],
   "mixins": [
+    "access.FireworkRocketEntityAccessor",
     "common.ExplosionMixin"
   ],
   "injectors": {
