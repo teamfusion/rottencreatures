@@ -111,8 +111,8 @@ public class TntBarrelBlock extends Block {
             Direction direction = hitResult.getDirection().getOpposite();
             if (!level.isClientSide) {
                 FireworkRocketEntity firework = new FireworkRocketEntity(level, stack, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, true);
-                ((FireworkRocketEntityAccessor)firework).setLifetime(150);
-                firework.shoot(direction.getStepX(), direction.getStepY() + 0.5D, direction.getStepZ(), 0.5F, 1.0F);
+                ((FireworkRocketEntityAccessor)firework).setLifetime(80);
+                firework.shoot(direction.getStepX(), direction.getStepY() + 0.25D, direction.getStepZ(), 0.5F, 1.0F);
                 level.addFreshEntity(firework);
 
                 PrimedTntBarrel tnt = new PrimedTntBarrel(level, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, player);
