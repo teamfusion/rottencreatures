@@ -31,7 +31,7 @@ public class PrimedTntBarrel extends Entity {
     public PrimedTntBarrel(Level level, double x, double y, double z, @Nullable LivingEntity owner) {
         this(RCEntityTypes.TNT_BARREL.get(), level);
         this.setPos(x, y, z);
-        double offset = level.random.nextDouble() * 6.3D;
+        double offset = level.random.nextDouble() * 6.3F;
         this.setDeltaMovement(-Math.sin(offset) * 0.02D, 0.2F, -Math.cos(offset) * 0.02D);
         this.setFuse(80);
         this.xo = x;
@@ -57,7 +57,7 @@ public class PrimedTntBarrel extends Entity {
 
     @Override
     public void tick() {
-        if (!this.isNoGravity()) this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.4D, 0.0D));
+        if (!this.isNoGravity()) this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
         this.move(MoverType.SELF, this.getDeltaMovement());
         this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
         if (this.onGround) this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));

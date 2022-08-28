@@ -5,8 +5,12 @@
   "client": [
   ],
   "mixins": [
+    "access.EntityAccessor",
     "access.FireworkRocketEntityAccessor",
-    "common.ExplosionMixin"
+    "common.ExplosionMixin",
+    "common.LavaCauldronBlockMixin",
+    "common.LayeredCauldronBlockMixin",
+    "common.PowderSnowBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
