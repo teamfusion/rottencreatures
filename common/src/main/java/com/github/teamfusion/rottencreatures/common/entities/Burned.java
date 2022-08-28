@@ -1,6 +1,5 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
-import com.github.teamfusion.rottencreatures.mixin.access.EntityAccessor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -73,10 +72,10 @@ public class Burned extends Zombie {
     @Override
     public void tick() {
         if (!this.level.isClientSide && this.isAlive() && !this.isNoAi()) {
-            if (this.isInWaterOrBubble() || this.isInPowderSnow) this.setObsidian(true);
-
+            if (this.isInWaterOrBubble()) this.setObsidian(true);
             if (this.isInLava() && this.isObsidian()) this.setObsidian(false);
         }
+
         super.tick();
     }
 
@@ -100,7 +99,11 @@ public class Burned extends Zombie {
     public boolean doHurtTarget(Entity entity) {
         boolean hurtTarget = super.doHurtTarget(entity);
         if (hurtTarget && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living && !this.isObsidian()) {
-//            living.setSecondsOnFire(5);
+            living.setSecondsOnFire(switch (this.level.getDifficulty()) {
+                case HARD -> 7;
+                case NORMAL -> 5;
+                default -> 3;
+            });
         }
 
         return hurtTarget;
@@ -153,10 +156,14 @@ public class Burned extends Zombie {
 
     public void setCrazy(boolean crazy) {
         this.getEntityData().set(DATA_IS_CRAZY, crazy);
-        AttributeInstance instance = this.getAttribute(Attributes.ATTACK_DAMAGE);
-        if (instance != null) {
-            instance.removeModifier(CRAZY_MODIFIER);
-            if (crazy) instance.addTransientModifier(CRAZY_MODIFIER);
+        if (!this.level.isClientSide) {
+            List<AttributeInstance> instances = new ArrayList<>();
+            instances.add(this.getAttribute(Attributes.ATTACK_DAMAGE));
+            instances.add(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE));
+            for (AttributeInstance instance : instances) {
+                instance.removeModifier(CRAZY_MODIFIER);
+                if (crazy) instance.addTransientModifier(CRAZY_MODIFIER);
+            }
         }
     }
 
@@ -168,5 +175,10 @@ public class Burned extends Zombie {
 
     public float getMoveSpeed() {
         return (float)this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isObsidian() ? 0.5F : this.isCrazy() ? 1.5F : 1.0F);
+    }
+
+    @Override
+    protected int calculateFallDamage(float distance, float amount) {
+        return super.calculateFallDamage(distance, amount) - (this.isObsidian() ? 10 : 0);
     }
 }

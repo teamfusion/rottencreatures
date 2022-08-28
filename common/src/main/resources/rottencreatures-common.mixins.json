@@ -5,7 +5,6 @@
   "client": [
   ],
   "mixins": [
-    "access.EntityAccessor",
     "access.FireworkRocketEntityAccessor",
     "common.ExplosionMixin",
     "common.LavaCauldronBlockMixin",
