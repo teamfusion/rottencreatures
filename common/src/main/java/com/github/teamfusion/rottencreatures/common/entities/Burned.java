@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
@@ -35,14 +36,14 @@ public class Burned extends Zombie {
         this.setPathfindingMalus(BlockPathTypes.LAVA, 8.0F);
     }
 
-    //Todo: make them attack frostbittens
     @Override
     protected void addBehaviourGoals() {
         super.addBehaviourGoals();
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Frostbitten.class, true));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MOVEMENT_SPEED, 0.22D).add(Attributes.ATTACK_DAMAGE, 4.0D);
+        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.22D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 4.0D);
     }
 
     @Override
@@ -97,8 +98,8 @@ public class Burned extends Zombie {
 
     @Override
     public boolean doHurtTarget(Entity entity) {
-        boolean hurtTarget = super.doHurtTarget(entity);
-        if (hurtTarget && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living && !this.isObsidian()) {
+        boolean hurt = super.doHurtTarget(entity);
+        if (hurt && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living && !this.isObsidian()) {
             living.setSecondsOnFire(switch (this.level.getDifficulty()) {
                 case HARD -> 7;
                 case NORMAL -> 5;
@@ -106,7 +107,7 @@ public class Burned extends Zombie {
             });
         }
 
-        return hurtTarget;
+        return hurt;
     }
 
     @Override

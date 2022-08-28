@@ -18,7 +18,7 @@ public class BurnedLavaLayer extends RenderLayer<Burned, BurnedModel> {
 
     public BurnedLavaLayer(RenderLayerParent<Burned, BurnedModel> parent, EntityModelSet set) {
         super(parent);
-        this.model = new BurnedModel(set.bakeLayer(BurnedRenderer.BURNED_LAVA_LAYER));
+        this.model = new BurnedModel(set.bakeLayer(BurnedRenderer.LAVA));
     }
 
     @Override

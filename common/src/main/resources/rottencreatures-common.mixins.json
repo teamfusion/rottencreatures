@@ -6,6 +6,7 @@
   ],
   "mixins": [
     "access.FireworkRocketEntityAccessor",
+    "access.MobEffectAccessor",
     "common.ExplosionMixin",
     "common.LavaCauldronBlockMixin",
     "common.LayeredCauldronBlockMixin",
