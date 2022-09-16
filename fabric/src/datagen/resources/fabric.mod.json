@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "rottencreatures-datagen",
+  "name": "Rotten Creatures Data Generation",
+  "version": "${version}",
+  "environment": "server",
+  "entrypoints": {
+    "fabric-datagen": [ "com.github.teamfusion.rottencreatures.datagen.RottenCreaturesDataGenerator" ]
+  }
+}
