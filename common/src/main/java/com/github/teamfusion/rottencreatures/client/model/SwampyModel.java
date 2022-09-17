@@ -1,7 +1,8 @@
 package com.github.teamfusion.rottencreatures.client.model;
 
+import com.github.teamfusion.rottencreatures.common.entities.Swampy;
+import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -9,11 +10,12 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.util.Mth;
 
-public class FrostbittenModel<T extends Zombie> extends ZombieModel<T> {
-    public FrostbittenModel(ModelPart modelPart) {
+public class SwampyModel extends HumanoidModel<Swampy> {
+    public SwampyModel(ModelPart modelPart) {
         super(modelPart);
+        this.crouching = true;
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -26,7 +28,23 @@ public class FrostbittenModel<T extends Zombie> extends ZombieModel<T> {
     }
 
     @Override
-    public boolean isAggressive(T zombie) {
-        return zombie.isAggressive();
+    public void setupAnim(Swampy swampy, float angle, float distance, float animProgress, float yaw, float pitch) {
+        super.setupAnim(swampy, angle, distance, animProgress, yaw, pitch);
+        animateZombieArms(this.leftArm, this.rightArm, swampy.isAggressive(), this.attackTime, animProgress);
+    }
+
+    public static void animateZombieArms(ModelPart leftArm, ModelPart rightArm, boolean isAggressive, float attackTime, float animProgress) {
+        float j = (float)(-Math.PI) / (isAggressive ? 3.5F : 10.0F);
+        float h = Mth.sin(attackTime * (float)Math.PI);
+        float i = Mth.sin((1.0F - (1.0F - attackTime) * (1.0F - attackTime)) * (float)Math.PI);
+        rightArm.zRot = 0.0F;
+        leftArm.zRot = 0.0F;
+        rightArm.yRot = -(0.1F - h * 0.6F);
+        leftArm.yRot = 0.1F - h * 0.6F;
+        rightArm.xRot = j;
+        leftArm.xRot = j;
+        rightArm.xRot += h * 1.2F - i * 0.4F;
+        leftArm.xRot += h * 1.2F - i * 0.4F;
+        AnimationUtils.bobArms(rightArm, leftArm, animProgress);
     }
 }

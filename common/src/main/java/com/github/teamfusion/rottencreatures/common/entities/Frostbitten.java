@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 public class Frostbitten extends Zombie {
-    public Frostbitten(EntityType<? extends Zombie> entityType, Level level) {
-        super(entityType, level);
+    public Frostbitten(EntityType<? extends Zombie> type, Level level) {
+        super(type, level);
         this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
     }
@@ -36,8 +36,10 @@ public class Frostbitten extends Zombie {
     public boolean doHurtTarget(Entity entity) {
         boolean hurt = super.doHurtTarget(entity);
         if (hurt && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living) {
-            living.addEffect(new MobEffectInstance(RCMobEffects.FREEZE.get()), this);
+            float modifier = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
+            living.addEffect(new MobEffectInstance(RCMobEffects.FREEZE.get(), 140 * (int)modifier), this);
         }
+
         return hurt;
     }
 

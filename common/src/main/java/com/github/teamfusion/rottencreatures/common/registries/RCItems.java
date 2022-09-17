@@ -16,6 +16,7 @@ public class RCItems {
     // Spawns
     public static final Supplier<Item> BURNED_SPAWN_EGG = create("burned_spawn_egg", spawnEgg(RCEntityTypes.BURNED, 5969689, 14244138));
     public static final Supplier<Item> FROSTBITTEN_SPAWN_EGG = create("frostbitten_spawn_egg", spawnEgg(RCEntityTypes.FROSTBITTEN, 5864108, 8967167));
+    public static final Supplier<Item> SWAMPY_SPAWN_EGG = create("swampy_spawn_egg", spawnEgg(RCEntityTypes.SWAMPY, 3351821, 7227939));
 
     private static <T extends Item> Supplier<T> create(String key, Supplier<T> item) {
         return ITEMS.register(key, item);

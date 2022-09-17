@@ -43,7 +43,7 @@ public class Burned extends Zombie {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.22D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 4.0D);
+        return Zombie.createAttributes().add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 4.0D);
     }
 
     @Override
@@ -100,11 +100,14 @@ public class Burned extends Zombie {
     public boolean doHurtTarget(Entity entity) {
         boolean hurt = super.doHurtTarget(entity);
         if (hurt && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living && !this.isObsidian()) {
-            living.setSecondsOnFire(switch (this.level.getDifficulty()) {
-                case HARD -> 7;
-                case NORMAL -> 5;
-                default -> 3;
-            });
+            float modifier = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
+            living.setSecondsOnFire(3 * (int)modifier);
+
+//            living.setSecondsOnFire(switch (this.level.getDifficulty()) {
+//                case HARD -> 7;
+//                case NORMAL -> 5;
+//                default -> 3;
+//            });
         }
 
         return hurt;
