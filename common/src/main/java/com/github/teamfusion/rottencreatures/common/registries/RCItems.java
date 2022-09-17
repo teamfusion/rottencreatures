@@ -18,6 +18,10 @@ public class RCItems {
     public static final Supplier<Item> FROSTBITTEN_SPAWN_EGG = create("frostbitten_spawn_egg", spawnEgg(RCEntityTypes.FROSTBITTEN, 5864108, 8967167));
     public static final Supplier<Item> SWAMPY_SPAWN_EGG = create("swampy_spawn_egg", spawnEgg(RCEntityTypes.SWAMPY, 3351821, 7227939));
 
+    // Loot
+    public static final Supplier<Item> MAGMA_ROTTEN_FLESH = create("magma_rotten_flesh", () -> new Item(new Item.Properties().tab(RottenCreatures.TAB)));
+    public static final Supplier<Item> FROZEN_ROTTEN_FLESH = create("frozen_rotten_flesh", () -> new Item(new Item.Properties().tab(RottenCreatures.TAB)));
+
     private static <T extends Item> Supplier<T> create(String key, Supplier<T> item) {
         return ITEMS.register(key, item);
     }

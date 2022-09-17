@@ -12,10 +12,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class BurnedRenderer extends AbstractZombieRenderer<Burned, BurnedModel> {
-    public static final ModelLayerLocation MAIN = ModelBuilder.createLayer(RCEntityTypes.BURNED.get());
-    public static final ModelLayerLocation INNER_ARMOR = ModelBuilder.createLayer(RCEntityTypes.BURNED.get(), "inner_armor");
-    public static final ModelLayerLocation OUTER_ARMOR = ModelBuilder.createLayer(RCEntityTypes.BURNED.get(), "outer_armor");
-    public static final ModelLayerLocation LAVA = ModelBuilder.createLayer(RCEntityTypes.BURNED.get(), "lava");
+    public static final ModelLayerLocation MAIN = ModelBuilder.createLayer("burned");
+    public static final ModelLayerLocation INNER_ARMOR = ModelBuilder.createLayer("burned", "inner_armor");
+    public static final ModelLayerLocation OUTER_ARMOR = ModelBuilder.createLayer("burned", "outer_armor");
+    public static final ModelLayerLocation LAVA = ModelBuilder.createLayer("burned", "lava");
 
     public static final ResourceLocation BURNED_LOCATION = new ResourceLocation(RottenCreatures.MOD_ID, "textures/entity/burned/burned.png");
     public static final ResourceLocation OBSIDIAN_LOCATION = new ResourceLocation(RottenCreatures.MOD_ID, "textures/entity/burned/burned_obsidian.png");

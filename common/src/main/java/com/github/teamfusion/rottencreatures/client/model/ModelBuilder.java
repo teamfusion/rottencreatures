@@ -21,6 +21,14 @@ public class ModelBuilder {
         return new ModelLayerLocation(new ResourceLocation(RottenCreatures.MOD_ID, type.getDescriptionId()), name);
     }
 
+    public static ModelLayerLocation createLayer(String key) {
+        return createLayer(key, "main");
+    }
+
+    public static ModelLayerLocation createLayer(String key, String name) {
+        return new ModelLayerLocation(new ResourceLocation(RottenCreatures.MOD_ID, key), name);
+    }
+
     public static void createArmor(ModelLayerLocation inner, ModelLayerLocation outer) {
         RenderHandler.setModelLayerDefinition(inner, () -> INNER_ARMOR);
         RenderHandler.setModelLayerDefinition(outer, () -> OUTER_ARMOR);
