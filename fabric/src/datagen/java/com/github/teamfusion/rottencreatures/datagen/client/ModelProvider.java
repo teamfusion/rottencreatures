@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 
-public class ModelProvider extends FabricModelProvider {
+public final class ModelProvider extends FabricModelProvider {
     private static final ModelTemplate SPAWN_EGG = createItem("template_spawn_egg");
 
     public ModelProvider(FabricDataGenerator dataGenerator) {

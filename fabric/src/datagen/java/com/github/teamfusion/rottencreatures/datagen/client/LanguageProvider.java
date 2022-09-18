@@ -18,7 +18,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class LanguageProvider implements DataProvider {
+public final class LanguageProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private final Map<String, String> data = new TreeMap<>();
     private final DataGenerator generator;

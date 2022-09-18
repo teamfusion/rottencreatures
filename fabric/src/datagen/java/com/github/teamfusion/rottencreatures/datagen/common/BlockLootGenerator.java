@@ -1,15 +1,16 @@
 package com.github.teamfusion.rottencreatures.datagen.common;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
-import net.minecraft.data.loot.BlockLoot;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.storage.loot.LootTable;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 
-import java.util.function.BiConsumer;
+public final class BlockLootGenerator extends FabricBlockLootTableProvider {
+    public BlockLootGenerator(FabricDataGenerator gen) {
+        super(gen);
+    }
 
-public class BlockLootGenerator extends BlockLoot {
     @Override
-    public void accept(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
+    protected void generateBlockLootTables() {
         this.dropSelf(RCBlocks.TNT_BARREL.get());
     }
 }
