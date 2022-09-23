@@ -1,4 +1,4 @@
-package com.github.teamfusion.rottencreatures.datagen.common;
+package com.github.teamfusion.rottencreatures.datagen.common.loot;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;

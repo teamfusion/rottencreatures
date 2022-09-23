@@ -26,7 +26,7 @@
               }
             }
           ],
-          "name": "rottencreatures:frozen_rotten_flesh"
+          "name": "minecraft:rotten_flesh"
         }
       ]
     },
@@ -36,15 +36,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_ingot"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:carrot"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:potato"
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0.0,
+                "max": 2.0
+              },
+              "add": false
+            }
+          ],
+          "name": "minecraft:obsidian"
         }
       ],
       "conditions": [
@@ -53,37 +56,8 @@
         },
         {
           "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.025,
+          "chance": 0.5,
           "looting_multiplier": 0.01
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:snowball"
-        }
-      ],
-      "functions": [
-        {
-          "function": "minecraft:set_count",
-          "count": {
-            "type": "minecraft:uniform",
-            "min": 0.0,
-            "max": 1.0
-          },
-          "add": false
-        },
-        {
-          "function": "minecraft:looting_enchant",
-          "count": {
-            "type": "minecraft:uniform",
-            "min": 0.0,
-            "max": 1.0
-          }
         }
       ]
     }

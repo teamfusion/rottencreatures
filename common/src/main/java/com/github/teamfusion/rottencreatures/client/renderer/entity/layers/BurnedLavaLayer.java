@@ -22,8 +22,8 @@ public class BurnedLavaLayer extends RenderLayer<Burned, BurnedModel> {
     }
 
     @Override
-    public void render(PoseStack stack, MultiBufferSource buffer, int light, Burned burned, float f, float g, float h, float j, float k, float l) {
+    public void render(PoseStack stack, MultiBufferSource buffer, int light, Burned burned, float angle, float distance, float tickDelta, float animationProgress, float yaw, float pitch) {
         ResourceLocation layer = burned.isCrazy() ? CRAZY_LAVA_LOCATION : BURNED_LAVA_LOCATION;
-        if (!burned.isObsidian()) coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, layer, stack, buffer, light, burned, f, g, j, k, l, h, 1.0F, 1.0F, 1.0F);
+        if (!burned.isObsidian()) coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, layer, stack, buffer, 15728640, burned, angle, distance, animationProgress, yaw, pitch, tickDelta, 1.0F, 1.0F, 1.0F);
     }
 }

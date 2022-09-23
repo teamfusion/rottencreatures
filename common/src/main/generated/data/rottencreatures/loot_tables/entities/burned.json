@@ -26,7 +26,7 @@
               }
             }
           ],
-          "name": "rottencreatures:frozen_rotten_flesh"
+          "name": "rottencreatures:magma_rotten_flesh"
         }
       ]
     },
@@ -36,35 +36,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_ingot"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:carrot"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:potato"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.025,
-          "looting_multiplier": 0.01
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:snowball"
+          "name": "minecraft:magma_block"
         }
       ],
       "functions": [
@@ -84,6 +56,23 @@
             "min": 0.0,
             "max": 1.0
           }
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:magma_cream"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance_with_looting",
+          "chance": 0.025,
+          "looting_multiplier": 0.01
         }
       ]
     }

@@ -1,14 +1,19 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+
+import java.util.Random;
 
 public class Swampy extends Zombie {
     public Swampy(EntityType<? extends Zombie> type, Level level) {
@@ -28,5 +33,9 @@ public class Swampy extends Zombie {
             living.addEffect(new MobEffectInstance(MobEffects.POISON, 140 * (int)modifier), this);
         }
         return hurt;
+    }
+
+    public static boolean checkSwampySpawnRules(EntityType<Swampy> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
+        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWN_EGG || level.canSeeSky(pos));
     }
 }

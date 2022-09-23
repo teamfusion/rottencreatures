@@ -1,15 +1,22 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.mixin.access.BuiltInLootTablesAccessor;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -18,11 +25,15 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class Burned extends Zombie {
@@ -30,6 +41,8 @@ public class Burned extends Zombie {
     private static final AttributeModifier OBSIDIAN_MODIFIER = new AttributeModifier(UUID.fromString("cf2ce4af-4807-4896-aaad-1c077a87e9bf"), "Obsidian attribute boost", 0.75F, AttributeModifier.Operation.MULTIPLY_BASE);
     private static final EntityDataAccessor<Boolean> DATA_IS_OBSIDIAN = SynchedEntityData.defineId(Burned.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_IS_CRAZY = SynchedEntityData.defineId(Burned.class, EntityDataSerializers.BOOLEAN);
+
+    public static final ResourceLocation BURNED_OBSIDIAN = BuiltInLootTablesAccessor.callRegister(new ResourceLocation(RottenCreatures.MOD_ID, "entities/burned/obsidian"));
 
     public Burned(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
@@ -54,6 +67,11 @@ public class Burned extends Zombie {
     }
 
     @Override
+    protected ResourceLocation getDefaultLootTable() {
+        return this.isObsidian() ? BURNED_OBSIDIAN : super.getDefaultLootTable();
+    }
+
+    @Override
     protected boolean convertsInWater() {
         return false;
     }
@@ -67,7 +85,11 @@ public class Burned extends Zombie {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.isCrazy() && !this.isObsidian()) this.level.addParticle(ParticleTypes.LAVA, this.getRandomX(0.1D), this.getRandomY(), this.getRandomZ(0.1D), 0.0D, 0.0D, 0.0D);
+        if (this.isCrazy() && !this.isObsidian()) {
+            if (this.random.nextInt(15) == 0) {
+                this.level.addParticle(ParticleTypes.LAVA, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+            }
+        }
     }
 
     @Override
@@ -102,12 +124,6 @@ public class Burned extends Zombie {
         if (hurt && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living && !this.isObsidian()) {
             float modifier = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
             living.setSecondsOnFire(3 * (int)modifier);
-
-//            living.setSecondsOnFire(switch (this.level.getDifficulty()) {
-//                case HARD -> 7;
-//                case NORMAL -> 5;
-//                default -> 3;
-//            });
         }
 
         return hurt;
@@ -184,5 +200,15 @@ public class Burned extends Zombie {
     @Override
     protected int calculateFallDamage(float distance, float amount) {
         return super.calculateFallDamage(distance, amount) - (this.isObsidian() ? 10 : 0);
+    }
+
+    public static boolean checkBurnedSpawnRules(EntityType<Burned> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
+        return !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK);
+    }
+
+    @Override @Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
+        if (this.random.nextFloat() < 0.05F) this.setCrazy(true);
+        return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
     }
 }

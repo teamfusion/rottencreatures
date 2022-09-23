@@ -5,8 +5,10 @@
   "client": [
   ],
   "mixins": [
+    "access.BuiltInLootTablesAccessor",
     "access.FireworkRocketEntityAccessor",
     "access.MobEffectAccessor",
+    "access.SpawnPlacementsAccessor",
     "common.ExplosionMixin",
     "common.LavaCauldronBlockMixin",
     "common.LayeredCauldronBlockMixin",

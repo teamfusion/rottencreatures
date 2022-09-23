@@ -44,7 +44,7 @@ public final class LanguageProvider implements DataProvider {
         this.add(RCEntityTypes.BURNED.get(), "Burned");
         this.add(RCEntityTypes.FROSTBITTEN.get(), "Frostbitten");
         this.add(RCEntityTypes.SWAMPY.get(), "Swampy");
-        this.add(RCEntityTypes.TNT_BARREL.get(), "Tnt Barrel");
+        this.add(RCEntityTypes.TNT_BARREL.get(), "Primed TNT Barrel");
 
         // Blocks
         this.add(RCBlocks.TNT_BARREL.get(), "TNT Barrel");
