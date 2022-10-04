@@ -9,17 +9,18 @@ import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import com.mojang.logging.LogUtils;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Items;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //<>
 
+/**
+ * Todo:
+ * - Fix Area Effect Clouds
+ * - Finish Freeze Effect
+ */
 public class RottenCreatures {
     public static final String MOD_ID = "rottencreatures";
     public static final Logger LOGGER = LogUtils.getLogger();

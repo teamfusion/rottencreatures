@@ -13,24 +13,26 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 public class SwampyModel extends HumanoidModel<Swampy> {
-    public SwampyModel(ModelPart modelPart) {
-        super(modelPart);
+
+    public SwampyModel(ModelPart root) {
+        super(root);
         this.crouching = true;
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition mesh = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);
         PartDefinition root = mesh.getRoot();
-        root.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)).texOffs(64, 0).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)).texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-        root.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(40, 16).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).texOffs(64, 16).addBox(-2.0F, -2.0F, 2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).texOffs(40, 32).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(-6.0F, -10.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
-        root.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(32, 48).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).texOffs(64, 48).addBox(-2.0F, -2.0F, 2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).texOffs(48, 48).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(6.0F, -10.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
-        return LayerDefinition.create(mesh, 96, 64);
+        root.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F).texOffs(64, 48).addBox(-4.0F, 0.0F, -4.0F, 8.0F, 8.0F, 8.0F).texOffs(64, 0).addBox(-4.5F, -8.5F, -4.5F, 9.0F, 9.0F, 9.0F), PartPose.ZERO);
+        root.getChild("body").addOrReplaceChild("foliage", CubeListBuilder.create().texOffs(56, 18).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 6.0F, 0.0F), PartPose.offsetAndRotation(0.0F, 0.0F, -2.5F, -0.5236F, 0.0F, 0.0F));
+        root.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(40, 16).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F).texOffs(72, 18).addBox(-2.5F, -2.5F, -2.5F, 5.0F, 14.0F, 5.0F), PartPose.offsetAndRotation(-6.0F, -10.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
+        root.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(32, 48).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F).texOffs(92, 18).addBox(-2.5F, -2.5F, -2.5F, 5.0F, 14.0F, 5.0F), PartPose.offsetAndRotation(6.0F, -10.0F, 0.0F, -1.5708F, 0.0F, 0.0F));
+        return LayerDefinition.create(mesh, 112, 64);
     }
 
     @Override
-    public void setupAnim(Swampy swampy, float angle, float distance, float animProgress, float yaw, float pitch) {
-        super.setupAnim(swampy, angle, distance, animProgress, yaw, pitch);
-        animateZombieArms(this.leftArm, this.rightArm, swampy.isAggressive(), this.attackTime, animProgress);
+    public void setupAnim(Swampy swampy, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch) {
+        super.setupAnim(swampy, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
+        animateZombieArms(this.leftArm, this.rightArm, swampy.isAggressive(), this.attackTime, ageInTicks);
     }
 
     public static void animateZombieArms(ModelPart leftArm, ModelPart rightArm, boolean isAggressive, float attackTime, float animProgress) {

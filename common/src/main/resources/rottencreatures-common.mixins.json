@@ -3,6 +3,7 @@
   "package": "com.github.teamfusion.rottencreatures.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.GuiMixin"
   ],
   "mixins": [
     "access.BuiltInLootTablesAccessor",
@@ -12,6 +13,7 @@
     "common.ExplosionMixin",
     "common.LavaCauldronBlockMixin",
     "common.LayeredCauldronBlockMixin",
+    "common.LivingEntityMixin",
     "common.PowderSnowBlockMixin"
   ],
   "injectors": {

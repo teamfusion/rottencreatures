@@ -3,6 +3,7 @@ package com.github.teamfusion.rottencreatures.datagen.client;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
+import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.data.DataGenerator;
@@ -57,6 +58,7 @@ public final class LanguageProvider implements DataProvider {
         this.add(RCItems.FROZEN_ROTTEN_FLESH.get(), "Frozen Rotten Flesh");
 
         // Misc
+        this.add(RCMobEffects.FREEZE.get(), "Freeze");
         this.add("itemGroup.rottencreatures.rottencreatures", "Rotten Creatures");
     }
 

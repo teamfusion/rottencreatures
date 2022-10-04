@@ -45,8 +45,8 @@ import java.util.UUID;
  * - Burned and Frostbittens are enemies and will attack each other on sight //
  * - Rain can hurt Burned //
  * - There's a low chance that the Burned will spawn with Crazy variant //
- * - Magma Rotten Flesh can be used in furnaces like fuel, but you require at least 3 to cook a single item
- * - if an entity eats the Magma Rotten Flesh, it may either receive fire resistance for a short time or be set on fire.
+ * - Magma Rotten Flesh can be used in furnaces like fuel, but you require at least 3 to cook a single item //
+ * - if an entity eats the Magma Rotten Flesh, it may either receive fire resistance for a short time or be set on fire. //
  */
 public class Burned extends Zombie {
     private static final AttributeModifier CRAZY_MODIFIER = new AttributeModifier(UUID.fromString("a0ffa7a6-1210-466a-a9a1-31909417a99e"), "Crazy attribute boost", 0.5F, AttributeModifier.Operation.MULTIPLY_BASE);

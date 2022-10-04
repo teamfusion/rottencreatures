@@ -2,6 +2,8 @@ package com.github.teamfusion.rottencreatures.common.registries;
 
 import com.github.teamfusion.platform.CoreRegistry;
 import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.common.item.MagmaRottenFleshItem;
+import com.github.teamfusion.rottencreatures.common.misc.RCFoodProperties;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EntityType;
@@ -19,8 +21,8 @@ public class RCItems {
     public static final Supplier<Item> SWAMPY_SPAWN_EGG = create("swampy_spawn_egg", spawnEgg(RCEntityTypes.SWAMPY, 3351821, 7227939));
 
     // Loot
-    public static final Supplier<Item> MAGMA_ROTTEN_FLESH = create("magma_rotten_flesh", () -> new Item(new Item.Properties().tab(RottenCreatures.TAB)));
-    public static final Supplier<Item> FROZEN_ROTTEN_FLESH = create("frozen_rotten_flesh", () -> new Item(new Item.Properties().tab(RottenCreatures.TAB)));
+    public static final Supplier<Item> MAGMA_ROTTEN_FLESH = create("magma_rotten_flesh", () -> new MagmaRottenFleshItem(new Item.Properties().food(RCFoodProperties.MAGMA_ROTTEN_FLESH).tab(RottenCreatures.TAB)));
+    public static final Supplier<Item> FROZEN_ROTTEN_FLESH = create("frozen_rotten_flesh", () -> new Item(new Item.Properties().food(RCFoodProperties.FROZEN_ROTTEN_FLESH).tab(RottenCreatures.TAB)));
 
     private static <T extends Item> Supplier<T> create(String key, Supplier<T> item) {
         return ITEMS.register(key, item);

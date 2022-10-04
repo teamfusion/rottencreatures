@@ -2,6 +2,7 @@ package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -50,8 +51,9 @@ public class Swampy extends Zombie {
         }
 
         if (this.isBaby()) {
-//            this.kill();
+            this.kill();
             RCMobEffects.createAreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ(), MobEffects.POISON, 2.5F, 3);
+            this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getRandomY(), this.getZ(), this.random.nextDouble(-0.15, 0.15), 0.0D, this.random.nextDouble(-0.15, 0.15));
         }
 
         return hurt;

@@ -2,7 +2,9 @@ package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +25,7 @@ import java.util.Random;
 /**
  * - has the Freeze effect when he hits the user or another mob, if the entity has leather armor this doesn't apply. //
  * - can walk over the water like the FrostWalker enchantment of boots //
- * - if a baby died, he'll explode applying freezing effect to the nearest entity. a TINY explosion of snow that doesn't break anything.
+ * - if a baby died, he'll explode applying freezing effect to the nearest entity. a TINY explosion of snow that doesn't break anything. //
  *
  * - if a zombie dies in powder snow, he transforms into a Frostbitten
  */
@@ -66,8 +68,11 @@ public class Frostbitten extends Zombie {
     @Override
     protected void tickDeath() {
         super.tickDeath();
-        if (!this.level.isClientSide && this.isBaby() && this.deathTime == 20) {
-            RCMobEffects.createAreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ(), RCMobEffects.FREEZE.get(), 2.5F, 3);
+        if (this.isBaby()) {
+            if (!this.level.isClientSide && this.deathTime == 20)
+                RCMobEffects.spawnLingeringCloud(this, MobEffects.POISON);
+//                RCMobEffects.createAreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ(), RCMobEffects.FREEZE.get(), 2.5F, 3);
+            this.level.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getRandomY(), this.getZ(), this.random.nextDouble(-0.15, 0.15), 0.0D, this.random.nextDouble(-0.15, 0.15));
         }
     }
 
