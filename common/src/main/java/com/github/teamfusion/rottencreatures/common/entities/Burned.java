@@ -36,18 +36,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-/**
- * - can set a player or entity on fire on hit (duration depends on the difficulty) //
- * - if touching water, he'll transform into an Obsidian variant //
- * - if has low health (10HP or lower), he'll turn into the Crazy variant, increasing his strength and speed, also gaining knockback //
- *
- * - if a zombie dies on lava, it has a 50% chance of transforming into a Burned
- * - Burned and Frostbittens are enemies and will attack each other on sight //
- * - Rain can hurt Burned //
- * - There's a low chance that the Burned will spawn with Crazy variant //
- * - Magma Rotten Flesh can be used in furnaces like fuel, but you require at least 3 to cook a single item //
- * - if an entity eats the Magma Rotten Flesh, it may either receive fire resistance for a short time or be set on fire. //
- */
 public class Burned extends Zombie {
     private static final AttributeModifier CRAZY_MODIFIER = new AttributeModifier(UUID.fromString("a0ffa7a6-1210-466a-a9a1-31909417a99e"), "Crazy attribute boost", 0.5F, AttributeModifier.Operation.MULTIPLY_BASE);
     private static final AttributeModifier OBSIDIAN_MODIFIER = new AttributeModifier(UUID.fromString("cf2ce4af-4807-4896-aaad-1c077a87e9bf"), "Obsidian attribute boost", 1.0F, AttributeModifier.Operation.MULTIPLY_BASE);
@@ -114,7 +102,6 @@ public class Burned extends Zombie {
         super.tick();
     }
 
-    //Todo: apply custom sounds
     @Override
     protected SoundEvent getAmbientSound() {
         return super.getAmbientSound();

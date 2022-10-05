@@ -14,7 +14,8 @@
     "common.LavaCauldronBlockMixin",
     "common.LayeredCauldronBlockMixin",
     "common.LivingEntityMixin",
-    "common.PowderSnowBlockMixin"
+    "common.PowderSnowBlockMixin",
+    "common.ZombieMixin"
   ],
   "injectors": {
     "defaultRequire": 1

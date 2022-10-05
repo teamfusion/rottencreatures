@@ -3,6 +3,7 @@ package com.github.teamfusion.rottencreatures.common.entities;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +16,8 @@ import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
 
@@ -22,13 +25,14 @@ import java.util.Random;
  * - applies Blindness and Poison at the same time when he hits a player or entity (duration depends on the difficulty) //
  * - on death, he has a 80% chance to drop a small cloud effect area with poison //
  * - if a baby attacks an entity, he'll explode and create a small cloud effect with poison //
- * - can swim slightly faster in water
+ * - can swim slightly faster in water //
  *
  * - if it's attacking an entity, it does small jumps like the spider //
  */
 public class Swampy extends Zombie {
     public Swampy(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }
 
     @Override
@@ -60,9 +64,15 @@ public class Swampy extends Zombie {
     }
 
     @Override
-    protected void tickDeath() {
-        super.tickDeath();
-        if (!this.level.isClientSide && this.deathTime == 20 && this.random.nextFloat() < 0.8F) {
+    public void travel(Vec3 vec3) {
+        this.setSpeed((float)this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isInWater() ? 1.5F : 1.0F));
+        super.travel(vec3);
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        super.die(source);
+        if (!this.level.isClientSide && this.random.nextInt(10) < 8) {
             RCMobEffects.createAreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ(), MobEffects.POISON, 2.5F, 6);
         }
     }

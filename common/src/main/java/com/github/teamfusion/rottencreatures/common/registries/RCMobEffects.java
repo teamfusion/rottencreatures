@@ -8,10 +8,8 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -20,10 +18,11 @@ import java.util.function.Supplier;
 
 /**
  * Freeze Effect:
- * - applies the frozen hearts
- * - applies frozen screen
- * - applies shaking to the entity model
+ * - applies the frozen hearts //
+ * - applies frozen screen //
+ * - applies shaking to the entity model //
  * - prevents the target from moving or attacking
+ * - make them brewable!
  */
 public class RCMobEffects {
     public static final CoreRegistry<MobEffect> EFFECTS = CoreRegistry.create(Registry.MOB_EFFECT, RottenCreatures.MOD_ID);
