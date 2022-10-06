@@ -60,8 +60,8 @@ public final class LanguageGenerator implements DataProvider {
 
         // Alchemy
         this.effect(RCMobEffects.FREEZE.get(), "Freeze");
-        this.potion("corrupted", true, false, false);
-        this.potion("freeze", false, true, true);
+        this.potion("Corrupted", true, false, false);
+        this.potion("Freeze", false, true, true);
         this.add("item.minecraft.tipped_arrow.effect.freeze", "Arrow of Freeze");
         this.add("item.minecraft.tipped_arrow.effect.long_freeze", "Arrow of Freeze");
         this.add("item.minecraft.tipped_arrow.effect.strong_freeze", "Arrow of Freeze");
@@ -89,12 +89,12 @@ public final class LanguageGenerator implements DataProvider {
     private void potion(String entry, boolean isContainer, boolean hasLong, boolean hasStrong) {
         for (PotionType type : PotionType.values()) {
             String name = isContainer ? entry + " " + type.name : type.name + " of " + entry;
-            this.add("item.minecraft." + type.id + ".effect." + entry, name);
+            this.add("item.minecraft." + type.id + ".effect." + entry.toLowerCase(), name);
             if (hasLong) {
-                this.add("item.minecraft." + type.id + ".effect." + "long_" + entry, name);
+                this.add("item.minecraft." + type.id + ".effect." + "long_" + entry.toLowerCase(), name);
             }
             if (hasStrong) {
-                this.add("item.minecraft." + type.id + ".effect." + "strong_" + entry, name);
+                this.add("item.minecraft." + type.id + ".effect." + "strong_" + entry.toLowerCase(), name);
             }
         }
     }
