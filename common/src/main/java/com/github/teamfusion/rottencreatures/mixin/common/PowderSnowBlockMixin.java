@@ -20,8 +20,10 @@ public class PowderSnowBlockMixin {
     @Inject(method = "entityInside", at = @At("TAIL"))
     private void rc$isEntityInside(BlockState state, Level level, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!level.isClientSide && entity instanceof Burned burned) {
-            if (!burned.isObsidian()) level.destroyBlock(pos, false);
-            burned.setObsidian(true);
+            if (!burned.isObsidian()) {
+                level.destroyBlock(pos, false);
+                burned.setObsidian(true);
+            }
         }
     }
 }

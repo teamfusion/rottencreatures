@@ -14,6 +14,7 @@
     "common.LayeredCauldronBlockMixin",
     "common.LivingEntityMixin",
     "common.PowderSnowBlockMixin",
+    "common.VillagerHostilesSensorMixin",
     "common.ZombieMixin"
   ],
   "injectors": {
