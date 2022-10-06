@@ -9,6 +9,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SplashPotionItem;
 
 import java.util.function.Supplier;
 
@@ -23,6 +24,9 @@ public class RCItems {
     // Loot
     public static final Supplier<Item> MAGMA_ROTTEN_FLESH = create("magma_rotten_flesh", () -> new MagmaRottenFleshItem(new Item.Properties().food(RCFoodProperties.MAGMA_ROTTEN_FLESH).tab(RottenCreatures.TAB)));
     public static final Supplier<Item> FROZEN_ROTTEN_FLESH = create("frozen_rotten_flesh", () -> new Item(new Item.Properties().food(RCFoodProperties.FROZEN_ROTTEN_FLESH).tab(RottenCreatures.TAB)));
+
+    // MISC
+    public static final Supplier<Item> CORRUPTED_WART = create("corrupted_wart", () -> new Item(new Item.Properties().tab(RottenCreatures.TAB)));
 
     private static <T extends Item> Supplier<T> create(String key, Supplier<T> item) {
         return ITEMS.register(key, item);

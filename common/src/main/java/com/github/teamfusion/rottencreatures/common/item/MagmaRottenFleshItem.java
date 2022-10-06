@@ -15,6 +15,11 @@ public class MagmaRottenFleshItem extends Item {
         super(properties);
     }
 
+    /**
+     * applies a 50% chance for the effect application
+     * it can either grant fire resistance for 15 seconds
+     * or set the entity on fire for 5 seconds
+     */
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         super.finishUsingItem(stack, level, entity);
@@ -25,7 +30,7 @@ public class MagmaRottenFleshItem extends Item {
 
         if (!level.isClientSide) {
             if (level.random.nextBoolean()) {
-                entity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 300, 0));
+                entity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 300));
             } else {
                 entity.setSecondsOnFire(5);
             }

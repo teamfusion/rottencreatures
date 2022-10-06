@@ -8,7 +8,9 @@ import com.github.teamfusion.rottencreatures.common.entities.Frostbitten;
 import com.github.teamfusion.rottencreatures.common.entities.Swampy;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
+import com.github.teamfusion.rottencreatures.common.registries.RCPotions;
 import com.github.teamfusion.rottencreatures.common.worldgen.WorldGeneration;
+import com.github.teamfusion.rottencreatures.mixin.access.PotionBrewingAccessor;
 
 public class CommonSetup {
     public static void common() {
@@ -21,5 +23,6 @@ public class CommonSetup {
         WorldGeneration.setup();
         BiomeModifier.setup();
         ItemRegistry.registerFuel(RCItems.MAGMA_ROTTEN_FLESH.get(), 67);
+        RCPotions.bootstrap();
     }
 }

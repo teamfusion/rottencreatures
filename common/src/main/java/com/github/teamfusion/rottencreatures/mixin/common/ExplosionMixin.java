@@ -16,6 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ExplosionMixin {
     @Shadow @Final @Nullable private Entity source;
 
+    /**
+     * checks for the owner of the PrimedTntBarrel
+     */
     @Inject(method = "getSourceMob", at = @At("TAIL"), cancellable = true)
     private void getSource(CallbackInfoReturnable<LivingEntity> cir) {
         if (this.source instanceof PrimedTntBarrel barrel) {

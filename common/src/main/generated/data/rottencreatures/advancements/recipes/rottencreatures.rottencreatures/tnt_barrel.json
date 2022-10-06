@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "rottencreatures:tnt_barrel"
+    ]
+  },
+  "criteria": {
+    "has_gunpowder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:gunpowder"
+            ]
+          }
+        ]
+      }
+    },
+    "has_barrel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:barrel"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "rottencreatures:tnt_barrel"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gunpowder",
+      "has_barrel",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -25,6 +25,10 @@ public abstract class LayeredCauldronBlockMixin extends AbstractCauldronBlock {
         super(properties, map);
     }
 
+    /**
+     * if a burned falls inside a cauldron it will be turned into an obsidian variant
+     * and a layer of the content will be consumed
+     */
     @Inject(method = "entityInside", at = @At("TAIL"))
     private void rc$isEntityInside(BlockState state, Level level, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!level.isClientSide && entity instanceof Burned burned && !burned.isObsidian() && this.isEntityInsideContent(state, pos, entity)) {

@@ -16,10 +16,10 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 
-public final class ModelProvider extends FabricModelProvider {
+public final class ModelGenerator extends FabricModelProvider {
     private static final ModelTemplate SPAWN_EGG = createItem("template_spawn_egg");
 
-    public ModelProvider(FabricDataGenerator dataGenerator) {
+    public ModelGenerator(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
     }
 
@@ -35,6 +35,7 @@ public final class ModelProvider extends FabricModelProvider {
         gen.generateFlatItem(RCItems.SWAMPY_SPAWN_EGG.get(), SPAWN_EGG);
         gen.generateFlatItem(RCItems.MAGMA_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCItems.FROZEN_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(RCItems.CORRUPTED_WART.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCBlocks.TNT_BARREL.get().asItem(), create(RCBlocks.TNT_BARREL.get()));
     }
 

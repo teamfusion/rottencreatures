@@ -13,6 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PowderSnowBlock.class)
 public class PowderSnowBlockMixin {
+    /**
+     * if a burned is inside of powder snow it will destroy the block
+     * and will be turned into the obsidian variant
+     */
     @Inject(method = "entityInside", at = @At("TAIL"))
     private void rc$isEntityInside(BlockState state, Level level, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!level.isClientSide && entity instanceof Burned burned) {

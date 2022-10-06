@@ -22,6 +22,9 @@ public abstract class LavaCauldronBlockMixin extends AbstractCauldronBlock {
         super(properties, map);
     }
 
+    /**
+     * if a burned is inside a lava cauldron, it will remove the obsidian variant
+     */
     @Inject(method = "entityInside", at = @At("TAIL"))
     private void rc$isEntityInside(BlockState state, Level level, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (this.isEntityInsideContent(state, pos, entity) && entity instanceof Burned burned) burned.setObsidian(false);

@@ -10,14 +10,12 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.FrostWalkerEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -47,7 +45,7 @@ public class Frostbitten extends Zombie {
     public boolean doHurtTarget(Entity entity) {
         boolean hurt = super.doHurtTarget(entity);
         if (hurt && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living) {
-            if (!living.getItemBySlot(EquipmentSlot.HEAD).is(Items.LEATHER_HELMET) && !living.getItemBySlot(EquipmentSlot.CHEST).is(Items.LEATHER_CHESTPLATE) && !living.getItemBySlot(EquipmentSlot.LEGS).is(Items.LEATHER_LEGGINGS) && !living.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)) {
+            if (!living.canFreeze()) {
                 float modifier = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
                 living.addEffect(new MobEffectInstance(RCMobEffects.FREEZE.get(), 140 * (int)modifier), this);
             }
@@ -74,7 +72,7 @@ public class Frostbitten extends Zombie {
                 List<ServerPlayer> players = ((ServerLevel)this.level).getPlayers(player -> this.distanceToSqr(player) < 10.0F && player.gameMode.isSurvival());
                 for (ServerPlayer player : players) {
                     if (!player.hasEffect(freeze)) {
-                        player.addEffect(new MobEffectInstance(freeze, 100, 1), this);
+                        player.addEffect(new MobEffectInstance(freeze, 100), this);
                     }
                 }
             }
