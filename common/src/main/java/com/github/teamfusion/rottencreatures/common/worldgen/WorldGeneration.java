@@ -4,6 +4,7 @@ import com.github.teamfusion.platform.common.worldgen.BiomeModifier;
 import com.github.teamfusion.rottencreatures.common.entities.Burned;
 import com.github.teamfusion.rottencreatures.common.entities.Frostbitten;
 import com.github.teamfusion.rottencreatures.common.entities.Swampy;
+import com.github.teamfusion.rottencreatures.common.entities.UndeadMiner;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.mixin.access.SpawnPlacementsAccessor;
 import net.minecraft.world.entity.MobCategory;
@@ -17,8 +18,10 @@ public class WorldGeneration {
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.BURNED.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Burned::checkBurnedSpawnRules);
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.FROSTBITTEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Frostbitten::checkFrostbittenSpawnRules);
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.SWAMPY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Swampy::checkSwampySpawnRules);
+        SpawnPlacementsAccessor.callRegister(RCEntityTypes.UNDEAD_MINER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, UndeadMiner::checkUndeadMinerSpawnRules);
         BiomeModifier.add(writer -> writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.BURNED.get(), 19, 4, 4), Biomes.NETHER_WASTES);
         BiomeModifier.add(writer -> writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.FROSTBITTEN.get(), 80, 4, 4), Biome.BiomeCategory.ICY);
         BiomeModifier.add(writer -> writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.SWAMPY.get(), 80, 4, 4), Biome.BiomeCategory.SWAMP);
+        BiomeModifier.exclude(writer -> writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.UNDEAD_MINER.get(), 12, 1, 4), Biome.BiomeCategory.NETHER, Biome.BiomeCategory.NONE, Biome.BiomeCategory.THEEND, Biome.BiomeCategory.MUSHROOM);
     }
 }

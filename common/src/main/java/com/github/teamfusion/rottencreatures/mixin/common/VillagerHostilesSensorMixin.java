@@ -23,6 +23,7 @@ public class VillagerHostilesSensorMixin {
                 .put(RCEntityTypes.BURNED.get(), 10.0F)
                 .put(RCEntityTypes.FROSTBITTEN.get(), 8.0F)
                 .put(RCEntityTypes.SWAMPY.get(), 8.0F)
+                .put(RCEntityTypes.UNDEAD_MINER.get(), 8.0F)
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import com.github.teamfusion.platform.common.worldgen.BiomeModifier;
 import com.github.teamfusion.rottencreatures.common.entities.Burned;
 import com.github.teamfusion.rottencreatures.common.entities.Frostbitten;
 import com.github.teamfusion.rottencreatures.common.entities.Swampy;
+import com.github.teamfusion.rottencreatures.common.entities.UndeadMiner;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import com.github.teamfusion.rottencreatures.common.registries.RCPotions;
@@ -17,6 +18,7 @@ public class CommonSetup {
         MobHandler.registerAttributes(RCEntityTypes.BURNED, Burned::createAttributes);
         MobHandler.registerAttributes(RCEntityTypes.FROSTBITTEN, Frostbitten::createAttributes);
         MobHandler.registerAttributes(RCEntityTypes.SWAMPY, Swampy::createAttributes);
+        MobHandler.registerAttributes(RCEntityTypes.UNDEAD_MINER, UndeadMiner::createAttributes);
     }
 
     public static void postCommon() {

@@ -43,8 +43,8 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     /**
-     * prevents the entity from being hurt due the effect, but
-     * if the entity has the effect but is in powder snow it will be hurt
+     * prevents the entity from being hurt due the effect,
+     * but if the entity has the effect and is in powder snow it will be hurt
      */
     @Inject(method = "canFreeze", at = @At("TAIL"), cancellable = true)
     private void rc$canFreeze(CallbackInfoReturnable<Boolean> cir) {

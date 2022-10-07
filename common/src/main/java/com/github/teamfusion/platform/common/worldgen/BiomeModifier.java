@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 public class BiomeModifier {
     private static final Map<Consumer<BiomeWriter>, ResourceKey<Biome>[]> BIOME_FEATURES = new ConcurrentHashMap<>();
     private static final Map<Consumer<BiomeWriter>, Biome.BiomeCategory[]> CATEGORY_FEATURES = new ConcurrentHashMap<>();
+    private static final Map<Consumer<BiomeWriter>, Biome.BiomeCategory[]> BLACKLISTED_CATEGORIES = new ConcurrentHashMap<>();
     public static final BiomeModifier INSTANCE = new BiomeModifier();
 
     @ExpectPlatform
@@ -21,6 +22,7 @@ public class BiomeModifier {
     public void register(BiomeWriter writer) {
         BIOME_FEATURES.forEach(writer::add);
         CATEGORY_FEATURES.forEach(writer::add);
+        BLACKLISTED_CATEGORIES.forEach(writer::exclude);
     }
 
     @SafeVarargs
@@ -30,5 +32,9 @@ public class BiomeModifier {
 
     public static void add(Consumer<BiomeWriter> writer, Biome.BiomeCategory... categories) {
         CATEGORY_FEATURES.put(writer, categories);
+    }
+
+    public static void exclude(Consumer<BiomeWriter> writer, Biome.BiomeCategory... categories) {
+        BLACKLISTED_CATEGORIES.put(writer, categories);
     }
 }

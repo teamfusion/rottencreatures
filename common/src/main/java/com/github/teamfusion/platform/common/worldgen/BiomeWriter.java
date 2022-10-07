@@ -22,6 +22,10 @@ public abstract class BiomeWriter {
         for (Biome.BiomeCategory category : categories) if (this.is(category)) writer.accept(this);
     }
 
+    public final void exclude(Consumer<BiomeWriter> writer, Biome.BiomeCategory... categories) {
+        for (Biome.BiomeCategory category : categories) if (!this.is(category)) writer.accept(this);
+    }
+
     public boolean is(ResourceKey<Biome> biome) {
         return biome == ResourceKey.create(Registry.BIOME_REGISTRY, this.name());
     }

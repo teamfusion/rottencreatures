@@ -33,6 +33,7 @@ public final class ModelGenerator extends FabricModelProvider {
         gen.generateFlatItem(RCItems.BURNED_SPAWN_EGG.get(), SPAWN_EGG);
         gen.generateFlatItem(RCItems.FROSTBITTEN_SPAWN_EGG.get(), SPAWN_EGG);
         gen.generateFlatItem(RCItems.SWAMPY_SPAWN_EGG.get(), SPAWN_EGG);
+        gen.generateFlatItem(RCItems.UNDEAD_MINER_SPAWN_EGG.get(), SPAWN_EGG);
         gen.generateFlatItem(RCItems.MAGMA_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCItems.FROZEN_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCItems.CORRUPTED_WART.get(), ModelTemplates.FLAT_ITEM);
