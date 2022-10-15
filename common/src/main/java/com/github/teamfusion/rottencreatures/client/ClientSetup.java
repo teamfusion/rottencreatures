@@ -39,15 +39,15 @@ public class ClientSetup {
         RenderHandler.setModelLayerDefinition(UndeadMinerRenderer.LAYER.getMain(), UndeadMinerModel::createBodyLayer);
         UndeadMinerRenderer.LAYER.buildArmor();
 
-        RenderHandler.setEntityRenderer(RCEntityTypes.MUMMY, MummyRenderer::new);
-        RenderHandler.setModelLayerDefinition(MummyRenderer.LAYER.getMain(), MummyModel::createBodyLayer);
-        MummyRenderer.LAYER.buildArmor(0.25F);
+//        RenderHandler.setEntityRenderer(RCEntityTypes.MUMMY, MummyRenderer::new);
+//        RenderHandler.setModelLayerDefinition(MummyRenderer.LAYER.getMain(), MummyModel::createBodyLayer);
+//        MummyRenderer.LAYER.buildArmor(0.25F);
 
-        RenderHandler.setEntityRenderer(RCEntityTypes.GLACIAL_HUNTER, GlacialHunterRenderer::new);
-        RenderHandler.setModelLayerDefinition(GlacialHunterRenderer.LAYER.getMain(), GlacialHunterModel::createBodyLayer);
+//        RenderHandler.setEntityRenderer(RCEntityTypes.GLACIAL_HUNTER, GlacialHunterRenderer::new);
+//        RenderHandler.setModelLayerDefinition(GlacialHunterRenderer.LAYER.getMain(), GlacialHunterModel::createBodyLayer);
 
-        RenderHandler.setEntityRenderer(RCEntityTypes.SCARAB, ScarabRenderer::new);
-        RenderHandler.setModelLayerDefinition(ScarabRenderer.LAYER.getMain(), ScarabModel::createBodyLayer);
+//        RenderHandler.setEntityRenderer(RCEntityTypes.SCARAB, ScarabRenderer::new);
+//        RenderHandler.setModelLayerDefinition(ScarabRenderer.LAYER.getMain(), ScarabModel::createBodyLayer);
     }
 
     public static void postClient() {}

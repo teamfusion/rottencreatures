@@ -21,9 +21,9 @@ public class CommonSetup {
         MobHandler.registerAttributes(RCEntityTypes.FROSTBITTEN, Frostbitten::createAttributes);
         MobHandler.registerAttributes(RCEntityTypes.SWAMPY, Swampy::createAttributes);
         MobHandler.registerAttributes(RCEntityTypes.UNDEAD_MINER, UndeadMiner::createAttributes);
-        MobHandler.registerAttributes(RCEntityTypes.MUMMY, Mummy::createAttributes);
-        MobHandler.registerAttributes(RCEntityTypes.GLACIAL_HUNTER, GlacialHunter::createAttributes);
-        MobHandler.registerAttributes(RCEntityTypes.SCARAB, Scarab::createAttributes);
+//        MobHandler.registerAttributes(RCEntityTypes.MUMMY, Mummy::createAttributes);
+//        MobHandler.registerAttributes(RCEntityTypes.GLACIAL_HUNTER, GlacialHunter::createAttributes);
+//        MobHandler.registerAttributes(RCEntityTypes.SCARAB, Scarab::createAttributes);
     }
 
     public static void postCommon() {

@@ -79,16 +79,16 @@ public final class EntityLootGenerator extends SimpleFabricLootTableProvider {
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.COAL)).add(LootItem.lootTableItem(Items.GOLD_INGOT)).when(LootItemKilledByPlayerCondition.killedByPlayer()).apply(LootBuilder.count(0, 2)).apply(LootBuilder.looting(0, 1)))
         );
 
-        this.add(RCEntityTypes.MUMMY, consumer, LootTable.lootTable()
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.ROTTEN_FLESH).apply(LootBuilder.count(0, 2)).apply(LootBuilder.looting(0, 1))))
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.PAPER)).add(LootItem.lootTableItem(Items.GOLD_NUGGET)).when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.75F, 0.1F)))
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.RAW_GOLD).when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.1F))))
-        );
-
-        this.add(RCEntityTypes.GLACIAL_HUNTER, consumer, LootTable.lootTable()
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.ROTTEN_FLESH).apply(LootBuilder.count(0, 2)).apply(LootBuilder.looting(0, 1))))
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.COD)).add(LootItem.lootTableItem(Items.LEATHER)).apply(LootBuilder.count(0, 1)).apply(LootBuilder.looting(0, 1)))
-        );
+//        this.add(RCEntityTypes.MUMMY, consumer, LootTable.lootTable()
+//                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.ROTTEN_FLESH).apply(LootBuilder.count(0, 2)).apply(LootBuilder.looting(0, 1))))
+//                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.PAPER)).add(LootItem.lootTableItem(Items.GOLD_NUGGET)).when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.75F, 0.1F)))
+//                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.RAW_GOLD).when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.1F))))
+//        );
+//
+//        this.add(RCEntityTypes.GLACIAL_HUNTER, consumer, LootTable.lootTable()
+//                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.ROTTEN_FLESH).apply(LootBuilder.count(0, 2)).apply(LootBuilder.looting(0, 1))))
+//                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(Items.COD)).add(LootItem.lootTableItem(Items.LEATHER)).apply(LootBuilder.count(0, 1)).apply(LootBuilder.looting(0, 1)))
+//        );
 
         this.add(RCEntityTypes.TNT_BARREL, consumer, LootTable.lootTable());
     }
