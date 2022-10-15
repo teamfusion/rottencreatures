@@ -64,7 +64,7 @@ public class Frostbitten extends Zombie {
     public void die(DamageSource source) {
         if (this.isBaby()) {
             for (int i = 0; i < 8; i++) {
-                this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getRandomY(), this.getZ(), this.random.nextDouble(-0.15, 0.15), 0.0D, this.random.nextDouble(-0.15, 0.15));
+                this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getRandomY(), this.getZ(), -0.15D + this.random.nextDouble(0.45D), 0.0D, -0.15D + this.random.nextDouble(0.45D));
             }
 
             if (!this.level.isClientSide) {

@@ -18,8 +18,14 @@ import org.slf4j.Logger;
 //<>
 
 /**
- * Todo:
- * - Finish Freeze Effect
+ * Issues for future BG:
+ * - fix mummy armor rendering
+ * - fix scarab AI
+ * - fix swampy height
+ * - tweak loot tables
+ *
+ * Mob Properties
+ * <a href="https://docs.google.com/spreadsheets/d/10VWOjZ1Z_yEU101hk-EzwyDLUDU6RKzs/edit#gid=1618430498">...</a>
  */
 public class RottenCreatures {
     public static final String MOD_ID = "rottencreatures";

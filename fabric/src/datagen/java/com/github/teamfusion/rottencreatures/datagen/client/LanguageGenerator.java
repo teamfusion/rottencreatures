@@ -46,6 +46,9 @@ public final class LanguageGenerator implements DataProvider {
         this.entity(RCEntityTypes.FROSTBITTEN.get(), "Frostbitten");
         this.entity(RCEntityTypes.SWAMPY.get(), "Swampy");
         this.entity(RCEntityTypes.UNDEAD_MINER.get(), "Undead Miner");
+        this.entity(RCEntityTypes.MUMMY.get(), "Mummy");
+        this.entity(RCEntityTypes.GLACIAL_HUNTER.get(), "Glacial Hunter");
+        this.entity(RCEntityTypes.SCARAB.get(), "Scarab");
         this.entity(RCEntityTypes.TNT_BARREL.get(), "Primed TNT Barrel");
 
         // Blocks
@@ -56,6 +59,8 @@ public final class LanguageGenerator implements DataProvider {
         this.item(RCItems.FROSTBITTEN_SPAWN_EGG.get(), "Frostbitten Spawn Egg");
         this.item(RCItems.SWAMPY_SPAWN_EGG.get(), "Swampy Spawn Egg");
         this.item(RCItems.UNDEAD_MINER_SPAWN_EGG.get(), "Undead Miner Spawn Egg");
+        this.item(RCItems.MUMMY_SPAWN_EGG.get(), "Mummy Spawn Egg");
+        this.item(RCItems.GLACIAL_HUNTER_SPAWN_EGG.get(), "Glacial Hunter Spawn Egg");
         this.item(RCItems.MAGMA_ROTTEN_FLESH.get(), "Magma Rotten Flesh");
         this.item(RCItems.FROZEN_ROTTEN_FLESH.get(), "Frozen Rotten Flesh");
         this.item(RCItems.CORRUPTED_WART.get(), "Corrupted Wart");

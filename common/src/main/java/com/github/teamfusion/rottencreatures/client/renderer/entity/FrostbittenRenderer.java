@@ -2,21 +2,17 @@ package com.github.teamfusion.rottencreatures.client.renderer.entity;
 
 import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.client.model.FrostbittenModel;
-import com.github.teamfusion.rottencreatures.client.model.ModelBuilder;
+import com.github.teamfusion.rottencreatures.client.model.LayerBuilder;
 import com.github.teamfusion.rottencreatures.common.entities.Frostbitten;
-import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.AbstractZombieRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class FrostbittenRenderer extends AbstractZombieRenderer<Frostbitten, FrostbittenModel<Frostbitten>> {
-    public static final ModelLayerLocation MAIN = ModelBuilder.createLayer("frostbitten");
-    public static final ModelLayerLocation INNER_ARMOR = ModelBuilder.createLayer("frostbitten", "inner_armor");
-    public static final ModelLayerLocation OUTER_ARMOR = ModelBuilder.createLayer("frostbitten", "outer_armor");
+    public static final LayerBuilder LAYER = LayerBuilder.of("frostbitten");
 
     public FrostbittenRenderer(EntityRendererProvider.Context context) {
-        super(context, new FrostbittenModel<>(context.bakeLayer(MAIN)), new FrostbittenModel<>(context.bakeLayer(INNER_ARMOR)), new FrostbittenModel<>(context.bakeLayer(OUTER_ARMOR)));
+        super(context, new FrostbittenModel<>(context.bakeLayer(LAYER.getMain())), new FrostbittenModel<>(context.bakeLayer(LAYER.getInner())), new FrostbittenModel<>(context.bakeLayer(LAYER.getOuter())));
     }
 
     @Override

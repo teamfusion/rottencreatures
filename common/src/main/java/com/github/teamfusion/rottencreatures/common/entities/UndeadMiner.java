@@ -1,7 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
-import com.github.teamfusion.rottencreatures.mixin.access.BuiltInLootTablesAccessor;
+import com.github.teamfusion.rottencreatures.common.LootBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -33,10 +32,11 @@ import java.util.Random;
 
 public class UndeadMiner extends Zombie {
     private static final EntityDataAccessor<Integer> DATA_VARIANT = SynchedEntityData.defineId(UndeadMiner.class, EntityDataSerializers.INT);
-    public static final ResourceLocation A_RANK = BuiltInLootTablesAccessor.callRegister(new ResourceLocation(RottenCreatures.MOD_ID, "entities/undead_miner/a_rank"));
-    public static final ResourceLocation B_RANK = BuiltInLootTablesAccessor.callRegister(new ResourceLocation(RottenCreatures.MOD_ID, "entities/undead_miner/b_rank"));
-    public static final ResourceLocation C_RANK = BuiltInLootTablesAccessor.callRegister(new ResourceLocation(RottenCreatures.MOD_ID, "entities/undead_miner/c_rank"));
-    public static final ResourceLocation M_RANK = BuiltInLootTablesAccessor.callRegister(new ResourceLocation(RottenCreatures.MOD_ID, "entities/undead_miner/m_rank"));
+    private static final LootBuilder BUILDER = LootBuilder.of("undead_miner");
+    public static final ResourceLocation DIAMOND_LOOT = BUILDER.build("diamond");
+    public static final ResourceLocation IRON_LOOT = BUILDER.build("iron");
+    public static final ResourceLocation STONE_LOOT = BUILDER.build("stone");
+    public static final ResourceLocation GOLD_LOOT = BUILDER.build("gold");
 
     public UndeadMiner(EntityType<? extends Zombie> entityType, Level level) {
         super(entityType, level);
@@ -106,17 +106,17 @@ public class UndeadMiner extends Zombie {
      * applies random values to generate miners with different ranks
      * also checks if it should generate the mesa miner
      *
-     * - A-Rank : 10%
-     * - B-Rank : 30%
-     * - C-Rank : 60%
-     * - M-Rank : 60% but only in mesa biome
+     * - Stone-Rank : 10%
+     * - Iron-Rank : 30%
+     * - Diamond-Rank : 60%
+     * - Gold-Rank : 60% but only in mesa biome
      */
     public Variant getRandomVariant(Random random, Holder<Biome> biome) {
         int chance = random.nextInt(50);
         if (chance <= 15) {
-            return Variant.B;
+            return Variant.IRON;
         } else {
-            return chance >= 45 ? Variant.A : biome.is(BiomeTags.IS_BADLANDS) ? Variant.M : Variant.C;
+            return chance >= 45 ? Variant.DIAMOND : biome.is(BiomeTags.IS_BADLANDS) ? Variant.GOLD : Variant.STONE;
         }
     }
 
@@ -126,10 +126,10 @@ public class UndeadMiner extends Zombie {
     @Override
     protected ResourceLocation getDefaultLootTable() {
         return switch (this.getVariant()) {
-            case A -> A_RANK;
-            case B -> B_RANK;
-            case C -> C_RANK;
-            case M -> M_RANK;
+            case DIAMOND -> DIAMOND_LOOT;
+            case IRON -> IRON_LOOT;
+            case STONE -> STONE_LOOT;
+            case GOLD -> GOLD_LOOT;
         };
     }
 
@@ -150,10 +150,10 @@ public class UndeadMiner extends Zombie {
      * manages each variant per rank
      */
     public enum Variant {
-        C(0, "c", Items.STONE_PICKAXE),
-        B(1, "b", Items.IRON_PICKAXE),
-        A(2, "a", Items.DIAMOND_PICKAXE),
-        M(3, "m", Items.GOLDEN_PICKAXE);
+        STONE(0, "stone", Items.STONE_PICKAXE),
+        IRON(1, "iron", Items.IRON_PICKAXE),
+        DIAMOND(2, "diamond", Items.DIAMOND_PICKAXE),
+        GOLD(3, "gold", Items.GOLDEN_PICKAXE);
 
         public static final Variant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(Variant::getId)).toArray(Variant[]::new);
         private final int id;

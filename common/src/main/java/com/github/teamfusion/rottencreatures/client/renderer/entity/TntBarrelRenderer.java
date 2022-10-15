@@ -19,9 +19,9 @@ public class TntBarrelRenderer extends EntityRenderer<PrimedTntBarrel> {
     }
 
     @Override
-    public void render(PrimedTntBarrel tnt, float yaw, float angle, PoseStack stack, MultiBufferSource buffer, int light) {
-        stack.pushPose();
-        stack.translate(0.0D, 0.5D, 0.0D);
+    public void render(PrimedTntBarrel tnt, float yaw, float angle, PoseStack matrices, MultiBufferSource vertices, int light) {
+        matrices.pushPose();
+        matrices.translate(0.0D, 0.5D, 0.0D);
         int cooldown = tnt.getFuse();
         if ((float)cooldown - angle + 1.0F < 10.0f) {
             float delta = 1.0F - ((float)cooldown - angle + 1.0F) / 10.0F;
@@ -29,14 +29,14 @@ public class TntBarrelRenderer extends EntityRenderer<PrimedTntBarrel> {
             delta *= delta;
             delta *= delta;
             float scale = 1.0F + delta * 0.3F;
-            stack.scale(scale, scale, scale);
+            matrices.scale(scale, scale, scale);
         }
-        stack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        stack.translate(-0.5D, -0.5D, 0.5D);
-        stack.mulPose(Vector3f.YP.rotationDegrees(90.0F));
-        TntMinecartRenderer.renderWhiteSolidBlock(RCBlocks.TNT_BARREL.get().defaultBlockState(), stack, buffer, light, cooldown / 5 % 2 == 0);
-        stack.popPose();
-        super.render(tnt, yaw, angle, stack, buffer, light);
+        matrices.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+        matrices.translate(-0.5D, -0.5D, 0.5D);
+        matrices.mulPose(Vector3f.YP.rotationDegrees(90.0F));
+        TntMinecartRenderer.renderWhiteSolidBlock(RCBlocks.TNT_BARREL.get().defaultBlockState(), matrices, vertices, light, cooldown / 5 % 2 == 0);
+        matrices.popPose();
+        super.render(tnt, yaw, angle, matrices, vertices, light);
     }
 
     @Override

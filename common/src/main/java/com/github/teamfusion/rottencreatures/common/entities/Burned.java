@@ -1,7 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
-import com.github.teamfusion.rottencreatures.mixin.access.BuiltInLootTablesAccessor;
+import com.github.teamfusion.rottencreatures.common.LootBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -42,7 +41,7 @@ public class Burned extends Zombie {
     private static final EntityDataAccessor<Boolean> DATA_IS_OBSIDIAN = SynchedEntityData.defineId(Burned.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_IS_CRAZY = SynchedEntityData.defineId(Burned.class, EntityDataSerializers.BOOLEAN);
 
-    public static final ResourceLocation BURNED_OBSIDIAN = BuiltInLootTablesAccessor.callRegister(new ResourceLocation(RottenCreatures.MOD_ID, "entities/burned/obsidian"));
+    public static final ResourceLocation OBSIDIAN_LOOT = LootBuilder.of("burned").build("obsidian");
 
     public Burned(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
@@ -68,7 +67,7 @@ public class Burned extends Zombie {
 
     @Override
     protected ResourceLocation getDefaultLootTable() {
-        return this.isObsidian() ? BURNED_OBSIDIAN : super.getDefaultLootTable();
+        return this.isObsidian() ? OBSIDIAN_LOOT : super.getDefaultLootTable();
     }
 
     @Override
@@ -79,7 +78,7 @@ public class Burned extends Zombie {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        if (this.getHealth() <= 10.0D) this.setCrazy(true);
+        if (this.getHealth() <= 10.0D && !this.isCrazy()) this.setCrazy(true);
     }
 
     @Override
