@@ -82,6 +82,6 @@ public class Frostbitten extends Zombie {
     }
 
     public static boolean checkFrostbittenSpawnRules(EntityType<Frostbitten> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
-        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWN_EGG || level.canSeeSky(pos));
+        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
     }
 }

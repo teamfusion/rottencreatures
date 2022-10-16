@@ -24,7 +24,6 @@ public class ClientSetup {
 
         RenderHandler.setEntityRenderer(RCEntityTypes.BURNED, BurnedRenderer::new);
         RenderHandler.setModelLayerDefinition(BurnedRenderer.LAYER.getMain(), () -> BurnedModel.createBodyLayer(0.0F));
-        RenderHandler.setModelLayerDefinition(BurnedRenderer.LAVA, () -> BurnedModel.createBodyLayer(0.025F));
         BurnedRenderer.LAYER.buildArmor();
 
         RenderHandler.setEntityRenderer(RCEntityTypes.FROSTBITTEN, FrostbittenRenderer::new);

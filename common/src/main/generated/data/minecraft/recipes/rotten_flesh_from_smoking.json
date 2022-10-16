@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "rottencreatures:frozen_rotten_flesh"
+  },
+  "result": "minecraft:rotten_flesh",
+  "experience": 0.1,
+  "cookingtime": 100
+}

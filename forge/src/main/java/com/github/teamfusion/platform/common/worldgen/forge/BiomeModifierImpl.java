@@ -5,6 +5,7 @@ import com.github.teamfusion.platform.common.worldgen.BiomeWriter;
 import com.github.teamfusion.rottencreatures.RottenCreatures;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;

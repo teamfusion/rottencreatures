@@ -106,9 +106,9 @@ public class UndeadMiner extends Zombie {
      * applies random values to generate miners with different ranks
      * also checks if it should generate the mesa miner
      *
-     * - Stone-Rank : 10%
+     * - Diamond-Rank : 10%
      * - Iron-Rank : 30%
-     * - Diamond-Rank : 60%
+     * - Stone-Rank : 60%
      * - Gold-Rank : 60% but only in mesa biome
      */
     public Variant getRandomVariant(Random random, Holder<Biome> biome) {
@@ -143,7 +143,7 @@ public class UndeadMiner extends Zombie {
     }
 
     public static boolean checkUndeadMinerSpawnRules(EntityType<UndeadMiner> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
-        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWN_EGG || !level.canSeeSky(pos)) && pos.getY() < level.getSeaLevel();
+        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || !level.canSeeSky(pos)) && pos.getY() < level.getSeaLevel();
     }
 
     /**

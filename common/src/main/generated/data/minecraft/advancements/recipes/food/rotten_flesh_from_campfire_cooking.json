@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "minecraft:rotten_flesh_from_campfire_cooking"
+    ]
+  },
+  "criteria": {
+    "has_frozen_rotten_flesh": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "rottencreatures:frozen_rotten_flesh"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:rotten_flesh_from_campfire_cooking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_frozen_rotten_flesh",
+      "has_the_recipe"
+    ]
+  ]
+}

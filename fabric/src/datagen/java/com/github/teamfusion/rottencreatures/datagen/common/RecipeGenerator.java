@@ -13,6 +13,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.apache.commons.compress.utils.Sets;
 
 import java.io.BufferedWriter;
@@ -92,5 +93,7 @@ public class RecipeGenerator extends RecipeProvider {
                 .pattern("GBG")
                 .pattern("GGG")
                 .unlockedBy("has_gunpowder", has(Items.GUNPOWDER)).unlockedBy("has_barrel", has(Items.BARREL)).save(consumer);
+        simpleCookingRecipe(consumer, "smoking", RecipeSerializer.SMOKING_RECIPE, 100, RCItems.FROZEN_ROTTEN_FLESH.get(), Items.ROTTEN_FLESH, 0.1F);
+        simpleCookingRecipe(consumer, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING_RECIPE, 600, RCItems.FROZEN_ROTTEN_FLESH.get(), Items.ROTTEN_FLESH, 0.1F);
     }
 }
