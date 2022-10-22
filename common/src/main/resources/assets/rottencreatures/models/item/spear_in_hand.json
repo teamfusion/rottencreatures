@@ -1,0 +1,27 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "rottencreatures:item/spear_in_hand"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, -45],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, 45],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [-32, -50, 0],
+			"translation": [2, 0.75, 2],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [160, 55, 170],
+			"translation": [2, 0.75, 2],
+			"scale": [1.5, 1.5, 1.5]
+		}
+	}
+}

@@ -27,12 +27,13 @@ import java.util.Random;
 public class Frostbitten extends Zombie {
     public Frostbitten(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
+        this.xpReward = 5;
         this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MOVEMENT_SPEED, 0.22D).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D);
+        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class Frostbitten extends Zombie {
     public boolean doHurtTarget(Entity entity) {
         boolean hurt = super.doHurtTarget(entity);
         if (hurt && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living) {
-            if (!living.canFreeze()) {
+            if (living.canFreeze()) {
                 float modifier = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
                 living.addEffect(new MobEffectInstance(RCMobEffects.FREEZE.get(), 140 * (int)modifier), this);
             }

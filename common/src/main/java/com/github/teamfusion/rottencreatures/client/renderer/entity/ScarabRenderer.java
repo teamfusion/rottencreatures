@@ -16,12 +16,7 @@ public class ScarabRenderer<T extends Scarab> extends MobRenderer<T, ScarabModel
     }
 
     @Override
-    protected float getFlipDegrees(T entity) {
-        return 180.0F;
-    }
-
-    @Override
     public ResourceLocation getTextureLocation(T entity) {
-        return new ResourceLocation(RottenCreatures.MOD_ID, "textures/entity/beetle.png");
+        return new ResourceLocation(RottenCreatures.MOD_ID, "textures/entity/scarab/scarab.png");
     }
 }

@@ -25,6 +25,7 @@ import java.util.Random;
 public class Swampy extends Zombie {
     public Swampy(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
+        this.xpReward = 4;
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }
 
@@ -59,8 +60,6 @@ public class Swampy extends Zombie {
 
         if (this.isBaby()) {
             this.kill();
-            this.spawnLingeringCloud();
-            this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getRandomY(), this.getZ(), this.random.nextDouble(-0.15, 0.15), 0.0D, this.random.nextDouble(-0.15, 0.15));
         }
 
         return hurt;
@@ -81,8 +80,14 @@ public class Swampy extends Zombie {
     @Override
     public void die(DamageSource source) {
         super.die(source);
-        if (!this.level.isClientSide && this.random.nextInt(10) < 8) {
-            this.spawnLingeringCloud();
+        if (!this.level.isClientSide) {
+            if (this.random.nextFloat() <= 0.8F || this.isBaby()) {
+                this.spawnLingeringCloud();
+                if (this.isBaby()) {
+                    Vec3 pos = this.getBoundingBox().getCenter();
+                    for (int i = 0; i < 40; i++) this.level.addParticle(ParticleTypes.POOF, pos.x, pos.y, pos.z, this.random.nextGaussian() * 0.2D, this.random.nextGaussian() * 0.2D, this.random.nextGaussian() * 0.2D);
+                }
+            }
         }
     }
 

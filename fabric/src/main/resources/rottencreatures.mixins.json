@@ -3,6 +3,10 @@
   "package": "com.github.teamfusion.rottencreatures.mixin.fabric",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.ItemEntityRendererMixin",
+    "client.ItemModelShaperMixin",
+    "client.ItemRendererMixin",
+    "client.ModelBakeryMixin"
   ],
   "mixins": [
   ],

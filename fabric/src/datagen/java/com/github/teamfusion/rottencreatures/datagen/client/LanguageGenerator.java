@@ -46,9 +46,16 @@ public final class LanguageGenerator implements DataProvider {
         this.entity(RCEntityTypes.FROSTBITTEN.get(), "Frostbitten");
         this.entity(RCEntityTypes.SWAMPY.get(), "Swampy");
         this.entity(RCEntityTypes.UNDEAD_MINER.get(), "Undead Miner");
-//        this.entity(RCEntityTypes.MUMMY.get(), "Mummy");
-//        this.entity(RCEntityTypes.GLACIAL_HUNTER.get(), "Glacial Hunter");
-//        this.entity(RCEntityTypes.SCARAB.get(), "Scarab");
+        this.entity(RCEntityTypes.MUMMY.get(), "Mummy");
+        this.entity(RCEntityTypes.SCARAB.get(), "Scarab");
+        this.entity(RCEntityTypes.FLYING_SCARAB.get(), "Flying Scarab");
+        this.entity(RCEntityTypes.GLACIAL_HUNTER.get(), "Glacial Hunter");
+        this.entity(RCEntityTypes.HUNTER_WOLF.get(), "Hunter's Wolf");
+        this.entity(RCEntityTypes.DEAD_BEARD.get(), "Dead Beard");
+        this.entity(RCEntityTypes.ZOMBIE_LACKEY.get(), "Zombie Lackey");
+        this.entity(RCEntityTypes.SKELETON_LACKEY.get(), "Skeleton Lackey");
+        this.entity(RCEntityTypes.IMMORTAL.get(), "Immortal");
+        this.entity(RCEntityTypes.ZAP.get(), "Zap");
         this.entity(RCEntityTypes.TNT_BARREL.get(), "Primed TNT Barrel");
 
         // Blocks
@@ -59,11 +66,14 @@ public final class LanguageGenerator implements DataProvider {
         this.item(RCItems.FROSTBITTEN_SPAWN_EGG.get(), "Frostbitten Spawn Egg");
         this.item(RCItems.SWAMPY_SPAWN_EGG.get(), "Swampy Spawn Egg");
         this.item(RCItems.UNDEAD_MINER_SPAWN_EGG.get(), "Undead Miner Spawn Egg");
-//        this.item(RCItems.MUMMY_SPAWN_EGG.get(), "Mummy Spawn Egg");
-//        this.item(RCItems.GLACIAL_HUNTER_SPAWN_EGG.get(), "Glacial Hunter Spawn Egg");
+        this.item(RCItems.MUMMY_SPAWN_EGG.get(), "Mummy Spawn Egg");
+        this.item(RCItems.GLACIAL_HUNTER_SPAWN_EGG.get(), "Glacial Hunter Spawn Egg");
+        this.item(RCItems.DEAD_BEARD_SPAWN_EGG.get(), "Dead Beard Spawn Egg");
+        this.item(RCItems.IMMORTAL_SPAWN_EGG.get(), "Immortal Spawn Egg");
         this.item(RCItems.MAGMA_ROTTEN_FLESH.get(), "Magma Rotten Flesh");
         this.item(RCItems.FROZEN_ROTTEN_FLESH.get(), "Frozen Rotten Flesh");
         this.item(RCItems.CORRUPTED_WART.get(), "Corrupted Wart");
+        this.item(RCItems.SPEAR.get(), "Spear");
 
         // Alchemy
         this.effect(RCMobEffects.FREEZE.get(), "Freeze");
@@ -72,6 +82,8 @@ public final class LanguageGenerator implements DataProvider {
         this.add("item.minecraft.tipped_arrow.effect.freeze", "Arrow of Freeze");
         this.add("item.minecraft.tipped_arrow.effect.long_freeze", "Arrow of Freeze");
         this.add("item.minecraft.tipped_arrow.effect.strong_freeze", "Arrow of Freeze");
+
+        this.effect(RCMobEffects.CHANNELLED.get(), "Channelled");
 
         // Misc
         this.add("itemGroup.rottencreatures.rottencreatures", "Rotten Creatures");

@@ -30,9 +30,9 @@ public class SwampyModel extends HumanoidModel<Swampy> {
     }
 
     @Override
-    public void setupAnim(Swampy swampy, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch) {
-        super.setupAnim(swampy, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
-        animateZombieArms(this.leftArm, this.rightArm, swampy.isAggressive(), this.attackTime, ageInTicks);
+    public void setupAnim(Swampy swampy, float limbSwing, float limbSwingAmount, float animationProgress, float headYaw, float headPitch) {
+        super.setupAnim(swampy, limbSwing, limbSwingAmount, animationProgress, headYaw, headPitch);
+        animateZombieArms(this.leftArm, this.rightArm, swampy.isAggressive(), this.attackTime, animationProgress);
     }
 
     public static void animateZombieArms(ModelPart leftArm, ModelPart rightArm, boolean isAggressive, float attackTime, float animProgress) {

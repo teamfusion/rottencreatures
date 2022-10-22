@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/generated",
+  "loader": "forge:separate-perspective",
+  "base": {
+    "parent": "rottencreatures:item/spear_in_hand"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "rottencreatures:item/spear_inventory"
+    },
+    "ground": {
+      "parent": "rottencreatures:item/spear_inventory"
+    },
+    "fixed": {
+      "parent": "rottencreatures:item/spear_inventory"
+    }
+  }
+}

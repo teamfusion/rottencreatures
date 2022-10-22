@@ -45,6 +45,7 @@ public class Burned extends Zombie {
 
     public Burned(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
+        this.xpReward = 5;
         this.setPathfindingMalus(BlockPathTypes.LAVA, 8.0F);
     }
 
@@ -55,7 +56,7 @@ public class Burned extends Zombie {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createAttributes().add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 4.0D);
+        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 4.0D);
     }
 
     @Override
@@ -208,7 +209,7 @@ public class Burned extends Zombie {
 
     @Override @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
-        if (this.random.nextFloat() < 0.05F) this.setCrazy(true);
+        if (this.random.nextFloat() <= 0.05F) this.setCrazy(true);
         return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
     }
 }

@@ -1,5 +1,8 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
+import com.github.teamfusion.rottencreatures.common.registries.RCItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -13,25 +16,20 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.ZombieAttackGoal;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Random;
+
 /**
- * Behavior:
- * Will only spawn near igloos or snowy structures.
- *
  * Concepts:
  * May throw snowballs
  * If it has 10HP or lower, he'll attack with a spear if he doesn't have one
  * If the snowball hit the entity, it applies slowness
- *
- * TODO: set wolves as hostile
  */
 public class GlacialHunter extends Zombie {
     public GlacialHunter(EntityType<? extends Zombie> type, Level level) {
@@ -75,12 +73,12 @@ public class GlacialHunter extends Zombie {
         }
     }
 
-    private boolean hasSpear() {
-        return this.getItemBySlot(EquipmentSlot.MAINHAND).is(Items.TRIDENT);
+    public boolean hasSpear() {
+        return this.getItemBySlot(EquipmentSlot.MAINHAND).is(RCItems.SPEAR.get());
     }
 
     private void setSpear() {
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TRIDENT));
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RCItems.SPEAR.get()));
     }
 
     @Override
@@ -95,6 +93,11 @@ public class GlacialHunter extends Zombie {
     }
 
     @Override
+    protected boolean isSunSensitive() {
+        return false;
+    }
+
+    @Override
     public boolean isBaby() {
         return false;
     }
@@ -105,14 +108,16 @@ public class GlacialHunter extends Zombie {
         super.travel(vec3);
     }
 
+    public static boolean checkGlacialHunterSpawnRules(EntityType<GlacialHunter> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
+        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
+    }
+
     @Nullable @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
-        Wolf wolf = EntityType.WOLF.create(this.level);
+        HunterWolf wolf = RCEntityTypes.HUNTER_WOLF.get().create(this.level);
         if (level.getRandom().nextFloat() <= 0.3F && wolf != null) {
             wolf.moveTo(this.blockPosition().offset(-2 + this.level.random.nextInt(3), 1, -2 + this.level.random.nextInt(3)), 0.0F, 0.0F);
-            wolf.setRemainingPersistentAngerTime(900);
-            wolf.setOwnerUUID(this.getUUID());
-            wolf.isAlliedTo(this);
+            wolf.setOwner(this);
             level.addFreshEntity(wolf);
         }
 

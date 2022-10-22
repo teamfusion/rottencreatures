@@ -1,5 +1,6 @@
 package com.github.teamfusion.rottencreatures.client.model;
 
+import com.github.teamfusion.rottencreatures.common.entities.GlacialHunter;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -7,9 +8,8 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.world.entity.monster.Zombie;
 
-public class GlacialHunterModel<T extends Zombie> extends ZombieModel<T> {
+public class GlacialHunterModel<T extends GlacialHunter> extends ZombieModel<T> {
     public GlacialHunterModel(ModelPart modelPart) {
         super(modelPart);
     }
@@ -42,5 +42,11 @@ public class GlacialHunterModel<T extends Zombie> extends ZombieModel<T> {
         this.leftArm.x = 7;
         this.rightLeg.y = 14;
         this.leftLeg.y = 14;
+        if (hunter.hasSpear()) {
+            this.rightArm.setPos(-8.0F, this.rightArm.y, -3.0F);
+            this.rightArm.setRotation(-0.3054F, -0.3927F, -0.3142F);
+            this.leftArm.setPos(5.0F, this.leftArm.y, -3.0F);
+            this.leftArm.setRotation(-0.8727F, 1.0036F, 0.0F);
+        }
     }
 }

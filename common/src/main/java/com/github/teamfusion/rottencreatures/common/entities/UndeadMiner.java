@@ -38,12 +38,13 @@ public class UndeadMiner extends Zombie {
     public static final ResourceLocation STONE_LOOT = BUILDER.build("stone");
     public static final ResourceLocation GOLD_LOOT = BUILDER.build("gold");
 
-    public UndeadMiner(EntityType<? extends Zombie> entityType, Level level) {
-        super(entityType, level);
+    public UndeadMiner(EntityType<? extends Zombie> type, Level level) {
+        super(type, level);
+        this.xpReward = 6;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 2.0D);
+        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 2.0D);
     }
 
     /**
@@ -53,6 +54,14 @@ public class UndeadMiner extends Zombie {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(2, new RestrictSunGoal(this));
+    }
+
+    /**
+     * prevents miners to burn at sunlight
+     */
+    @Override
+    protected boolean isSunSensitive() {
+        return false;
     }
 
     @Override

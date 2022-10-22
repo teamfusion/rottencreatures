@@ -12,19 +12,19 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 public class ScarabModel<T extends Scarab> extends HierarchicalModel<T> {
-    private final ModelPart root;
-    private final ModelPart head;
-    private final ModelPart body;
-    private final ModelPart rightFrontLeg;
-    private final ModelPart rightMiddleLeg;
-    private final ModelPart rightHindLeg;
-    private final ModelPart leftFrontLeg;
-    private final ModelPart leftMiddleLeg;
-    private final ModelPart leftHindLeg;
-    private final ModelPart rightElytra;
-    private final ModelPart leftElytra;
-    private final ModelPart rightWing;
-    private final ModelPart leftWing;
+    protected final ModelPart root;
+    protected final ModelPart head;
+    protected final ModelPart body;
+    protected final ModelPart rightFrontLeg;
+    protected final ModelPart rightMiddleLeg;
+    protected final ModelPart rightHindLeg;
+    protected final ModelPart leftFrontLeg;
+    protected final ModelPart leftMiddleLeg;
+    protected final ModelPart leftHindLeg;
+    protected final ModelPart rightElytra;
+    protected final ModelPart leftElytra;
+    protected final ModelPart rightWing;
+    protected final ModelPart leftWing;
 
     public ScarabModel(ModelPart root) {
         this.root = root;
@@ -55,7 +55,7 @@ public class ScarabModel<T extends Scarab> extends HierarchicalModel<T> {
         body.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(3, 21).addBox(-2.0F, 0.0F, -0.5F, 2.0F, 0.0F, 1.0F), PartPose.offset(-3.5F, 0.0F, 5.5F));
 
         body.addOrReplaceChild("right_elytra", CubeListBuilder.create().texOffs(38, 51).addBox(-4.0F, -4.0F, 0.0F, 4.0F, 4.0F, 9.0F, new CubeDeformation(0.005F)), PartPose.offset(0.0F, 0.0F, -2.0F));
-        body.addOrReplaceChild("left_elytra", CubeListBuilder.create().texOffs(38, 38).addBox(-0.0F, -4.0F, 0.0F, 4.0F, 4.0F, 9.0F, new CubeDeformation(0.005F)), PartPose.offset(1.0F, 0.0F, -2.0F));
+        body.addOrReplaceChild("left_elytra", CubeListBuilder.create().texOffs(38, 38).addBox(-0.0F, -4.0F, 0.0F, 4.0F, 4.0F, 9.0F, new CubeDeformation(0.005F)), PartPose.offset(0.0F, 0.0F, -2.0F));
         body.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(-5, 52).addBox(-5.0F, 0.0F, 0.0F, 5.0F, 0.0F, 9.0F), PartPose.offset(3.0F, -4.0F, -2.0F));
         body.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(15, 52).addBox(0.0F, 0.0F, 0.0F, 5.0F, 0.0F, 9.0F), PartPose.offset(-3.0F, -4.0F, -2.0F));
 
@@ -69,40 +69,26 @@ public class ScarabModel<T extends Scarab> extends HierarchicalModel<T> {
 
     @Override
     public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        if (entity.isFlying()) {
-            float degree = animationProgress * 120.32113F * (float)(Math.PI / 180.0D);
-            this.body.xRot = -0.87F;
-            this.head.xRot = 0.87F;
-            this.rightElytra.setPos(-1.5F, -2.0F, -2.0F);
-            this.rightElytra.setRotation(0.87F, -0.52F, -0.17F);
-            this.leftElytra.setPos(1.5F, -2.0F, -2.0F);
-            this.leftElytra.setRotation(0.87F, 0.52F, 0.17F);
-            this.rightWing.yRot = 1.57F;
-            this.rightWing.zRot = Mth.cos(degree) * (float)Math.PI * 0.15F;
-            this.leftWing.yRot = -1.57F;
-            this.leftWing.zRot = -Mth.cos(degree) * (float)Math.PI * 0.15F;
-        } else {
-            this.head.yRot = headYaw * (float)(Math.PI / 180.0D);
-            this.head.xRot = headPitch * (float)(Math.PI / 180.0D);
-            float degree = 0.52F;
-            this.rightFrontLeg.yRot = Mth.cos(limbAngle * 5.0F + (float)Math.PI) * 3.0F * limbDistance;
-            this.rightFrontLeg.xRot = 0.0F;
-            this.rightFrontLeg.zRot = -degree;
-            this.rightMiddleLeg.yRot = -Mth.cos(limbAngle * 5.0F + (float)Math.PI) * 3.0F * limbDistance;
-            this.rightMiddleLeg.xRot = 0.0F;
-            this.rightMiddleLeg.zRot = -degree;
-            this.rightHindLeg.yRot = Mth.cos(limbAngle * 5.0F + (float)Math.PI) * 3.0F * limbDistance;
-            this.rightHindLeg.xRot = 0.0F;
-            this.rightHindLeg.zRot = -degree;
-            this.leftFrontLeg.yRot = Mth.cos(limbAngle * 5.0F) * 3.0F * limbDistance;
-            this.leftFrontLeg.xRot = 0.0F;
-            this.leftFrontLeg.zRot = degree;
-            this.leftMiddleLeg.yRot = -Mth.cos(limbAngle * 5.0F) * 3.0F * limbDistance;
-            this.leftMiddleLeg.xRot = 0.0F;
-            this.leftMiddleLeg.zRot = degree;
-            this.leftHindLeg.yRot = Mth.cos(limbAngle * 5.0F) * 3.0F * limbDistance;
-            this.leftHindLeg.xRot = 0.0F;
-            this.leftHindLeg.zRot = degree;
-        }
+        this.head.yRot = headYaw * (float)(Math.PI / 180.0D);
+        this.head.xRot = headPitch * (float)(Math.PI / 180.0D);
+        float degree = 0.52F;
+        this.rightFrontLeg.yRot = Mth.cos(limbAngle * 5.0F + (float)Math.PI) * 3.0F * limbDistance;
+        this.rightFrontLeg.xRot = 0.0F;
+        this.rightFrontLeg.zRot = -degree;
+        this.rightMiddleLeg.yRot = -Mth.cos(limbAngle * 5.0F + (float)Math.PI) * 3.0F * limbDistance;
+        this.rightMiddleLeg.xRot = 0.0F;
+        this.rightMiddleLeg.zRot = -degree;
+        this.rightHindLeg.yRot = Mth.cos(limbAngle * 5.0F + (float)Math.PI) * 3.0F * limbDistance;
+        this.rightHindLeg.xRot = 0.0F;
+        this.rightHindLeg.zRot = -degree;
+        this.leftFrontLeg.yRot = Mth.cos(limbAngle * 5.0F) * 3.0F * limbDistance;
+        this.leftFrontLeg.xRot = 0.0F;
+        this.leftFrontLeg.zRot = degree;
+        this.leftMiddleLeg.yRot = -Mth.cos(limbAngle * 5.0F) * 3.0F * limbDistance;
+        this.leftMiddleLeg.xRot = 0.0F;
+        this.leftMiddleLeg.zRot = degree;
+        this.leftHindLeg.yRot = Mth.cos(limbAngle * 5.0F) * 3.0F * limbDistance;
+        this.leftHindLeg.xRot = 0.0F;
+        this.leftHindLeg.zRot = degree;
     }
 }

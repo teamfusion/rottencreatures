@@ -2,7 +2,8 @@
   "required": true,
   "package": "com.github.teamfusion.rottencreatures.mixin",
   "compatibilityLevel": "JAVA_17",
-  "client": [],
+  "client": [
+  ],
   "mixins": [
     "access.BuiltInLootTablesAccessor",
     "access.FireworkRocketEntityAccessor",
@@ -14,6 +15,7 @@
     "common.LayeredCauldronBlockMixin",
     "common.LivingEntityMixin",
     "common.PowderSnowBlockMixin",
+    "common.ServerLevelMixin",
     "common.VillagerHostilesSensorMixin",
     "common.ZombieMixin"
   ],

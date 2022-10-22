@@ -19,10 +19,7 @@ import org.slf4j.Logger;
 
 /**
  * Issues for future BG:
- * - fix mummy armor rendering
- * - fix scarab AI
- * - fix swampy height
- * - tweak loot tables
+ * - add treasure chest
  *
  * Mob Properties
  * <a href="https://docs.google.com/spreadsheets/d/10VWOjZ1Z_yEU101hk-EzwyDLUDU6RKzs/edit#gid=1618430498">...</a>
