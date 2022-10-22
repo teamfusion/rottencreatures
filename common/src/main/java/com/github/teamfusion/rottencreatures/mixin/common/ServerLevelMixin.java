@@ -48,6 +48,10 @@ public abstract class ServerLevelMixin {
         }
     }
 
+    /**
+     * checks for nearby players that have the channelled effect active.
+     * since the only way of getting this effect is being attacked by an Immortal or Zap i see no use on checking for any living entity that is not a player.
+     */
     @Inject(method = "findLightningTargetAround", at = @At("TAIL"), cancellable = true)
     private void rc$findLightningTargetAround(BlockPos pos, CallbackInfoReturnable<BlockPos> cir) {
         LivingEntity entity = $this.getNearestPlayer(TargetingConditions.forNonCombat().range(64), pos.getX(), pos.getY(), pos.getZ());

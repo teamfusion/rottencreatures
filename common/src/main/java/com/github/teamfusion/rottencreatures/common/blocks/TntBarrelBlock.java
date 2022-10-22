@@ -78,6 +78,9 @@ public class TntBarrelBlock extends Block {
         explode(level, pos, entity, false);
     }
 
+    /**
+     * primes the tnt barrel block and checks if it should explode with a delay or instantly
+     */
     private static void explode(Level level, BlockPos pos, @Nullable LivingEntity entity, boolean immediately) {
         if (!level.isClientSide) {
             PrimedTntBarrel tnt = new PrimedTntBarrel(level, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, entity);
@@ -135,6 +138,9 @@ public class TntBarrelBlock extends Block {
         return super.use(state, level, pos, player, hand, hitResult);
     }
 
+    /**
+     * if a projectile on fire reaches the block, it marks it an unstable and primes it
+     */
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hitResult, Projectile projectile) {
         if (!level.isClientSide) {
@@ -147,6 +153,9 @@ public class TntBarrelBlock extends Block {
         }
     }
 
+    /**
+     * prevents the block dropping on explosion
+     */
     @Override
     public boolean dropFromExplosion(Explosion explosion) {
         return false;

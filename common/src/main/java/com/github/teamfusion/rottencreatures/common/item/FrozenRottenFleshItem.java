@@ -15,6 +15,10 @@ public class FrozenRottenFleshItem extends Item {
         super(properties);
     }
 
+    /**
+     * it has an 80% chance to apply 15 seconds of hunter to the entity.
+     * it also checks if the entity is on fire to be able to extinguish it
+     */
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         super.finishUsingItem(stack, level, entity);
@@ -25,7 +29,7 @@ public class FrozenRottenFleshItem extends Item {
 
         if (!level.isClientSide) {
             if (level.random.nextFloat() <= 0.8F) entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 300));
-            entity.setSharedFlagOnFire(false);
+            if (entity.isOnFire()) entity.setSharedFlagOnFire(false);
         }
 
         return stack;

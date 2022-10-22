@@ -23,6 +23,9 @@ public class ImpaledLayer<T extends Immortal> extends RenderLayer<T, ImmortalMod
         this.trident = new TridentModel(modelSet.bakeLayer(ModelLayers.TRIDENT));
     }
 
+    /**
+     * renders a vanilla trident on the Immortal's chest! if the Immortal is powered then it will apply a glint into the Trident.
+     */
     @Override
     public void render(PoseStack matrices, MultiBufferSource source, int light, T entity, float angle, float distance, float tickDelta, float animationProgress, float yaw, float pitch) {
         matrices.pushPose();

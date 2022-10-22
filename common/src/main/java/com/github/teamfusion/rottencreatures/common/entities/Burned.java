@@ -85,6 +85,10 @@ public class Burned extends Zombie {
     @Override
     public void aiStep() {
         super.aiStep();
+        if (this.random.nextInt(10) == 0) {
+            this.level.addParticle(this.isObsidian() ? ParticleTypes.FALLING_OBSIDIAN_TEAR : ParticleTypes.FALLING_LAVA, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+        }
+
         if (this.isCrazy()) {
             if (this.random.nextInt(10) == 0) {
                 this.level.addParticle(this.isObsidian() ? (this.random.nextBoolean() ? ParticleTypes.SMOKE : ParticleTypes.LARGE_SMOKE) : ParticleTypes.LAVA, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
