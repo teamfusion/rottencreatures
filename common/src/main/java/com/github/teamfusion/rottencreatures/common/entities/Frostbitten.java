@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,7 +23,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 import java.util.List;
-import java.util.Random;
 
 public class Frostbitten extends Zombie {
     public Frostbitten(EntityType<? extends Zombie> type, Level level) {
@@ -65,7 +65,7 @@ public class Frostbitten extends Zombie {
     public void die(DamageSource source) {
         if (this.isBaby()) {
             for (int i = 0; i < 8; i++) {
-                this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getRandomY(), this.getZ(), -0.15D + this.random.nextDouble(0.45D), 0.0D, -0.15D + this.random.nextDouble(0.45D));
+                this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getRandomY(), this.getZ(), this.random.nextGaussian() * 2.0D, 0.0D, this.random.nextGaussian() * 2.0D);
             }
 
             if (!this.level.isClientSide) {
@@ -82,7 +82,7 @@ public class Frostbitten extends Zombie {
         super.die(source);
     }
 
-    public static boolean checkFrostbittenSpawnRules(EntityType<Frostbitten> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
+    public static boolean checkFrostbittenSpawnRules(EntityType<Frostbitten> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
         return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
     }
 }

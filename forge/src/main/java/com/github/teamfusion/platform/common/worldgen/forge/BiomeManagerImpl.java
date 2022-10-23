@@ -4,11 +4,10 @@ import com.github.teamfusion.platform.common.worldgen.BiomeContext;
 import com.github.teamfusion.platform.common.worldgen.BiomeManager;
 import com.github.teamfusion.platform.common.worldgen.BiomeWriter;
 import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -16,74 +15,78 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.ModifiableBiomeInfo;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
-import java.util.Optional;
+import javax.annotation.Nullable;
 
-@Mod.EventBusSubscriber(modid = RottenCreatures.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class BiomeManagerImpl {
-    public static void setup() {}
+    @Nullable private static Codec<PlatformBiomeModifier> codec = null;
 
-    @SubscribeEvent
-    public static void event(BiomeLoadingEvent event) {
-        BiomeManager.INSTANCE.register(new ForgeBiomeWriter(event));
+    public static void setup() {
+        FMLJavaModLoadingContext.get().getModEventBus().<RegisterEvent>addListener(event -> {
+            event.register(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, entry -> {
+                entry.register(new ResourceLocation(RottenCreatures.MOD_ID, "biome_modifier_codec"), codec = Codec.unit(PlatformBiomeModifier.INSTANCE));
+            });
+            event.register(ForgeRegistries.Keys.BIOME_MODIFIERS, entry -> {
+                entry.register(new ResourceLocation(RottenCreatures.MOD_ID, "biome_modifier"), PlatformBiomeModifier.INSTANCE);
+            });
+        });
+    }
+
+    static class PlatformBiomeModifier implements BiomeModifier {
+        private static final PlatformBiomeModifier INSTANCE = new PlatformBiomeModifier();
+
+        @Override
+        public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+            if (phase == Phase.ADD) BiomeManager.INSTANCE.register(new ForgeBiomeWriter(biome, builder));
+        }
+
+        @Override
+        public Codec<? extends BiomeModifier> codec() {
+            return codec != null ? codec : Codec.unit(INSTANCE);
+        }
     }
 
     static class ForgeBiomeWriter extends BiomeWriter {
-        private final BiomeLoadingEvent event;
+        private final Holder<Biome> biome;
+        private final ModifiableBiomeInfo.BiomeInfo.Builder builder;
 
-        ForgeBiomeWriter(BiomeLoadingEvent event) {
-            this.event = event;
+        ForgeBiomeWriter(Holder<Biome> biome, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+            this.biome = biome;
+            this.builder = builder;
         }
 
         @Override
         public ResourceLocation name() {
-            return this.event.getName();
+            return ForgeBiomeWriter.this.biome.unwrapKey().get().location();
         }
 
-        @Override
         public BiomeContext context() {
             return new BiomeContext() {
-                private final ResourceKey<Biome> resourceKey = ResourceKey.create(Registry.BIOME_REGISTRY, ForgeBiomeWriter.this.name());
+                @Override
+                public boolean is(TagKey<Biome> tag) {
+                    return ForgeBiomeWriter.this.biome.is(tag);
+                }
 
                 @Override
                 public boolean is(ResourceKey<Biome> biome) {
-                    return this.resourceKey == biome;
-                }
-
-                @Override
-                public boolean is(TagKey<Biome> tag) {
-                    MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-                    if (server != null) {
-                        Optional<? extends Registry<Biome>> registry = server.registryAccess().registry(Registry.BIOME_REGISTRY);
-                        if (registry.isPresent()) {
-                            Optional<Holder<Biome>> holder = registry.get().getHolder(this.resourceKey);
-                            if (holder.isPresent()) {
-                                return holder.get().is(tag);
-                            }
-                        }
-                    }
-                    return false;
-                }
-
-                @Override
-                public boolean is(Biome.BiomeCategory category) {
-                    return ForgeBiomeWriter.this.event.getCategory() == category;
+                    return ForgeBiomeWriter.this.biome.is(biome);
                 }
             };
         }
 
         @Override
         public void addFeature(GenerationStep.Decoration step, Holder<PlacedFeature> feature) {
-            this.event.getGeneration().addFeature(step, feature);
+            this.builder.getGenerationSettings().addFeature(step, feature);
         }
 
         @Override
         public void addSpawn(MobCategory category, EntityType<?> type, int weight, int minGroup, int maxGroup) {
-            this.event.getSpawns().addSpawn(category, new MobSpawnSettings.SpawnerData(type, weight, minGroup, maxGroup));
+            this.builder.getMobSpawnSettings().addSpawn(category, new MobSpawnSettings.SpawnerData(type, weight, minGroup, maxGroup));
         }
     }
 }

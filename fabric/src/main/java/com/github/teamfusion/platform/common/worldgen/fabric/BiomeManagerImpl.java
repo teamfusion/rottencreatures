@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.minecraft.core.Holder;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -50,11 +49,6 @@ public class BiomeManagerImpl {
                 @Override
                 public boolean is(ResourceKey<Biome> biome) {
                     return FabricBiomeWriter.this.selector.getBiomeKey() == biome;
-                }
-
-                @Override
-                public boolean is(Biome.BiomeCategory category) {
-                    return Biome.getBiomeCategory(BuiltinRegistries.BIOME.getOrCreateHolder(FabricBiomeWriter.this.selector.getBiomeKey())) == category;
                 }
             };
         }

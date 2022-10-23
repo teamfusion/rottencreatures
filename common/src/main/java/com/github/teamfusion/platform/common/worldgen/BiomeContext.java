@@ -8,6 +8,4 @@ public interface BiomeContext {
     boolean is(TagKey<Biome> tag);
 
     boolean is(ResourceKey<Biome> biome);
-
-    boolean is(Biome.BiomeCategory category);
 }

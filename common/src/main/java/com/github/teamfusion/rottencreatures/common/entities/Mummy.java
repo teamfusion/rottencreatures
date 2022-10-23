@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,8 +24,6 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class Mummy extends SpellcasterZombie {
     private static final EntityDataAccessor<Boolean> DATA_IS_ANCIENT = SynchedEntityData.defineId(Mummy.class, EntityDataSerializers.BOOLEAN);
@@ -128,7 +127,7 @@ public class Mummy extends SpellcasterZombie {
         this.getEntityData().set(DATA_IS_ANCIENT, ancient);
     }
 
-    public static boolean checkMummySpawnRules(EntityType<Mummy> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
+    public static boolean checkMummySpawnRules(EntityType<Mummy> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
         return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
     }
 

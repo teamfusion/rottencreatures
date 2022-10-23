@@ -4,6 +4,7 @@ import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -22,8 +23,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 /**
  * Concepts:
@@ -66,11 +65,9 @@ public class GlacialHunter extends Zombie {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
-        super.populateDefaultEquipmentSlots(difficulty);
-        if (this.level.getRandom().nextFloat() <= 0.4F) {
-            this.setSpear();
-        }
+    protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
+        super.populateDefaultEquipmentSlots(random, difficulty);
+        if (this.level.getRandom().nextFloat() <= 0.4F) this.setSpear();
     }
 
     public boolean hasSpear() {
@@ -108,7 +105,7 @@ public class GlacialHunter extends Zombie {
         super.travel(vec3);
     }
 
-    public static boolean checkGlacialHunterSpawnRules(EntityType<GlacialHunter> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
+    public static boolean checkGlacialHunterSpawnRules(EntityType<GlacialHunter> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
         return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
     }
 

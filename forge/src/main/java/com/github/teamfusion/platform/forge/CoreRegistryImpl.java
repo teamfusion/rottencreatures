@@ -4,11 +4,12 @@ import com.github.teamfusion.platform.CoreRegistry;
 import net.minecraft.core.Registry;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistry;
 
 import java.util.function.Supplier;
 
-public class CoreRegistryImpl<T extends IForgeRegistryEntry<T>> extends CoreRegistry<T> {
+
+public class CoreRegistryImpl<T extends ForgeRegistry<T>> extends CoreRegistry<T> {
     private final DeferredRegister<T> registry;
 
     protected CoreRegistryImpl(Registry<T> registry, String modId) {

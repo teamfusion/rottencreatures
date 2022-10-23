@@ -14,7 +14,6 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.Heightmap;
 
@@ -38,24 +37,24 @@ public class WorldGeneration {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.BURNED.get(), 20, 4, 4);
             }
 
-            if (biome.is(BiomeTags.HAS_IGLOO) || biome.is(Biome.BiomeCategory.ICY)) {
+            if (biome.is(BiomeTags.HAS_IGLOO)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.FROSTBITTEN.get(), 80, 4, 4);
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.GLACIAL_HUNTER.get(), 20, 1, 3);
             }
 
-            if (biome.is(BiomeTags.HAS_RUINED_PORTAL_SWAMP) || biome.is(Biome.BiomeCategory.SWAMP)) {
+            if (biome.is(BiomeTags.HAS_RUINED_PORTAL_SWAMP)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.SWAMPY.get(), 80, 4, 4);
             }
 
-            if (biome.is(BiomeTags.HAS_STRONGHOLD) || (!biome.is(Biome.BiomeCategory.NETHER) && !biome.is(Biome.BiomeCategory.THEEND) && !biome.is(Biome.BiomeCategory.NONE) && !biome.is(Biome.BiomeCategory.MUSHROOM))) {
+            if (biome.is(BiomeTags.IS_OVERWORLD) && !biome.is(Biomes.MUSHROOM_FIELDS) && !biome.is(Biomes.DEEP_DARK)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.UNDEAD_MINER.get(), 20, 1, 4);
             }
 
-            if (biome.is(BiomeTags.HAS_DESERT_PYRAMID) || biome.is(Biome.BiomeCategory.DESERT)) {
+            if (biome.is(BiomeTags.HAS_DESERT_PYRAMID)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.MUMMY.get(), 20, 1, 3);
             }
 
-            if (biome.is(BiomeTags.HAS_SHIPWRECK_BEACHED) || biome.is(Biome.BiomeCategory.BEACH)) {
+            if (biome.is(BiomeTags.HAS_SHIPWRECK_BEACHED)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.DEAD_BEARD.get(), 10, 1, 1);
             }
         });
