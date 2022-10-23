@@ -54,7 +54,7 @@ public class BiomeManagerImpl {
 
                 @Override
                 public boolean is(Biome.BiomeCategory category) {
-                    return Biome.getBiomeCategory(BuiltinRegistries.BIOME.getOrCreateHolder(FabricBiomeWriter.this.selector.getBiomeKey())) == category;
+                    return false;
                 }
             };
         }
