@@ -19,7 +19,7 @@ public class TntBarrelRenderer extends EntityRenderer<PrimedTntBarrel> {
     }
 
     @Override
-    public void render(PrimedTntBarrel tnt, float yaw, float angle, PoseStack matrices, MultiBufferSource vertices, int light) {
+    public void render(PrimedTntBarrel tnt, float yaw, float angle, PoseStack matrices, MultiBufferSource source, int light) {
         matrices.pushPose();
         matrices.translate(0.0D, 0.5D, 0.0D);
         int cooldown = tnt.getFuse();
@@ -34,9 +34,9 @@ public class TntBarrelRenderer extends EntityRenderer<PrimedTntBarrel> {
         matrices.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
         matrices.translate(-0.5D, -0.5D, 0.5D);
         matrices.mulPose(Vector3f.YP.rotationDegrees(90.0F));
-        TntMinecartRenderer.renderWhiteSolidBlock(RCBlocks.TNT_BARREL.get().defaultBlockState(), matrices, vertices, light, cooldown / 5 % 2 == 0);
+        TntMinecartRenderer.renderWhiteSolidBlock(RCBlocks.TNT_BARREL.get().defaultBlockState(), matrices, source, light, cooldown / 5 % 2 == 0);
         matrices.popPose();
-        super.render(tnt, yaw, angle, matrices, vertices, light);
+        super.render(tnt, yaw, angle, matrices, source, light);
     }
 
     @Override

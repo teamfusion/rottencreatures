@@ -57,6 +57,7 @@ public final class LanguageGenerator implements DataProvider {
         this.entity(RCEntityTypes.IMMORTAL.get(), "Immortal");
         this.entity(RCEntityTypes.ZAP.get(), "Zap");
         this.entity(RCEntityTypes.TNT_BARREL.get(), "Primed TNT Barrel");
+        this.entity(RCEntityTypes.TREASURE_CHEST.get(), "Treasure Chest");
 
         // Blocks
         this.block(RCBlocks.TNT_BARREL.get(), "TNT Barrel");
@@ -73,6 +74,7 @@ public final class LanguageGenerator implements DataProvider {
         this.item(RCItems.MAGMA_ROTTEN_FLESH.get(), "Magma Rotten Flesh");
         this.item(RCItems.FROZEN_ROTTEN_FLESH.get(), "Frozen Rotten Flesh");
         this.item(RCItems.CORRUPTED_WART.get(), "Corrupted Wart");
+        this.item(RCItems.TREASURE_CHEST.get(), "Treasure Chest");
         this.item(RCItems.SPEAR.get(), "Spear");
 
         // Alchemy

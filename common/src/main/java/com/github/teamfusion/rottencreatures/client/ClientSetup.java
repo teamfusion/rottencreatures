@@ -11,6 +11,7 @@ import com.github.teamfusion.rottencreatures.client.model.ImmortalOverlayModel;
 import com.github.teamfusion.rottencreatures.client.model.MummyModel;
 import com.github.teamfusion.rottencreatures.client.model.ScarabModel;
 import com.github.teamfusion.rottencreatures.client.model.SwampyModel;
+import com.github.teamfusion.rottencreatures.client.model.TreasureChestModel;
 import com.github.teamfusion.rottencreatures.client.model.UndeadMinerModel;
 import com.github.teamfusion.rottencreatures.client.model.ZapModel;
 import com.github.teamfusion.rottencreatures.client.renderer.entity.BurnedRenderer;
@@ -25,6 +26,7 @@ import com.github.teamfusion.rottencreatures.client.renderer.entity.ScarabRender
 import com.github.teamfusion.rottencreatures.client.renderer.entity.SkeletonLackeyRenderer;
 import com.github.teamfusion.rottencreatures.client.renderer.entity.SwampyRenderer;
 import com.github.teamfusion.rottencreatures.client.renderer.entity.TntBarrelRenderer;
+import com.github.teamfusion.rottencreatures.client.renderer.entity.TreasureChestRenderer;
 import com.github.teamfusion.rottencreatures.client.renderer.entity.UndeadMinerRenderer;
 import com.github.teamfusion.rottencreatures.client.renderer.entity.ZapRenderer;
 import com.github.teamfusion.rottencreatures.client.renderer.entity.ZombieLackeyRenderer;
@@ -38,6 +40,8 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 public class ClientSetup {
     public static void client() {
         RenderHandler.setEntityRenderer(RCEntityTypes.TNT_BARREL, TntBarrelRenderer::new);
+        RenderHandler.setEntityRenderer(RCEntityTypes.TREASURE_CHEST, TreasureChestRenderer::new);
+        RenderHandler.setModelLayerDefinition(TreasureChestRenderer.LAYER.getMain(), TreasureChestModel::createBodyLayer);
 
         RenderHandler.setEntityRenderer(RCEntityTypes.BURNED, BurnedRenderer::new);
         RenderHandler.setModelLayerDefinition(BurnedRenderer.LAYER.getMain(), () -> BurnedModel.createBodyLayer(0.0F));

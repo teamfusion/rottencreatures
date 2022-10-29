@@ -14,6 +14,7 @@
   "entity.rottencreatures.scarab": "Scarab",
   "entity.rottencreatures.skeleton_lackey": "Skeleton Lackey",
   "entity.rottencreatures.swampy": "Swampy",
+  "entity.rottencreatures.treasure_chest": "Treasure Chest",
   "entity.rottencreatures.undead_miner": "Undead Miner",
   "entity.rottencreatures.zap": "Zap",
   "entity.rottencreatures.zombie_lackey": "Zombie Lackey",
@@ -43,6 +44,7 @@
   "item.rottencreatures.mummy_spawn_egg": "Mummy Spawn Egg",
   "item.rottencreatures.spear": "Spear",
   "item.rottencreatures.swampy_spawn_egg": "Swampy Spawn Egg",
+  "item.rottencreatures.treasure_chest": "Treasure Chest",
   "item.rottencreatures.undead_miner_spawn_egg": "Undead Miner Spawn Egg",
   "itemGroup.rottencreatures.rottencreatures": "Rotten Creatures"
 }

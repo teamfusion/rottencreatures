@@ -41,6 +41,7 @@ public final class ModelGenerator extends FabricModelProvider {
         gen.generateFlatItem(RCItems.MAGMA_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCItems.FROZEN_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCItems.CORRUPTED_WART.get(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(RCItems.TREASURE_CHEST.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCBlocks.TNT_BARREL.get().asItem(), create(RCBlocks.TNT_BARREL.get()));
     }
 

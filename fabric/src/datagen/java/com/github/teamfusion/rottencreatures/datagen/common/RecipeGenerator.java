@@ -3,6 +3,7 @@ package com.github.teamfusion.rottencreatures.datagen.common;
 import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -14,7 +15,6 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import org.apache.commons.compress.utils.Sets;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
