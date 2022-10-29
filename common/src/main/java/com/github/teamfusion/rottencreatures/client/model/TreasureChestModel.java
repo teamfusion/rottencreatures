@@ -38,7 +38,6 @@ public class TreasureChestModel<T extends TreasureChest> extends EntityModel<T> 
 
     @Override
     public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        RottenCreatures.LOGGER.info("animProgress:" + animationProgress);
         this.lid.xRot = !entity.isOpen() ? animationProgress / -20.0F : -2.0F;
     }
 }
