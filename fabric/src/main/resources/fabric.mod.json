@@ -24,6 +24,9 @@
   "entrypoints": {
     "main": [
       "com.github.teamfusion.rottencreatures.fabric.RottenCreaturesFabric"
+    ],
+    "modmenu": [
+      "com.github.teamfusion.platform.config.fabric.ModMenuImpl"
     ]
   },
   "mixins": [

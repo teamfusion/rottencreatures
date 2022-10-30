@@ -2,6 +2,7 @@ package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
+import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -28,6 +30,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -160,6 +163,11 @@ public class DeadBeard extends SpellcasterZombie {
 
     public static boolean checkDeadBeardSpawnRules(EntityType<DeadBeard> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
         return checkAnyLightMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
+    }
+
+    @Nullable @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
+        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.DEAD_BEARD, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
     }
 
     class SummonLackeysGoal extends UseSpellGoal {

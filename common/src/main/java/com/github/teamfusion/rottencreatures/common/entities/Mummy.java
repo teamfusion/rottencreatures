@@ -1,6 +1,7 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
+import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -135,7 +136,7 @@ public class Mummy extends SpellcasterZombie {
     @Nullable @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         if (this.random.nextFloat() <= 0.3F) this.setAncient(true);
-        return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.MUMMY, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
     }
 
     class SummonScarabsGoal extends UseSpellGoal {

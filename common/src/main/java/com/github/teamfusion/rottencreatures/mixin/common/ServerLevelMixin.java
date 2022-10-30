@@ -1,5 +1,6 @@
 package com.github.teamfusion.rottencreatures.mixin.common;
 
+import com.github.teamfusion.rottencreatures.ConfigEntries;
 import com.github.teamfusion.rottencreatures.common.entities.Immortal;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
@@ -26,7 +27,7 @@ public abstract class ServerLevelMixin {
     private final ServerLevel $this = ServerLevel.class.cast(this);
 
     /**
-     * for each lightning that is struck, there's a 5% chance to spawn an Immortal
+     * for each lightning that is struck, there's a chance to spawn an Immortal
      */
     @Inject(method = "tickChunk", at = @At("TAIL"))
     private void rc$tickChunk(LevelChunk chunk, int i, CallbackInfo ci) {
@@ -38,7 +39,7 @@ public abstract class ServerLevelMixin {
             BlockPos pos = this.findLightningTargetAround($this.getBlockRandomPos(x, 0, z, 15));
             if ($this.isRainingAt(pos)) {
                 DifficultyInstance difficulty = $this.getCurrentDifficultyAt(pos);
-                boolean canSpawn = $this.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && $this.random.nextDouble() < (double)difficulty.getEffectiveDifficulty() * 0.025D && !$this.getBlockState(pos.below()).is(Blocks.LIGHTNING_ROD);
+                boolean canSpawn = $this.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && $this.random.nextDouble() < (double)difficulty.getEffectiveDifficulty() * ConfigEntries.IMMORTAL_CHANCE.value() && !$this.getBlockState(pos.below()).is(Blocks.LIGHTNING_ROD);
                 if (canSpawn) {
                     Immortal immortal = RCEntityTypes.IMMORTAL.get().create($this);
                     immortal.setPos(pos.getX(), pos.getY(), pos.getZ());

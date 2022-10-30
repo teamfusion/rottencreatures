@@ -1,6 +1,7 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.LootBuilder;
+import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -211,9 +212,9 @@ public class Burned extends Zombie {
         return !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK);
     }
 
-    @Override @Nullable
+    @Nullable @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         if (this.random.nextFloat() <= 0.05F) this.setCrazy(true);
-        return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.BURNED, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
     }
 }

@@ -1,6 +1,7 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.LootBuilder;
+import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -148,11 +149,11 @@ public class UndeadMiner extends Zombie {
     @Nullable @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         this.setVariant(this.getRandomVariant(level.getRandom(), level.getBiome(this.blockPosition())));
-        return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.UNDEAD_MINER, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
     }
 
     public static boolean checkUndeadMinerSpawnRules(EntityType<UndeadMiner> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
-        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || !level.canSeeSky(pos)) && pos.getY() < level.getSeaLevel();
+        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || !level.canSeeSky(pos));
     }
 
     /**

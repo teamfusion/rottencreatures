@@ -46,5 +46,14 @@
   "item.rottencreatures.swampy_spawn_egg": "Swampy Spawn Egg",
   "item.rottencreatures.treasure_chest": "Treasure Chest",
   "item.rottencreatures.undead_miner_spawn_egg": "Undead Miner Spawn Egg",
-  "itemGroup.rottencreatures.rottencreatures": "Rotten Creatures"
+  "itemGroup.rottencreatures.rottencreatures": "Rotten Creatures",
+  "text.autoconfig.rottencreatures.option.mobSpawns": "Mob Spawns",
+  "text.autoconfig.rottencreatures.option.mobSpawns.burned_weight": "Burned Weight",
+  "text.autoconfig.rottencreatures.option.mobSpawns.dead_beard_weight": "Dead Beard Weight",
+  "text.autoconfig.rottencreatures.option.mobSpawns.frostbitten_weight": "Frostbitten Weight",
+  "text.autoconfig.rottencreatures.option.mobSpawns.glacial_hunter_weight": "Glacial Hunter Weight",
+  "text.autoconfig.rottencreatures.option.mobSpawns.immortal_chance": "Immortal Chance",
+  "text.autoconfig.rottencreatures.option.mobSpawns.mummy_weight": "Mummy Weight",
+  "text.autoconfig.rottencreatures.option.mobSpawns.swampy_weight": "Swampy Weight",
+  "text.autoconfig.rottencreatures.option.mobSpawns.undead_miner_weight": "Undead Miner Weight"
 }

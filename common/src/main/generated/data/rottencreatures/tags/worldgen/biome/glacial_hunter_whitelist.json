@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ice_spikes",
+    {
+      "id": "#minecraft:has_structure/igloo",
+      "required": false
+    }
+  ]
+}

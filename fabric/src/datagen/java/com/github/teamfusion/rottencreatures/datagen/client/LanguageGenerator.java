@@ -1,5 +1,7 @@
 package com.github.teamfusion.rottencreatures.datagen.client;
 
+import com.github.teamfusion.rottencreatures.ConfigEntries;
+import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
@@ -89,6 +91,17 @@ public final class LanguageGenerator implements DataProvider {
 
         // Misc
         this.add("itemGroup.rottencreatures.rottencreatures", "Rotten Creatures");
+
+        // Config
+        this.addConfig("mobSpawns", "Mob Spawns");
+        this.addConfig("mobSpawns", "burned_weight", ConfigEntries.BURNED_WEIGHT.name());
+        this.addConfig("mobSpawns", "frostbitten_weight", ConfigEntries.FROSTBITTEN_WEIGHT.name());
+        this.addConfig("mobSpawns", "glacial_hunter_weight", ConfigEntries.GLACIAL_HUNTER_WEIGHT.name());
+        this.addConfig("mobSpawns", "swampy_weight", ConfigEntries.SWAMPY_WEIGHT.name());
+        this.addConfig("mobSpawns", "undead_miner_weight", ConfigEntries.UNDEAD_MINER_WEIGHT.name());
+        this.addConfig("mobSpawns", "mummy_weight", ConfigEntries.MUMMY_WEIGHT.name());
+        this.addConfig("mobSpawns", "dead_beard_weight", ConfigEntries.DEAD_BEARD_WEIGHT.name());
+        this.addConfig("mobSpawns", "immortal_chance", ConfigEntries.IMMORTAL_CHANCE.name());
     }
 
     private void block(Block entry, String name) {
@@ -118,6 +131,14 @@ public final class LanguageGenerator implements DataProvider {
                 this.add("item.minecraft." + type.id + ".effect." + "strong_" + entry.toLowerCase(), name);
             }
         }
+    }
+
+    private void addConfig(String key, String sub, String value) {
+        this.add("text.autoconfig." + RottenCreatures.MOD_ID + ".option." + key + (sub != null ? "." + sub : ""), value);
+    }
+
+    private void addConfig(String key, String value) {
+        this.addConfig(key, null, value);
     }
 
     private void add(String key, String value) {
