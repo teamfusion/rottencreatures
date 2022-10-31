@@ -2,7 +2,6 @@ package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
@@ -80,6 +79,12 @@ public class GlacialHunter extends Zombie {
 
     private void setSpear() {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RCItems.SPEAR.get()));
+    }
+
+    //TEMPORAL
+    @Override
+    protected float getEquipmentDropChance(EquipmentSlot slot) {
+        return this.getItemBySlot(slot).is(RCItems.SPEAR.get()) ? 0.0F : super.getEquipmentDropChance(slot);
     }
 
     @Override

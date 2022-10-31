@@ -78,8 +78,9 @@ public class Immortal extends SpellcasterZombie {
         this.goalSelector.addGoal(5, new SummonLightningGoal());
         this.goalSelector.addGoal(7, new DashingGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Zombie.class, true) {
-            @Override
-            public boolean canUse() { return super.canUse() && this.target.getType() != RCEntityTypes.ZAP.get() && this.target.getType() != RCEntityTypes.IMMORTAL.get(); }
+            @Override public boolean canUse() {
+                return super.canUse() && this.target.getType() != RCEntityTypes.ZAP.get() && this.target.getType() != RCEntityTypes.IMMORTAL.get() && this.target.getType() != EntityType.ZOMBIE_VILLAGER;
+            }
         });
     }
 
@@ -184,7 +185,7 @@ public class Immortal extends SpellcasterZombie {
             ItemStack stack = new ItemStack(Items.TRIDENT);
             stack.setDamageValue(stack.getMaxDamage() - this.random.nextInt(1 + this.random.nextInt(Math.max(stack.getMaxDamage() - 3, 1))));
             if (this.hasPower()) {
-                if (this.random.nextFloat() <= 0.75F) stack.enchant(this.random.nextBoolean() ? Enchantments.CHANNELING : Enchantments.RIPTIDE, 1 + this.random.nextInt(1));
+                if (this.random.nextFloat() <= 0.75F) stack.enchant(this.random.nextBoolean() ? Enchantments.CHANNELING : Enchantments.RIPTIDE, 1);
                 this.spawnAtLocation(stack);
             }
 
