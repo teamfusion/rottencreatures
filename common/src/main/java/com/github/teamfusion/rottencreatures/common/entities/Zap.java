@@ -34,8 +34,9 @@ public class Zap extends Zombie {
         super.addBehaviourGoals();
         this.goalSelector.addGoal(1, new FollowLeaderGoal(this, Immortal.class, 1.25D));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Zombie.class, true) {
-            @Override
-            public boolean canUse() { return super.canUse() && this.target.getType() != RCEntityTypes.ZAP.get() && this.target.getType() != RCEntityTypes.IMMORTAL.get(); }
+            @Override public boolean canUse() {
+                return super.canUse() && this.target.getType() != RCEntityTypes.ZAP.get() && this.target.getType() != RCEntityTypes.IMMORTAL.get() && this.target.getType() != EntityType.ZOMBIE_VILLAGER;
+            }
         });
     }
 
@@ -85,7 +86,7 @@ public class Zap extends Zombie {
     }
 
     public static void convertToZap(LivingEntity entity, LivingEntity target) {
-        if (entity.level instanceof ServerLevel level && target instanceof Zombie zombie && zombie.getType() != RCEntityTypes.ZAP.get() && zombie.getType() != RCEntityTypes.IMMORTAL.get() && zombie.getType() != RCEntityTypes.DEAD_BEARD.get()) {
+        if (entity.level instanceof ServerLevel level && target instanceof Zombie zombie && zombie.getType() != RCEntityTypes.ZAP.get() && zombie.getType() != RCEntityTypes.IMMORTAL.get() && zombie.getType() != RCEntityTypes.DEAD_BEARD.get() && zombie.getType() != EntityType.ZOMBIE_VILLAGER) {
             Zap zap = zombie.convertTo(RCEntityTypes.ZAP.get(), true);
             zap.finalizeSpawn(level, level.getCurrentDifficultyAt(zap.blockPosition()), MobSpawnType.CONVERSION, null, null);
             if (!entity.isSilent()) level.levelEvent(null, 1026, entity.blockPosition(), 0);

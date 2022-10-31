@@ -63,9 +63,9 @@ public class TreasureChest extends PathfinderMob {
 
     private ItemStack getTreasure() {
         Item entry = null;
-        if (this.random.nextFloat() <= 0.006F) {
+        if (this.random.nextFloat() <= 0.0006F) {
             entry = Items.TOTEM_OF_UNDYING;
-        } else if (this.random.nextFloat() <= 0.025F) {
+        } else if (this.random.nextFloat() <= 0.0025F) {
             entry = Items.DIAMOND;
         } else if (this.random.nextFloat() <= 0.02F) {
             entry = Items.EMERALD;

@@ -78,6 +78,12 @@ public class GlacialHunter extends Zombie {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(RCItems.SPEAR.get()));
     }
 
+    //TEMPORAL
+    @Override
+    protected float getEquipmentDropChance(EquipmentSlot slot) {
+        return this.getItemBySlot(slot).is(RCItems.SPEAR.get()) ? 0.0F : super.getEquipmentDropChance(slot);
+    }
+
     @Override
     public boolean doHurtTarget(Entity entity) {
         boolean hurtTarget = super.doHurtTarget(entity);
