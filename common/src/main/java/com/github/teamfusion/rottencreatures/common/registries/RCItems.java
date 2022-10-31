@@ -5,6 +5,7 @@ import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.item.FrozenRottenFleshItem;
 import com.github.teamfusion.rottencreatures.common.item.MagmaRottenFleshItem;
 import com.github.teamfusion.rottencreatures.common.item.SpearItem;
+import com.github.teamfusion.rottencreatures.common.item.TreasureChestItem;
 import com.github.teamfusion.rottencreatures.common.misc.RCFoodProperties;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Registry;
@@ -33,6 +34,7 @@ public class RCItems {
 
     // MISC
     public static final Supplier<Item> CORRUPTED_WART = create("corrupted_wart", () -> new Item(new Item.Properties().tab(RottenCreatures.TAB)));
+    public static final Supplier<Item> TREASURE_CHEST = create("treasure_chest", () -> new TreasureChestItem(new Item.Properties().stacksTo(1).tab(RottenCreatures.TAB)));
     public static final Supplier<Item> SPEAR = create("spear", () -> new SpearItem(new Item.Properties()));
 
     private static <T extends Item> Supplier<T> create(String key, Supplier<T> item) {

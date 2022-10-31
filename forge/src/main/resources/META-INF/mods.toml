@@ -1,15 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[40,)"
 issueTrackerURL = ""
-license = "Insert License Here"
+license = "All Rights Reserved"
 
 [[mods]]
     modId = "rottencreatures"
     version = "${version}"
     displayName = "Rotten Creatures"
-    authors = "Team Fusion"
+    authors = "RPorotos, Team Fusion"
     description = '''
-    This is an example description! Tell everyone what your mod is about!
+    Rotten Creatures is a mod that aims to add lots of fun new zombie variants to the game!
     '''
     logoFile = "icon.png"
 

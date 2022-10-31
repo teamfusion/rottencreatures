@@ -17,6 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -143,6 +144,11 @@ public class DeadBeard extends SpellcasterZombie {
         }
     }
 
+    @Override
+    public boolean canAttack(LivingEntity entity) {
+        return !this.isIgnited() && super.canAttack(entity);
+    }
+
     /**
      * prevents dead beard to turn into a drowned if it lays underwater for too long
      */
@@ -180,10 +186,12 @@ public class DeadBeard extends SpellcasterZombie {
             ServerLevel level = (ServerLevel)DeadBeard.this.level;
 
             for (int i = 0; i <= DeadBeard.this.random.nextInt(4); i++) {
-                BlockPos pos = DeadBeard.this.blockPosition().offset(-2 + DeadBeard.this.random.nextInt(5), 1, -2 + DeadBeard.this.random.nextInt(5));
+                BlockPos pos = DeadBeard.this.blockPosition().offset(-2 + DeadBeard.this.random.nextInt(5), -0.8D, -2 + DeadBeard.this.random.nextInt(5));
                 Monster lackey = DeadBeard.this.random.nextBoolean() ? RCEntityTypes.ZOMBIE_LACKEY.get().create(DeadBeard.this.level) : RCEntityTypes.SKELETON_LACKEY.get().create(DeadBeard.this.level);
                 if (lackey instanceof Lackey lackeyIn) {
                     lackey.moveTo(pos, 0.0F, 0.0F);
+                    lackey.setDeltaMovement(0.0D, 0.5D, 0.0D);
+                    DeadBeard.this.level.playSound(null, lackey.blockPosition(), SoundEvents.GRAVEL_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
                     lackey.finalizeSpawn(level, DeadBeard.this.level.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
                     lackeyIn.setLimitedLife(500);
                     level.addFreshEntity(lackey);

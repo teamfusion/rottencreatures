@@ -1,14 +1,16 @@
 package com.github.teamfusion.rottencreatures.datagen.client;
 
+import com.github.teamfusion.rottencreatures.ConfigEntries;
+import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -29,10 +31,10 @@ public final class LanguageGenerator implements DataProvider {
     }
 
     @Override
-    public void run(HashCache cache) throws IOException {
+    public void run(CachedOutput cache) throws IOException {
         this.addTranslations();
         Path path = this.generator.getOutputFolder().resolve("assets/rottencreatures/lang/en_us.json");
-        DataProvider.save(GSON, cache, GSON.toJsonTree(this.data), path);
+        DataProvider.saveStable(cache, GSON.toJsonTree(this.data), path);
     }
 
     @Override
@@ -57,6 +59,7 @@ public final class LanguageGenerator implements DataProvider {
         this.entity(RCEntityTypes.IMMORTAL.get(), "Immortal");
         this.entity(RCEntityTypes.ZAP.get(), "Zap");
         this.entity(RCEntityTypes.TNT_BARREL.get(), "Primed TNT Barrel");
+        this.entity(RCEntityTypes.TREASURE_CHEST.get(), "Treasure Chest");
 
         // Blocks
         this.block(RCBlocks.TNT_BARREL.get(), "TNT Barrel");
@@ -73,6 +76,7 @@ public final class LanguageGenerator implements DataProvider {
         this.item(RCItems.MAGMA_ROTTEN_FLESH.get(), "Magma Rotten Flesh");
         this.item(RCItems.FROZEN_ROTTEN_FLESH.get(), "Frozen Rotten Flesh");
         this.item(RCItems.CORRUPTED_WART.get(), "Corrupted Wart");
+        this.item(RCItems.TREASURE_CHEST.get(), "Treasure Chest");
         this.item(RCItems.SPEAR.get(), "Spear");
 
         // Alchemy
@@ -87,6 +91,17 @@ public final class LanguageGenerator implements DataProvider {
 
         // Misc
         this.add("itemGroup.rottencreatures.rottencreatures", "Rotten Creatures");
+
+        // Config
+        this.addConfig("mobSpawns", "Mob Spawns");
+        this.addConfig("mobSpawns", "burned_weight", ConfigEntries.BURNED_WEIGHT.name());
+        this.addConfig("mobSpawns", "frostbitten_weight", ConfigEntries.FROSTBITTEN_WEIGHT.name());
+        this.addConfig("mobSpawns", "glacial_hunter_weight", ConfigEntries.GLACIAL_HUNTER_WEIGHT.name());
+        this.addConfig("mobSpawns", "swampy_weight", ConfigEntries.SWAMPY_WEIGHT.name());
+        this.addConfig("mobSpawns", "undead_miner_weight", ConfigEntries.UNDEAD_MINER_WEIGHT.name());
+        this.addConfig("mobSpawns", "mummy_weight", ConfigEntries.MUMMY_WEIGHT.name());
+        this.addConfig("mobSpawns", "dead_beard_weight", ConfigEntries.DEAD_BEARD_WEIGHT.name());
+        this.addConfig("mobSpawns", "immortal_chance", ConfigEntries.IMMORTAL_CHANCE.name());
     }
 
     private void block(Block entry, String name) {
@@ -116,6 +131,14 @@ public final class LanguageGenerator implements DataProvider {
                 this.add("item.minecraft." + type.id + ".effect." + "strong_" + entry.toLowerCase(), name);
             }
         }
+    }
+
+    private void addConfig(String key, String sub, String value) {
+        this.add("text.autoconfig." + RottenCreatures.MOD_ID + ".option." + key + (sub != null ? "." + sub : ""), value);
+    }
+
+    private void addConfig(String key, String value) {
+        this.addConfig(key, null, value);
     }
 
     private void add(String key, String value) {

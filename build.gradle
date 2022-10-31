@@ -38,6 +38,8 @@ allprojects {
                 includeGroup "com.jamieswhiteshirt"
             }
         }
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.terraformersmc.com/releases/" }
     }
 
     tasks.withType(JavaCompile) {

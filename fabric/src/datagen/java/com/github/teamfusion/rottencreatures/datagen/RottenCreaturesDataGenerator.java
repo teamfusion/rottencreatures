@@ -4,6 +4,7 @@ import com.github.teamfusion.rottencreatures.datagen.client.LanguageGenerator;
 import com.github.teamfusion.rottencreatures.datagen.client.ModelGenerator;
 import com.github.teamfusion.rottencreatures.datagen.common.RecipeGenerator;
 import com.github.teamfusion.rottencreatures.datagen.common.loot.BlockLootGenerator;
+import com.github.teamfusion.rottencreatures.datagen.common.tags.BiomeTagGenerator;
 import com.github.teamfusion.rottencreatures.datagen.common.tags.BlockTagGenerator;
 import com.github.teamfusion.rottencreatures.datagen.common.loot.EntityLootGenerator;
 import com.github.teamfusion.rottencreatures.datagen.common.tags.EntityTagGenerator;
@@ -17,6 +18,7 @@ public class RottenCreaturesDataGenerator implements DataGeneratorEntrypoint {
         gen.addProvider(LanguageGenerator::new);
         gen.addProvider(BlockLootGenerator::new);
         gen.addProvider(EntityLootGenerator::new);
+        gen.addProvider(BiomeTagGenerator::new);
         gen.addProvider(BlockTagGenerator::new);
         gen.addProvider(EntityTagGenerator::new);
         gen.addProvider(RecipeGenerator::new);

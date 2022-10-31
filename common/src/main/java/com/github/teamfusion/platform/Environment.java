@@ -10,4 +10,31 @@ public class Environment {
     public static CreativeModeTab createTab(ResourceLocation location, ItemStack icon) {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static boolean isLoaded(String modid) {
+        throw new AssertionError();
+    }
+
+    public static boolean isLoadedAt(Platform platform, String modId) {
+        return isLoaded(modId) && getPlatform() == platform || getPlatform() != platform;
+    }
+
+    @ExpectPlatform
+    public static Platform getPlatform() {
+        throw new AssertionError();
+    }
+
+    public static boolean forge() {
+        return getPlatform() == Platform.FORGE;
+    }
+
+    public static boolean fabric() {
+        return getPlatform() == Platform.FABRIC;
+    }
+
+    public enum Platform {
+        FORGE,
+        FABRIC
+    }
 }

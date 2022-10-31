@@ -1,7 +1,7 @@
 package com.github.teamfusion.platform.common.worldgen;
 
+import com.google.common.collect.Lists;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.List;
 import java.util.function.BiConsumer;

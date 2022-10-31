@@ -112,7 +112,7 @@ public class GlacialHunter extends Zombie {
     @Nullable @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         HunterWolf wolf = RCEntityTypes.HUNTER_WOLF.get().create(this.level);
-        if (level.getRandom().nextFloat() <= 0.3F && wolf != null) {
+        if (level.getRandom().nextFloat() <= 0.3F && spawnType == MobSpawnType.NATURAL && wolf != null) {
             wolf.moveTo(this.blockPosition().offset(-2 + this.level.random.nextInt(3), 1, -2 + this.level.random.nextInt(3)), 0.0F, 0.0F);
             wolf.setOwner(this);
             level.addFreshEntity(wolf);

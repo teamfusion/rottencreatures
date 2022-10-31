@@ -1,5 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.worldgen;
 
+import com.github.teamfusion.platform.common.worldgen.BiomeContext;
 import com.github.teamfusion.platform.common.worldgen.BiomeManager;
 import com.github.teamfusion.rottencreatures.common.entities.Burned;
 import com.github.teamfusion.rottencreatures.common.entities.DeadBeard;
@@ -9,6 +10,7 @@ import com.github.teamfusion.rottencreatures.common.entities.Mummy;
 import com.github.teamfusion.rottencreatures.common.entities.Swampy;
 import com.github.teamfusion.rottencreatures.common.entities.UndeadMiner;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
+import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import com.github.teamfusion.rottencreatures.mixin.access.SpawnPlacementsAccessor;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.Mob;
@@ -33,30 +35,37 @@ public class WorldGeneration {
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.IMMORTAL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.ZAP.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         BiomeManager.add((writer, biome) -> {
-            if (biome.is(Biomes.NETHER_WASTES)) {
+            if (in(biome, RCBiomeTags.BURNED)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.BURNED.get(), 20, 4, 4);
             }
 
-            if (biome.is(BiomeTags.HAS_IGLOO)) {
+            if (in(biome, RCBiomeTags.FROSTBITTEN)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.FROSTBITTEN.get(), 80, 4, 4);
+            }
+
+            if (in(biome, RCBiomeTags.GLACIAL_HUNTER)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.GLACIAL_HUNTER.get(), 20, 1, 3);
             }
 
-            if (biome.is(BiomeTags.HAS_RUINED_PORTAL_SWAMP)) {
+            if (in(biome, RCBiomeTags.SWAMPY)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.SWAMPY.get(), 80, 4, 4);
             }
 
-            if (biome.is(BiomeTags.IS_OVERWORLD) && !biome.is(Biomes.MUSHROOM_FIELDS) && !biome.is(Biomes.DEEP_DARK)) {
+            if (in(biome, RCBiomeTags.UNDEAD_MINER)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.UNDEAD_MINER.get(), 20, 1, 4);
             }
 
-            if (biome.is(BiomeTags.HAS_DESERT_PYRAMID)) {
+            if (in(biome, RCBiomeTags.MUMMY)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.MUMMY.get(), 20, 1, 3);
             }
 
-            if (biome.is(BiomeTags.HAS_SHIPWRECK_BEACHED)) {
+            if (in(biome, RCBiomeTags.DEAD_BEARD)) {
                 writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.DEAD_BEARD.get(), 10, 1, 1);
             }
         });
+    }
+
+    private static boolean in(BiomeContext biome, RCBiomeTags.Spawner spawner) {
+        return biome.is(spawner.whitelist()) && !biome.is(spawner.blacklist());
     }
 }

@@ -14,6 +14,7 @@ import com.github.teamfusion.rottencreatures.common.entities.Frostbitten;
 import com.github.teamfusion.rottencreatures.common.entities.PrimedTntBarrel;
 import com.github.teamfusion.rottencreatures.common.entities.SkeletonLackey;
 import com.github.teamfusion.rottencreatures.common.entities.Swampy;
+import com.github.teamfusion.rottencreatures.common.entities.TreasureChest;
 import com.github.teamfusion.rottencreatures.common.entities.UndeadMiner;
 import com.github.teamfusion.rottencreatures.common.entities.Zap;
 import com.github.teamfusion.rottencreatures.common.entities.ZombieLackey;
@@ -42,6 +43,7 @@ public class RCEntityTypes {
     public static final Supplier<EntityType<Immortal>> IMMORTAL = create("immortal", EntityType.Builder.of(Immortal::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 2.0F).clientTrackingRange(8));
     public static final Supplier<EntityType<Zap>> ZAP = create("zap", EntityType.Builder.of(Zap::new, MobCategory.MONSTER).sized(0.6F, 1.8F).clientTrackingRange(8));
     public static final Supplier<EntityType<PrimedTntBarrel>> TNT_BARREL = create("primed_tnt_barrel", EntityType.Builder.<PrimedTntBarrel>of(PrimedTntBarrel::new, MobCategory.MISC).fireImmune().sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(10));
+    public static final Supplier<EntityType<TreasureChest>> TREASURE_CHEST = create("treasure_chest", EntityType.Builder.of(TreasureChest::new, MobCategory.MISC).sized(0.5F, 0.25F).clientTrackingRange(10).updateInterval(10));
 
     private static <T extends Entity> Supplier<EntityType<T>> create(String key, EntityType.Builder<T> builder) {
         return ENTITIES.register(key, () -> builder.build(key));

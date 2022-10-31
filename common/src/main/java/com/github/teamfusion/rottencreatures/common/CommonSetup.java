@@ -20,6 +20,7 @@ import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import com.github.teamfusion.rottencreatures.common.registries.RCPotions;
 import com.github.teamfusion.rottencreatures.common.worldgen.WorldGeneration;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Wolf;
 
 public class CommonSetup {
@@ -38,6 +39,7 @@ public class CommonSetup {
         MobHandler.registerAttributes(RCEntityTypes.SKELETON_LACKEY, SkeletonLackey::createAttributes);
         MobHandler.registerAttributes(RCEntityTypes.IMMORTAL, Immortal::createAttributes);
         MobHandler.registerAttributes(RCEntityTypes.ZAP, Zap::createAttributes);
+        MobHandler.registerAttributes(RCEntityTypes.TREASURE_CHEST, Mob::createMobAttributes);
     }
 
     public static void postCommon() {
