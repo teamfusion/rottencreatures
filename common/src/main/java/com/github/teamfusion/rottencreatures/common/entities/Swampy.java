@@ -100,11 +100,6 @@ public class Swampy extends Zombie {
         return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
     }
 
-    @Nullable @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
-        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.SWAMPY, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
-    }
-
     /**
      * spawns a poison cloud that lasts for 10 seconds
      * if the swampy has an active effect it will also be applied in the lingering cloud

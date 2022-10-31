@@ -121,6 +121,7 @@ public class GlacialHunter extends Zombie {
             wolf.setOwner(this);
             level.addFreshEntity(wolf);
         }
-        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.GLACIAL_HUNTER, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
+
+        return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
     }
 }

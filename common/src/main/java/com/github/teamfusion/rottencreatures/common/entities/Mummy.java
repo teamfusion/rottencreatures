@@ -136,7 +136,7 @@ public class Mummy extends SpellcasterZombie {
     @Nullable @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         if (this.random.nextFloat() <= 0.3F) this.setAncient(true);
-        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.MUMMY, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
+        return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
     }
 
     class SummonScarabsGoal extends UseSpellGoal {

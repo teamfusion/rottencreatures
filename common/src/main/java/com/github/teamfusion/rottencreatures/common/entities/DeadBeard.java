@@ -165,11 +165,6 @@ public class DeadBeard extends SpellcasterZombie {
         return checkAnyLightMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
     }
 
-    @Nullable @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
-        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.DEAD_BEARD, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
-    }
-
     class SummonLackeysGoal extends UseSpellGoal {
         private final TargetingConditions lackeyCountTargeting = TargetingConditions.forNonCombat().range(16.0D).ignoreLineOfSight().ignoreInvisibilityTesting();
 

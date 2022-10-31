@@ -215,6 +215,6 @@ public class Burned extends Zombie {
     @Nullable @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         if (this.random.nextFloat() <= 0.05F) this.setCrazy(true);
-        return RCBiomeTags.Spawner.shouldSpawn(level.getBiome(this.blockPosition()), RCBiomeTags.BURNED, spawnType, super.finalizeSpawn(level, difficulty, spawnType, groupData, tag));
+        return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
     }
 }

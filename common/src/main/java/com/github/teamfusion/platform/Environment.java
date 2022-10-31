@@ -25,6 +25,14 @@ public class Environment {
         throw new AssertionError();
     }
 
+    public static boolean forge() {
+        return getPlatform() == Platform.FORGE;
+    }
+
+    public static boolean fabric() {
+        return getPlatform() == Platform.FABRIC;
+    }
+
     public enum Platform {
         FORGE,
         FABRIC
