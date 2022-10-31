@@ -3,17 +3,19 @@
 
   "id": "rottencreatures",
   "version": "${version}",
-  "license": "Insert License Here",
+  "license": "All Rights Reserved",
 
   "name": "Rotten Creatures",
   "icon": "assets/rottencreatures/icon.png",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Rotten Creatures is a mod that aims to add lots of fun new zombie variants to the game!",
 
   "authors": [
-    "Me!"
+    "RPorotos",
+    "Team Fusion"
   ],
   "contributors": [
-
+    "ItsBlackGear",
+    "Auxilliary"
   ],
   "contact": {
     "homepage": "https://github.com/teamfusion/rottencreatures",
