@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
-  "loader": "forge:separate-transform",
+  "loader": "forge:separate-perspective",
   "base": {
     "parent": "rottencreatures:item/spear_in_hand"
   },
