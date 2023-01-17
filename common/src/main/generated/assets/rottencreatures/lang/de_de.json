@@ -13,7 +13,7 @@
   "entity.rottencreatures.primed_tnt_barrel": "Grundiertes TNT Fass",
   "entity.rottencreatures.scarab": "Skarabäus",
   "entity.rottencreatures.skeleton_lackey": "Skelett Lakai",
-  "entity.rottencreatures.swampy": "Sumpfig",
+  "entity.rottencreatures.swampy": "Sumpfiger",
   "entity.rottencreatures.treasure_chest": "Schatztruhe",
   "entity.rottencreatures.undead_miner": "Untoter Minenarbeiter",
   "entity.rottencreatures.zap": "Zap",
@@ -43,7 +43,7 @@
   "item.rottencreatures.magma_rotten_flesh": "Magma Verrottetes Fleisch",
   "item.rottencreatures.mummy_spawn_egg": "Mumien Spawn Ei",
   "item.rottencreatures.spear": "Speer",
-  "item.rottencreatures.swampy_spawn_egg": "Sumpfiges Spawn Ei",
+  "item.rottencreatures.swampy_spawn_egg": "Sumpfiger Spawn Ei",
   "item.rottencreatures.treasure_chest": "Schatztruhe",
   "item.rottencreatures.undead_miner_spawn_egg": "Untoter Minenarbeiter Spawn Ei",
   "itemGroup.rottencreatures.rottencreatures": "Verdorbene Kreaturen",
@@ -54,6 +54,6 @@
   "text.autoconfig.rottencreatures.option.mobSpawns.glacial_hunter_weight": "Gletscherjäger Gewicht",
   "text.autoconfig.rottencreatures.option.mobSpawns.immortal_chance": "Unsterblichen Chance",
   "text.autoconfig.rottencreatures.option.mobSpawns.mummy_weight": "Mumien Gewicht",
-  "text.autoconfig.rottencreatures.option.mobSpawns.swampy_weight": "Sumpfiges Gewicht",
+  "text.autoconfig.rottencreatures.option.mobSpawns.swampy_weight": "Sumpfiger Gewicht",
   "text.autoconfig.rottencreatures.option.mobSpawns.undead_miner_weight": "Untoter Minenarbeiter Gewicht"
 }
