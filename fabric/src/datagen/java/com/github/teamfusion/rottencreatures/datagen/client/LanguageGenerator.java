@@ -99,6 +99,7 @@ public final class LanguageGenerator implements DataProvider {
         this.addConfig("mobSpawns", "glacial_hunter_weight", ConfigEntries.GLACIAL_HUNTER_WEIGHT.name());
         this.addConfig("mobSpawns", "swampy_weight", ConfigEntries.SWAMPY_WEIGHT.name());
         this.addConfig("mobSpawns", "undead_miner_weight", ConfigEntries.UNDEAD_MINER_WEIGHT.name());
+        this.addConfig("mobSpawns", "undead_miner_depth", ConfigEntries.UNDEAD_MINER_WEIGHT.name());
         this.addConfig("mobSpawns", "mummy_weight", ConfigEntries.MUMMY_WEIGHT.name());
         this.addConfig("mobSpawns", "dead_beard_weight", ConfigEntries.DEAD_BEARD_WEIGHT.name());
         this.addConfig("mobSpawns", "immortal_chance", ConfigEntries.IMMORTAL_CHANCE.name());

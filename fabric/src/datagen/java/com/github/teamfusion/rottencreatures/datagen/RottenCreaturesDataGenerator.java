@@ -18,7 +18,7 @@ public class RottenCreaturesDataGenerator implements DataGeneratorEntrypoint {
         gen.addProvider(LanguageGenerator::new);
         gen.addProvider(BlockLootGenerator::new);
         gen.addProvider(EntityLootGenerator::new);
-        gen.addProvider(BiomeTagGenerator::new);
+//        gen.addProvider(BiomeTagGenerator::new);
         gen.addProvider(BlockTagGenerator::new);
         gen.addProvider(EntityTagGenerator::new);
         gen.addProvider(RecipeGenerator::new);

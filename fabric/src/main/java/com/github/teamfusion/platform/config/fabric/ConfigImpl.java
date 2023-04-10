@@ -34,6 +34,9 @@ public class ConfigImpl implements ConfigData {
         @Comment("determines how often will Undead Miners spawn")
         public int undead_miner_weight = ConfigEntries.UNDEAD_MINER_WEIGHT.value();
 
+        @Comment("determines the max y height where Undead Miners can spawn")
+        public int undead_miner_depth = ConfigEntries.UNDEAD_MINER_DEPTH.value();
+
         @Comment("determines how often will Mummies spawn")
         public int mummy_weight = ConfigEntries.MUMMY_WEIGHT.value();
 
