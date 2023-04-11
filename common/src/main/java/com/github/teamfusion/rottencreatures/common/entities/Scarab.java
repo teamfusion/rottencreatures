@@ -1,5 +1,8 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
@@ -16,6 +19,8 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class Scarab extends Monster {
     public Scarab(EntityType<? extends Monster> type, Level level) {
@@ -52,5 +57,25 @@ public class Scarab extends Monster {
     @Override
     public MobType getMobType() {
         return MobType.ARTHROPOD;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.SILVERFISH_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return SoundEvents.SILVERFISH_HURT;
+    }
+
+    @Nullable @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.SILVERFISH_AMBIENT;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.SILVERFISH_STEP, 0.15F, 1.0F);
     }
 }

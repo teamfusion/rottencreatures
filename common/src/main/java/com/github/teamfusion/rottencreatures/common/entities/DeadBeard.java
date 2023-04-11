@@ -2,7 +2,6 @@ package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -28,9 +26,9 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -111,7 +109,7 @@ public class DeadBeard extends SpellcasterZombie {
     }
 
     private void explode() {
-        this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 4.0F, Explosion.BlockInteraction.BREAK);
+        this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 4.0F, this.level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) ? Explosion.BlockInteraction.BREAK : Explosion.BlockInteraction.NONE);
     }
 
     @Override
