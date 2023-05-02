@@ -44,6 +44,6 @@ public class ConfigImpl implements ConfigData {
         public int dead_beard_weight = ConfigEntries.DEAD_BEARD_WEIGHT.value();
 
         @Comment("determines the chance of spawning for Immortals")
-        public float immortal_chance = ConfigEntries.IMMORTAL_CHANCE.value();
+        public double immortal_chance = ConfigEntries.IMMORTAL_CHANCE.value();
     }
 }

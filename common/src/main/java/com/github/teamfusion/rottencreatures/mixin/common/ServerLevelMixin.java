@@ -39,7 +39,7 @@ public abstract class ServerLevelMixin {
             BlockPos pos = this.findLightningTargetAround($this.getBlockRandomPos(x, 0, z, 15));
             if ($this.isRainingAt(pos)) {
                 DifficultyInstance difficulty = $this.getCurrentDifficultyAt(pos);
-                boolean canSpawn = $this.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && $this.random.nextDouble() < (double)difficulty.getEffectiveDifficulty() * ConfigEntries.IMMORTAL_CHANCE.value() && !$this.getBlockState(pos.below()).is(Blocks.LIGHTNING_ROD);
+                boolean canSpawn = $this.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && $this.random.nextDouble() < difficulty.getEffectiveDifficulty() * ConfigEntries.IMMORTAL_CHANCE.value() && !$this.getBlockState(pos.below()).is(Blocks.LIGHTNING_ROD);
                 if (canSpawn) {
                     Immortal immortal = RCEntityTypes.IMMORTAL.get().create($this);
                     immortal.setPos(pos.getX(), pos.getY(), pos.getZ());
