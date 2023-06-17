@@ -55,5 +55,6 @@
   "text.autoconfig.rottencreatures.option.mobSpawns.immortal_chance": "Вероятность появления бессмертного",
   "text.autoconfig.rottencreatures.option.mobSpawns.mummy_weight": "Вероятность появления мумии",
   "text.autoconfig.rottencreatures.option.mobSpawns.swampy_weight": "Вероятность появления болотного",
-  "text.autoconfig.rottencreatures.option.mobSpawns.undead_miner_weight": "Вероятность появления мёртвого шахтёра"
+  "text.autoconfig.rottencreatures.option.mobSpawns.undead_miner_weight": "Вероятность появления мёртвого шахтёра",
+  "text.autoconfig.rottencreatures.option.mobSpawns.undead_miner_depth": "Глубина появления мёртвого шахтёра"
 }
