@@ -1,7 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
-import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import com.github.teamfusion.rottencreatures.data.RCEntityTypeTags;
 import net.minecraft.core.BlockPos;
