@@ -1,5 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -8,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
@@ -113,6 +115,21 @@ public class DeadBeard extends SpellcasterZombie {
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return RCSoundEvents.DEAD_BEARD_DEATH.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return RCSoundEvents.DEAD_BEARD_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return RCSoundEvents.DEAD_BEARD_AMBIENT.get();
+    }
+
+    @Override
     protected void dropCustomDeathLoot(DamageSource source, int lootingMultiplier, boolean allowDrops) {
         super.dropCustomDeathLoot(source, lootingMultiplier, allowDrops);
 
@@ -187,13 +204,14 @@ public class DeadBeard extends SpellcasterZombie {
         protected void performSpellCasting() {
             ServerLevel level = (ServerLevel)DeadBeard.this.level;
 
+            DeadBeard.this.level.playSound(null, DeadBeard.this.eyeBlockPosition(), RCSoundEvents.DEAD_BEARD_CALL.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
             for (int i = 0; i <= DeadBeard.this.random.nextInt(4); i++) {
                 BlockPos pos = DeadBeard.this.blockPosition().offset(-2 + DeadBeard.this.random.nextInt(5), -0.8D, -2 + DeadBeard.this.random.nextInt(5));
                 Monster lackey = DeadBeard.this.random.nextBoolean() ? RCEntityTypes.ZOMBIE_LACKEY.get().create(DeadBeard.this.level) : RCEntityTypes.SKELETON_LACKEY.get().create(DeadBeard.this.level);
                 if (lackey instanceof Lackey lackeyIn) {
                     lackey.moveTo(pos, 0.0F, 0.0F);
                     lackey.setDeltaMovement(0.0D, 0.5D, 0.0D);
-                    DeadBeard.this.level.playSound(null, lackey.blockPosition(), SoundEvents.GRAVEL_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    DeadBeard.this.level.playSound(null, lackey.blockPosition(), SoundEvents.GRAVEL_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
                     lackey.finalizeSpawn(level, DeadBeard.this.level.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
                     lackeyIn.setLimitedLife(500);
                     level.addFreshEntity(lackey);

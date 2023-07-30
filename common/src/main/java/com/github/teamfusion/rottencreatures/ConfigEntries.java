@@ -1,15 +1,60 @@
 package com.github.teamfusion.rottencreatures;
 
-import com.github.teamfusion.platform.config.Config;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 
 public class ConfigEntries {
-    public static final Config.Entry<Integer> BURNED_WEIGHT = Config.create("Burned Weight", 20, "determines how often will Burneds spawn");
-    public static final Config.Entry<Integer> FROSTBITTEN_WEIGHT = Config.create("Frostbitten Weight", 80, "determines how often will Frostbittens spawn");
-    public static final Config.Entry<Integer> GLACIAL_HUNTER_WEIGHT = Config.create("Glacial Hunter Weight", 20, "determines how often will Glacial Hunters spawn");
-    public static final Config.Entry<Integer> SWAMPY_WEIGHT = Config.create("Swampy Weight", 80, "determines how often will Swampies spawn");
-    public static final Config.Entry<Integer> UNDEAD_MINER_WEIGHT = Config.create("Undead Miner Weight", 20, "determines how often will Undead Miners spawn");
-    public static final Config.Entry<Integer> UNDEAD_MINER_DEPTH = Config.create("Undead Miner Depth", 63, "determines the max y height where Undead Miners can spawn");
-    public static final Config.Entry<Integer> MUMMY_WEIGHT = Config.create("Mummy Weight", 20, "determines how often will Mummies spawn");
-    public static final Config.Entry<Integer> DEAD_BEARD_WEIGHT = Config.create("Dead Beard Weight", 10, "determines how often will Dead Beard spawn");
-    public static final Config.Entry<Float> IMMORTAL_CHANCE = Config.create("Immortal Chance", 0.025F, "determines the chance of spawning for Immortals");
+    public static final int BURNED_SPAWN_WEIGHT = getBurnedSpawnWeight();
+    public static final int FROSTBITTEN_SPAWN_WEIGHT = getFrostbittenSpawnWeight();
+    public static final int GLACIAL_HUNTER_SPAWN_WEIGHT = getGlacialHunterSpawnWeight();
+    public static final int SWAMPY_SPAWN_WEIGHT = getSwampySpawnWeight();
+    public static final int UNDEAD_MINER_SPAWN_WEIGHT = getUndeadMinerSpawnWeight();
+    public static final int UNDEAD_MINER_SPAWN_DEPTH = getUndeadMinerSpawnDepth();
+    public static final int MUMMY_SPAWN_WEIGHT = getMummySpawnWeight();
+    public static final int DEAD_BEARD_SPAWN_WEIGHT = getDeadBeardSpawnWeight();
+    public static final double IMMORTAL_SPAWN_CHANCE = getImmortalSpawnChance();
+
+    @ExpectPlatform
+    public static int getBurnedSpawnWeight() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getFrostbittenSpawnWeight() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getGlacialHunterSpawnWeight() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getSwampySpawnWeight() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getUndeadMinerSpawnWeight() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getUndeadMinerSpawnDepth() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getMummySpawnWeight() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static int getDeadBeardSpawnWeight() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static double getImmortalSpawnChance() {
+        throw new AssertionError();
+    }
 }

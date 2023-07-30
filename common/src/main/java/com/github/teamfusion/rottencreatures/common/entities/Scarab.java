@@ -1,5 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -61,7 +62,7 @@ public class Scarab extends Monster {
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.SILVERFISH_DEATH;
+        return RCSoundEvents.BEETLE_DEATH.get();
     }
 
     @Override

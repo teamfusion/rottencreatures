@@ -1,10 +1,13 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -96,6 +99,21 @@ public class GlacialHunter extends Zombie {
         }
 
         return hurtTarget;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return RCSoundEvents.GLACIAL_HUNTER_DEATH.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return RCSoundEvents.GLACIAL_HUNTER_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return RCSoundEvents.GLACIAL_HUNTER_AMBIENT.get();
     }
 
     @Override

@@ -1,13 +1,12 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -24,7 +22,6 @@ import net.minecraft.world.item.enchantment.FrostWalkerEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Random;
@@ -64,6 +61,21 @@ public class Frostbitten extends Zombie {
     protected void onChangedBlock(BlockPos pos) {
         super.onChangedBlock(pos);
         FrostWalkerEnchantment.onEntityMoved(this, this.level, pos, 2);
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return RCSoundEvents.FROSTBITTEN_DEATH.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return RCSoundEvents.FROSTBITTEN_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return RCSoundEvents.FROSTBITTEN_AMBIENT.get();
     }
 
     @Override

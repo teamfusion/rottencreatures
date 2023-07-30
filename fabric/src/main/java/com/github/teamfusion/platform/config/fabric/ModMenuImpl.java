@@ -1,6 +1,6 @@
 package com.github.teamfusion.platform.config.fabric;
 
-import com.github.teamfusion.platform.Environment;
+import com.github.teamfusion.rottencreatures.fabric.ConfigEntriesImpl;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -8,7 +8,6 @@ import me.shedaniel.autoconfig.AutoConfig;
 public class ModMenuImpl implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-//        return Environment.isLoaded("cloth_config") ? parent -> AutoConfig.getConfigScreen(ConfigImpl.class, parent).get() : ModMenuApi.super.getModConfigScreenFactory();
-        return parent -> AutoConfig.getConfigScreen(ConfigImpl.class, parent).get();
+        return parent -> AutoConfig.getConfigScreen(ConfigEntriesImpl.class, parent).get();
     }
 }

@@ -2,8 +2,8 @@ package com.github.teamfusion.rottencreatures;
 
 import com.github.teamfusion.platform.Environment;
 import com.github.teamfusion.platform.ModInstance;
-import com.github.teamfusion.platform.config.Config;
 import com.github.teamfusion.rottencreatures.client.ClientSetup;
+import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import com.github.teamfusion.rottencreatures.common.CommonSetup;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
@@ -37,9 +37,8 @@ public class RottenCreatures {
         RCItems.ITEMS.register();
         RCMobEffects.EFFECTS.register();
         RCPotions.POTIONS.register();
+        RCSoundEvents.SOUNDS.register();
 
         RCBiomeTags.init();
-
-        Config.bootstrap();
     }
 }

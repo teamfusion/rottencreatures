@@ -93,15 +93,42 @@ public final class LanguageGenerator implements DataProvider {
         this.add("itemGroup.rottencreatures.rottencreatures", "Rotten Creatures");
 
         // Config
-        this.addConfig("mobSpawns", "Mob Spawns");
-        this.addConfig("mobSpawns", "burned_weight", ConfigEntries.BURNED_WEIGHT.name());
-        this.addConfig("mobSpawns", "frostbitten_weight", ConfigEntries.FROSTBITTEN_WEIGHT.name());
-        this.addConfig("mobSpawns", "glacial_hunter_weight", ConfigEntries.GLACIAL_HUNTER_WEIGHT.name());
-        this.addConfig("mobSpawns", "swampy_weight", ConfigEntries.SWAMPY_WEIGHT.name());
-        this.addConfig("mobSpawns", "undead_miner_weight", ConfigEntries.UNDEAD_MINER_WEIGHT.name());
-        this.addConfig("mobSpawns", "mummy_weight", ConfigEntries.MUMMY_WEIGHT.name());
-        this.addConfig("mobSpawns", "dead_beard_weight", ConfigEntries.DEAD_BEARD_WEIGHT.name());
-        this.addConfig("mobSpawns", "immortal_chance", ConfigEntries.IMMORTAL_CHANCE.name());
+        this.add("text.autoconfig.rottencreatures.title", "Rotten Creatures");
+        this.add("text.autoconfig.rottencreatures.option.spawns", "Spawns");
+
+        // Burned Zombie
+        this.add("text.autoconfig.rottencreatures.option.spawns.burned_spawn_weight", "Burned Spawn Weight");
+        this.add("text.autoconfig.rottencreatures.option.spawns.burned_spawn_weight.@Tooltip", "Determine how often do Burned Zombies spawn");
+
+        // Frostbitten Zombie
+        this.add("text.autoconfig.rottencreatures.option.spawns.frostbitten_spawn_weight", "Frostbitten Spawn Weight");
+        this.add("text.autoconfig.rottencreatures.option.spawns.frostbitten_spawn_weight.@Tooltip", "Determine how often do Frostbitten Zombies spawn");
+
+        // Glacial Hunter Zombie
+        this.add("text.autoconfig.rottencreatures.option.spawns.glacial_hunter_spawn_weight", "Glacial Hunter Spawn Weight");
+        this.add("text.autoconfig.rottencreatures.option.spawns.glacial_hunter_spawn_weight.@Tooltip", "Determine how often do Glacial Hunter Zombies spawn");
+
+        // Swampy Zombie
+        this.add("text.autoconfig.rottencreatures.option.spawns.swampy_spawn_weight", "Swampy Spawn Weight");
+        this.add("text.autoconfig.rottencreatures.option.spawns.swampy_spawn_weight.@Tooltip", "Determine how often do Swampy Zombies spawn");
+
+        // Undead Miner Zombie
+        this.add("text.autoconfig.rottencreatures.option.spawns.undead_miner_spawn_weight", "Undead Miner Spawn Weight");
+        this.add("text.autoconfig.rottencreatures.option.spawns.undead_miner_spawn_weight.@Tooltip", "Determine how often do Undead Miner Zombies spawn");
+        this.add("text.autoconfig.rottencreatures.option.spawns.undead_miner_spawn_depth", "Undead Miner Spawn Depth");
+        this.add("text.autoconfig.rottencreatures.option.spawns.undead_miner_spawn_depth.@Tooltip", "Determine the max spawn height for Undead Miner Zombies");
+
+        // Mummy
+        this.add("text.autoconfig.rottencreatures.option.spawns.mummy_spawn_weight", "Mummy Spawn Weight");
+        this.add("text.autoconfig.rottencreatures.option.spawns.mummy_spawn_weight.@Tooltip", "Determine how often do Mummies spawn");
+
+        // Dead Beard
+        this.add("text.autoconfig.rottencreatures.option.spawns.dead_beard_spawn_weight", "Dead Beard Spawn Weight");
+        this.add("text.autoconfig.rottencreatures.option.spawns.dead_beard_spawn_weight.@Tooltip", "Determine how often does Dead Beard spawn");
+
+        // Immortal
+        this.add("text.autoconfig.rottencreatures.option.spawns.immortal_spawn_chance", "Immortal Spawn Chance");
+        this.add("text.autoconfig.rottencreatures.option.spawns.immortal_spawn_chance.@Tooltip", "Determine the chance of spawning for Immortal Zombies");
     }
 
     private void block(Block entry, String name) {
@@ -131,14 +158,6 @@ public final class LanguageGenerator implements DataProvider {
                 this.add("item.minecraft." + type.id + ".effect." + "strong_" + entry.toLowerCase(), name);
             }
         }
-    }
-
-    private void addConfig(String key, String sub, String value) {
-        this.add("text.autoconfig." + RottenCreatures.MOD_ID + ".option." + key + (sub != null ? "." + sub : ""), value);
-    }
-
-    private void addConfig(String key, String value) {
-        this.addConfig(key, null, value);
     }
 
     private void add(String key, String value) {

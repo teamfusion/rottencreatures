@@ -40,37 +40,34 @@ public class WorldGeneration {
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.SKELETON_LACKEY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.IMMORTAL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         SpawnPlacementsAccessor.callRegister(RCEntityTypes.ZAP.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+
         BiomeManager.add((writer, biome) -> {
             if (in(biome, RCBiomeTags.BURNED) || in(biome, Biomes.NETHER_WASTES)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.BURNED.get(), ConfigEntries.BURNED_WEIGHT.value(), 4, 4);
+                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.BURNED.get(), ConfigEntries.BURNED_SPAWN_WEIGHT, 4, 4);
             }
 
             if (in(biome, RCBiomeTags.FROSTBITTEN) || in(biome, BiomeCategory.ICY) || in(biome, Biomes.ICE_SPIKES)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.FROSTBITTEN.get(), ConfigEntries.FROSTBITTEN_WEIGHT.value(), 4, 4);
+                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.FROSTBITTEN.get(), ConfigEntries.FROSTBITTEN_SPAWN_WEIGHT, 4, 4);
             }
 
             if (in(biome, RCBiomeTags.GLACIAL_HUNTER) || in(biome, BiomeCategory.ICY) || in(biome, Biomes.ICE_SPIKES)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.GLACIAL_HUNTER.get(), ConfigEntries.GLACIAL_HUNTER_WEIGHT.value(), 1, 3);
+                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.GLACIAL_HUNTER.get(), ConfigEntries.GLACIAL_HUNTER_SPAWN_WEIGHT, 1, 3);
             }
 
             if (in(biome, RCBiomeTags.SWAMPY) || in(biome, BiomeCategory.SWAMP)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.SWAMPY.get(), ConfigEntries.SWAMPY_WEIGHT.value(), 4, 4);
+                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.SWAMPY.get(), ConfigEntries.SWAMPY_SPAWN_WEIGHT, 4, 4);
             }
 
             if (in(biome, RCBiomeTags.UNDEAD_MINER) || not(biome, BiomeCategory.NONE, BiomeCategory.THEEND, BiomeCategory.NETHER, BiomeCategory.MUSHROOM)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.UNDEAD_MINER.get(), ConfigEntries.UNDEAD_MINER_WEIGHT.value(), 1, 4);
+                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.UNDEAD_MINER.get(), ConfigEntries.UNDEAD_MINER_SPAWN_WEIGHT, 1, 4);
             }
 
             if (in(biome, RCBiomeTags.MUMMY) || in(biome, BiomeCategory.DESERT)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.MUMMY.get(), ConfigEntries.MUMMY_WEIGHT.value(), 1, 3);
-            }
-
-            if (in(biome, RCBiomeTags.DEAD_BEARD) || in(biome, BiomeCategory.DESERT)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.MUMMY.get(), ConfigEntries.MUMMY_WEIGHT.value(), 1, 3);
+                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.MUMMY.get(), ConfigEntries.MUMMY_SPAWN_WEIGHT, 1, 3);
             }
 
             if (in(biome, RCBiomeTags.DEAD_BEARD) || in(biome, BiomeCategory.BEACH)) {
-                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.DEAD_BEARD.get(), ConfigEntries.DEAD_BEARD_WEIGHT.value(), 1, 1);
+                writer.addSpawn(MobCategory.MONSTER, RCEntityTypes.DEAD_BEARD.get(), ConfigEntries.DEAD_BEARD_SPAWN_WEIGHT, 1, 1);
             }
         });
     }

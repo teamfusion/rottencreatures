@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import com.github.teamfusion.rottencreatures.common.LootBuilder;
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -109,17 +109,17 @@ public class Burned extends Zombie {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return super.getAmbientSound();
+        return RCSoundEvents.BURNED_AMBIENT.get();
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return super.getHurtSound(damageSource);
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return RCSoundEvents.BURNED_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return super.getDeathSound();
+        return RCSoundEvents.BURNED_DEATH.get();
     }
 
     @Override

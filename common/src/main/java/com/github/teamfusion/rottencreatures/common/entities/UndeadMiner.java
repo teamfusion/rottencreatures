@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
+import com.github.teamfusion.rottencreatures.ConfigEntries;
 import com.github.teamfusion.rottencreatures.common.LootBuilder;
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -115,7 +115,6 @@ public class UndeadMiner extends Zombie {
     /**
      * applies random values to generate miners with different ranks
      * also checks if it should generate the mesa miner
-     *
      * - Diamond-Rank : 10%
      * - Iron-Rank : 30%
      * - Stone-Rank : 60%
@@ -153,7 +152,7 @@ public class UndeadMiner extends Zombie {
     }
 
     public static boolean checkUndeadMinerSpawnRules(EntityType<UndeadMiner> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
-        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || !level.canSeeSky(pos));
+        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || !level.canSeeSky(pos)) && pos.getY() <= ConfigEntries.UNDEAD_MINER_SPAWN_DEPTH;
     }
 
     /**

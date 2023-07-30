@@ -1,10 +1,9 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
+import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -13,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
@@ -22,7 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Random;
@@ -50,7 +47,6 @@ public class Swampy extends Zombie {
     /**
      * when attacking, there's different behavior depending on the age
      * when is a baby it will explode and spawn a lingering cloud of poison
-     *
      * otherwise checks if the entity is empty-handed and applies blindness and poison
      * the duration of the effects depend on the difficulty
      */
@@ -77,6 +73,21 @@ public class Swampy extends Zombie {
     public void travel(Vec3 vec3) {
         this.setSpeed((float)this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isInWater() ? 1.5F : 1.0F));
         super.travel(vec3);
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return RCSoundEvents.SWAMPY_DEATH.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return RCSoundEvents.SWAMPY_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return RCSoundEvents.SWAMPY_AMBIENT.get();
     }
 
     /**
