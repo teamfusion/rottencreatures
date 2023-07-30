@@ -3,6 +3,7 @@ package com.github.teamfusion.rottencreatures.common.entities;
 import com.github.teamfusion.rottencreatures.common.entities.goal.FollowLeaderGoal;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
+import com.github.teamfusion.rottencreatures.data.RCEntityTypeTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -35,7 +36,7 @@ public class Zap extends Zombie {
         this.goalSelector.addGoal(1, new FollowLeaderGoal(this, Immortal.class, 1.25D));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Zombie.class, true) {
             @Override public boolean canUse() {
-                return super.canUse() && this.target.getType() != RCEntityTypes.ZAP.get() && this.target.getType() != RCEntityTypes.IMMORTAL.get() && this.target.getType() != EntityType.ZOMBIE_VILLAGER;
+                return super.canUse() && this.target != null && !this.target.getType().is(RCEntityTypeTags.IGNORED_BY_IMMORTAL);
             }
         });
     }
@@ -86,10 +87,16 @@ public class Zap extends Zombie {
     }
 
     public static void convertToZap(LivingEntity entity, LivingEntity target) {
-        if (entity.level instanceof ServerLevel level && target instanceof Zombie zombie && zombie.getType() != RCEntityTypes.ZAP.get() && zombie.getType() != RCEntityTypes.IMMORTAL.get() && zombie.getType() != RCEntityTypes.DEAD_BEARD.get() && zombie.getType() != EntityType.ZOMBIE_VILLAGER) {
-            Zap zap = zombie.convertTo(RCEntityTypes.ZAP.get(), true);
-            zap.finalizeSpawn(level, level.getCurrentDifficultyAt(zap.blockPosition()), MobSpawnType.CONVERSION, null, null);
-            if (!entity.isSilent()) level.levelEvent(null, 1026, entity.blockPosition(), 0);
+        if (entity.level instanceof ServerLevel level) {
+            if (target instanceof Zombie zombie && !target.getType().is(RCEntityTypeTags.ZAP_UNCONVERTIBLES)) {
+                Zap zap = zombie.convertTo(RCEntityTypes.ZAP.get(), true);
+                if (zap != null) {
+                    zap.finalizeSpawn(level, level.getCurrentDifficultyAt(zap.blockPosition()), MobSpawnType.CONVERSION, null, null);
+                    if (!entity.isSilent()) {
+                        level.levelEvent(null, 1026, entity.blockPosition(), 0);
+                    }
+                }
+            }
         }
     }
 }

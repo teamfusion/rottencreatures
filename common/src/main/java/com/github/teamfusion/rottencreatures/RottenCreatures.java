@@ -11,6 +11,7 @@ import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import com.github.teamfusion.rottencreatures.common.registries.RCPotions;
 import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
+import com.github.teamfusion.rottencreatures.data.RCEntityTypeTags;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -40,5 +41,6 @@ public class RottenCreatures {
         RCSoundEvents.SOUNDS.register();
 
         RCBiomeTags.init();
+        RCEntityTypeTags.init();
     }
 }

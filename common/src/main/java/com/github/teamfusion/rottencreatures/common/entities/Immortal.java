@@ -3,6 +3,7 @@ package com.github.teamfusion.rottencreatures.common.entities;
 import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
+import com.github.teamfusion.rottencreatures.data.RCEntityTypeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -81,7 +82,7 @@ public class Immortal extends SpellcasterZombie {
         this.goalSelector.addGoal(7, new DashingGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Zombie.class, true) {
             @Override public boolean canUse() {
-                return super.canUse() && this.target.getType() != RCEntityTypes.ZAP.get() && this.target.getType() != RCEntityTypes.IMMORTAL.get() && this.target.getType() != EntityType.ZOMBIE_VILLAGER;
+                return super.canUse() && this.target != null && !this.target.getType().is(RCEntityTypeTags.IGNORED_BY_IMMORTAL);
             }
         });
     }
@@ -109,8 +110,8 @@ public class Immortal extends SpellcasterZombie {
     public void tick() {
         super.tick();
         if (!this.level.isClientSide && this.isAlive() && !this.isNoAi()) {
-            if (this.isInWaterOrBubble()) {
-                LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level);
+            LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level);
+            if (this.isInWaterOrBubble() && bolt != null) {
                 bolt.moveTo(Vec3.atBottomCenterOf(this.blockPosition().offset(0, 1, 0)));
                 this.level.addFreshEntity(bolt);
                 this.discard();

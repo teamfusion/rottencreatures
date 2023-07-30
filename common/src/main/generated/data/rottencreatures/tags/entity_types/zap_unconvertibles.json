@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:zombie_villager",
+    "rottencreatures:immortal",
+    "rottencreatures:zap",
+    "rottencreatures:dead_beard",
+    "rottencreatures:glacial_hunter"
+  ]
+}
