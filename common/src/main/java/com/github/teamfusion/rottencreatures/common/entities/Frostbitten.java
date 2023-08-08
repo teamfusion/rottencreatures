@@ -157,6 +157,11 @@ public class Frostbitten extends Zombie {
         }
     }
 
+    @Override
+    public boolean canBeAffected(MobEffectInstance instance) {
+        return instance.getEffect() != RCMobEffects.FREEZE.get() && super.canBeAffected(instance);
+    }
+
     public static boolean checkFrostbittenSpawnRules(EntityType<Frostbitten> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random random) {
         return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || level.canSeeSky(pos));
     }
