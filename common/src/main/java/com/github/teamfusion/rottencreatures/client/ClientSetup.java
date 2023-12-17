@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.client;
 
-import com.github.teamfusion.platform.client.RenderHandler;
+import com.github.teamfusion.rottencreatures.core.platform.client.RenderHandler;
 import com.github.teamfusion.rottencreatures.client.model.BurnedModel;
 import com.github.teamfusion.rottencreatures.client.model.DeadBeardModel;
 import com.github.teamfusion.rottencreatures.client.model.FlyingScarabModel;

@@ -3,7 +3,7 @@ package com.github.teamfusion.rottencreatures.common.entities;
 import com.github.teamfusion.rottencreatures.common.entities.goal.FollowLeaderGoal;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
-import com.github.teamfusion.rottencreatures.data.RCEntityTypeTags;
+import com.github.teamfusion.rottencreatures.core.data.RCEntityTypeTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;

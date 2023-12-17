@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.registries.forge;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;

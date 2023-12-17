@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.client.renderer.item;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.item.SpearItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemTransforms;

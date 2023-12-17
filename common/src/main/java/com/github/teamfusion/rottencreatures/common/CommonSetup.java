@@ -1,8 +1,8 @@
 package com.github.teamfusion.rottencreatures.common;
 
-import com.github.teamfusion.platform.common.MobHandler;
-import com.github.teamfusion.platform.common.registry.ItemRegistry;
-import com.github.teamfusion.platform.common.worldgen.BiomeManager;
+import com.github.teamfusion.rottencreatures.core.platform.common.MobHandler;
+import com.github.teamfusion.rottencreatures.core.platform.common.registry.ItemRegistry;
+import com.github.teamfusion.rottencreatures.core.platform.common.worldgen.BiomeManager;
 import com.github.teamfusion.rottencreatures.common.entities.Burned;
 import com.github.teamfusion.rottencreatures.common.entities.DeadBeard;
 import com.github.teamfusion.rottencreatures.common.entities.FlyingScarab;

@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.misc;
 
-import com.github.teamfusion.platform.common.registry.ItemRegistry;
+import com.github.teamfusion.rottencreatures.core.platform.common.registry.ItemRegistry;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

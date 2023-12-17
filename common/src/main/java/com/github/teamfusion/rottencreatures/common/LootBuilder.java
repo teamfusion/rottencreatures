@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.common;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
-import com.github.teamfusion.rottencreatures.mixin.access.BuiltInLootTablesAccessor;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.mixin.access.BuiltInLootTablesAccessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;

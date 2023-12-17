@@ -1,8 +1,8 @@
 package com.github.teamfusion.rottencreatures.common.registries;
 
-import com.github.teamfusion.platform.CoreRegistry;
-import com.github.teamfusion.rottencreatures.RottenCreatures;
-import com.github.teamfusion.rottencreatures.mixin.access.MobEffectAccessor;
+import com.github.teamfusion.rottencreatures.core.platform.CoreRegistry;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.mixin.access.MobEffectAccessor;
 import net.minecraft.core.Registry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.common.blocks;
 
 import com.github.teamfusion.rottencreatures.common.entities.PrimedTntBarrel;
-import com.github.teamfusion.rottencreatures.mixin.access.FireworkRocketEntityAccessor;
+import com.github.teamfusion.rottencreatures.core.mixin.access.FireworkRocketEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

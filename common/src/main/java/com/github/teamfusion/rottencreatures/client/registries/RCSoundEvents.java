@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.client.registries;
 
-import com.github.teamfusion.platform.CoreRegistry;
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.platform.CoreRegistry;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

@@ -1,7 +1,5 @@
 package com.github.teamfusion.rottencreatures.datagen.client;
 
-import com.github.teamfusion.rottencreatures.ConfigEntries;
-import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;

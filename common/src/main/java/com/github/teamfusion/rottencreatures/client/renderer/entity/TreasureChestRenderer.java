@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.client.renderer.entity;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.client.model.LayerBuilder;
 import com.github.teamfusion.rottencreatures.client.model.TreasureChestModel;
 import com.github.teamfusion.rottencreatures.common.entities.TreasureChest;

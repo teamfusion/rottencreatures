@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.common.registries;
 
-import com.github.teamfusion.platform.CoreRegistry;
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.platform.CoreRegistry;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.entities.DeadBeard;
 import com.github.teamfusion.rottencreatures.common.entities.FlyingScarab;
 import com.github.teamfusion.rottencreatures.common.entities.GlacialHunter;

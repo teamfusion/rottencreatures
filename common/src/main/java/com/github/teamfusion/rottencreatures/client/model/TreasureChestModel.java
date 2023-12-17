@@ -1,6 +1,5 @@
 package com.github.teamfusion.rottencreatures.client.model;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.entities.TreasureChest;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

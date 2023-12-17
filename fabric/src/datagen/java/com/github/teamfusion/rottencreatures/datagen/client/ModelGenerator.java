@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.datagen.client;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;

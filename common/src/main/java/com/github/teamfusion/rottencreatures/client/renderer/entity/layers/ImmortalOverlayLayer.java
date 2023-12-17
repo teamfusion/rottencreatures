@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.client.renderer.entity.layers;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.client.model.ImmortalModel;
 import com.github.teamfusion.rottencreatures.client.model.ImmortalOverlayModel;
 import com.github.teamfusion.rottencreatures.client.model.LayerBuilder;
@@ -10,7 +10,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;

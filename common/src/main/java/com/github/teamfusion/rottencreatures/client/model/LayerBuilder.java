@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.client.model;
 
-import com.github.teamfusion.platform.client.RenderHandler;
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.platform.client.RenderHandler;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;

@@ -1,12 +1,10 @@
 package com.github.teamfusion.rottencreatures.client.renderer.entity.layers;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.client.model.BurnedModel;
-import com.github.teamfusion.rottencreatures.client.renderer.entity.BurnedRenderer;
 import com.github.teamfusion.rottencreatures.common.entities.Burned;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;

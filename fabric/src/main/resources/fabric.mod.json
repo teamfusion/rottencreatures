@@ -25,10 +25,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.teamfusion.rottencreatures.fabric.RottenCreaturesFabric"
+      "com.github.teamfusion.rottencreatures.core.fabric.RottenCreaturesFabric"
     ],
     "modmenu": [
-      "com.github.teamfusion.platform.config.fabric.ModMenuImpl"
+      "com.github.teamfusion.rottencreatures.core.platform.config.fabric.ModMenuImpl"
     ]
   },
   "mixins": [

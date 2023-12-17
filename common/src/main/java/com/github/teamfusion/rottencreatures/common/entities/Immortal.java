@@ -2,7 +2,7 @@ package com.github.teamfusion.rottencreatures.common.entities;
 
 import com.github.teamfusion.rottencreatures.client.registries.RCSoundEvents;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
-import com.github.teamfusion.rottencreatures.data.RCEntityTypeTags;
+import com.github.teamfusion.rottencreatures.core.data.RCEntityTypeTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;

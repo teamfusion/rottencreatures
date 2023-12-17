@@ -1,8 +1,8 @@
 package com.github.teamfusion.rottencreatures.common.registries;
 
-import com.github.teamfusion.platform.CoreRegistry;
-import com.github.teamfusion.rottencreatures.RottenCreatures;
-import com.github.teamfusion.rottencreatures.mixin.access.PotionBrewingAccessor;
+import com.github.teamfusion.rottencreatures.core.platform.CoreRegistry;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.mixin.access.PotionBrewingAccessor;
 import net.minecraft.core.Registry;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Items;

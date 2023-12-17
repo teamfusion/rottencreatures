@@ -1,11 +1,9 @@
 package com.github.teamfusion.rottencreatures.client.renderer.entity;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.client.model.FlyingScarabModel;
 import com.github.teamfusion.rottencreatures.client.model.LayerBuilder;
-import com.github.teamfusion.rottencreatures.client.model.ScarabModel;
 import com.github.teamfusion.rottencreatures.common.entities.FlyingScarab;
-import com.github.teamfusion.rottencreatures.common.entities.Scarab;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

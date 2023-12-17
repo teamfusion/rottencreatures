@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.client.renderer.entity.layers;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.client.renderer.entity.ZombieLackeyRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.DrownedModel;

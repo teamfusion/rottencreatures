@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
-import com.github.teamfusion.rottencreatures.ConfigEntries;
+import com.github.teamfusion.rottencreatures.core.ConfigEntries;
 import com.github.teamfusion.rottencreatures.common.LootBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

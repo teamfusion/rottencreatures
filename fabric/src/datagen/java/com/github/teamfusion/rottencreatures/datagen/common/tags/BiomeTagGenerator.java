@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.datagen.common.tags;
 
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
+import com.github.teamfusion.rottencreatures.core.data.RCBiomeTags;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;

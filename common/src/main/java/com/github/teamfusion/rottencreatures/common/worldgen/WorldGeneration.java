@@ -1,9 +1,9 @@
 package com.github.teamfusion.rottencreatures.common.worldgen;
 
-import com.github.teamfusion.platform.Environment;
-import com.github.teamfusion.platform.common.worldgen.BiomeContext;
-import com.github.teamfusion.platform.common.worldgen.BiomeManager;
-import com.github.teamfusion.rottencreatures.ConfigEntries;
+import com.github.teamfusion.rottencreatures.core.platform.Environment;
+import com.github.teamfusion.rottencreatures.core.platform.common.worldgen.BiomeContext;
+import com.github.teamfusion.rottencreatures.core.platform.common.worldgen.BiomeManager;
+import com.github.teamfusion.rottencreatures.core.ConfigEntries;
 import com.github.teamfusion.rottencreatures.common.entities.Burned;
 import com.github.teamfusion.rottencreatures.common.entities.DeadBeard;
 import com.github.teamfusion.rottencreatures.common.entities.Frostbitten;
@@ -12,8 +12,8 @@ import com.github.teamfusion.rottencreatures.common.entities.Mummy;
 import com.github.teamfusion.rottencreatures.common.entities.Swampy;
 import com.github.teamfusion.rottencreatures.common.entities.UndeadMiner;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
-import com.github.teamfusion.rottencreatures.mixin.access.SpawnPlacementsAccessor;
+import com.github.teamfusion.rottencreatures.core.data.RCBiomeTags;
+import com.github.teamfusion.rottencreatures.core.mixin.access.SpawnPlacementsAccessor;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
