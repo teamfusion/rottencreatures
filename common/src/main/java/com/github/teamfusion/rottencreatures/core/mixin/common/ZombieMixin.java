@@ -8,6 +8,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Zombie.class)
 public class ZombieMixin extends Monster {
@@ -15,37 +16,39 @@ public class ZombieMixin extends Monster {
         super(entityType, level);
     }
 
-    /**
-     * checks the difficulty and the environment of the zombie at the moment of dying
-     * if a zombie dies in lava it will be transformed into a burned
-     * if a zombie dies in powder snow will be transformed into a frostbitten
-     *
-     * each transformation has a different chance depending on the difficulty
-     * if it's normal then it applies 50% of the time
-     * if it's hard then it applies 100% of the time
-     *
-     * will also apply a conversion sound at the moment of transformation.
-     */
     @Override
     public void die(DamageSource source) {
-        if (this.getType() == EntityType.ZOMBIE && (this.level.getDifficulty() == Difficulty.NORMAL || this.level.getDifficulty() == Difficulty.HARD)) {
-            if (this.level.getDifficulty() != Difficulty.HARD && this.level.random.nextBoolean()) return;
+        if (this.getType() == EntityType.ZOMBIE) {
+            Difficulty difficulty = this.level.getDifficulty();
+            if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
+                // Set the chance for the zombie to convert upon death.
+                // 20% chance on normal, 33.3% chance on hard.
+                int chance = difficulty == Difficulty.NORMAL ? 4 : 2;
+                // Apply a 20% chance of conversion if the difficulty is hard.
+                if (this.random.nextInt(chance) == 0) {
+                    // If the zombie dies in lava, convert it into a burned.
+                    if (this.isInLava()) {
+                        this.rc$tryToConvert(RCEntityTypes.BURNED.get());
+                    }
 
-            if (this.isInLava()) {
-                this.convertTo(RCEntityTypes.BURNED.get(), true);
-                if (!this.isSilent()) {
-                    this.level.levelEvent(1026, this.blockPosition(), 0);
-                }
-            }
-
-            if (this.isInPowderSnow || this.wasInPowderSnow) {
-                this.convertTo(RCEntityTypes.FROSTBITTEN.get(), true);
-                if (!this.isSilent()) {
-                    this.level.levelEvent(1026, this.blockPosition(), 0);
+                    // If the zombie dies in powder snow, convert it into a frostbitten.
+                    if (this.isInPowderSnow || this.wasInPowderSnow) {
+                        this.rc$tryToConvert(RCEntityTypes.FROSTBITTEN.get());
+                    }
                 }
             }
         }
 
         super.die(source);
+    }
+
+    @Unique
+    private void rc$tryToConvert(EntityType<? extends Zombie> type) {
+        // convert into the specified entity, keeping the current inventory
+        this.convertTo(type, true);
+        // send conversion sound to client.
+        if (!this.isSilent()) {
+            this.level.levelEvent(1026, this.blockPosition(), 0);
+        }
     }
 }
