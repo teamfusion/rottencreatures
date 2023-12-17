@@ -18,7 +18,18 @@ import java.util.function.Supplier;
 public class RCBlocks {
     public static final CoreRegistry<Block> BLOCKS = CoreRegistry.create(Registry.BLOCK, RottenCreatures.MOD_ID);
 
-    public static final Supplier<Block> TNT_BARREL = create("tnt_barrel", () -> new TntBarrelBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 5.0F).sound(SoundType.WOOD)), RottenCreatures.TAB);
+    // ========== BLOCKS ===============================================================================================
+
+    public static final Supplier<Block> TNT_BARREL = create(
+            "tnt_barrel",
+            () -> new TntBarrelBlock(
+                    BlockBehaviour.Properties.of(Material.WOOD)
+                            .strength(2.0F, 5.0F)
+                            .sound(SoundType.WOOD)
+            ), RottenCreatures.TAB
+    );
+
+    // ========== REGISTRY METHODS =====================================================================================
 
     private static <T extends Block> Supplier<T> create(String key, Supplier<T> block, CreativeModeTab tab) {
         return create(key, block, entry -> new BlockItem(entry.get(), new Item.Properties().tab(tab)));

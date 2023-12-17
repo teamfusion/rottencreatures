@@ -1,16 +1,16 @@
 package com.github.teamfusion.rottencreatures.core.data;
 
 import com.github.teamfusion.rottencreatures.core.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.platform.common.TagRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.biome.Biome;
 
 public class RCBiomeTags {
-    public static void init() {}
+    public static final TagRegistry<Biome> TAGS = TagRegistry.of(Registry.BIOME_REGISTRY, RottenCreatures.MOD_ID);
 
     public static final Spawner BURNED = Spawner.of("burned");
     public static final Spawner FROSTBITTEN = Spawner.of("frostbitten");
@@ -20,13 +20,9 @@ public class RCBiomeTags {
     public static final Spawner MUMMY = Spawner.of("mummy");
     public static final Spawner DEAD_BEARD = Spawner.of("dead_beard");
 
-    private static TagKey<Biome> create(String key) {
-        return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(RottenCreatures.MOD_ID, key));
-    }
-
     public record Spawner(TagKey<Biome> whitelist, TagKey<Biome> blacklist) {
         public static Spawner of(String name) {
-            return new Spawner(create(name + "_whitelist"), create(name + "_blacklist"));
+            return new Spawner(TAGS.create(name + "_whitelist"), TAGS.create(name + "_blacklist"));
         }
 
         public static SpawnGroupData shouldSpawn(Holder<Biome> biome, Spawner spawner, MobSpawnType spawnType, SpawnGroupData data) {

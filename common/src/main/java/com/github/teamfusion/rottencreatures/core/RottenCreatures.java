@@ -19,10 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.slf4j.Logger;
 
-/**
- * Mob Properties
- * <a href="https://docs.google.com/spreadsheets/d/10VWOjZ1Z_yEU101hk-EzwyDLUDU6RKzs/edit#gid=1618430498">...</a>
- */
 public class RottenCreatures {
     public static final String MOD_ID = "rottencreatures";
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -52,7 +48,7 @@ public class RottenCreatures {
         RCEntityTypes.ENTITIES.register();
 
         // ========== TAG REGISTRY =====================================================================================
-        RCBiomeTags.init();
-        RCEntityTypeTags.init();
+        RCBiomeTags.TAGS.register();
+        RCEntityTypeTags.TAGS.register();
     }
 }
