@@ -108,7 +108,13 @@ public class MummyArmorLayer<T extends LivingEntity, M extends HumanoidModel<T>,
     }
 
     private ResourceLocation getArmorLocation(ArmorItem armor, boolean legs, @Nullable String overlay) {
-        String location = "textures/models/armor/" + armor.getMaterial().getName() + "_layer_" + (legs ? 2 : 1) + (overlay == null ? "" : "_" + overlay) + ".png";
-        return ARMOR_LOCATION_CACHE.computeIfAbsent(location, ResourceLocation::new);
+        String s1 = String.format(Locale.ROOT, "%s:textures/models/armor/%s_layer_%d%s.png", "minecraft", armor.getMaterial().getName(), legs ? 2 : 1, overlay == null ? "" : String.format(Locale.ROOT, "_%s", overlay));
+        ResourceLocation resourcelocation = (ResourceLocation)ARMOR_LOCATION_CACHE.get(s1);
+        if (resourcelocation == null) {
+            resourcelocation = new ResourceLocation(s1);
+            ARMOR_LOCATION_CACHE.put(s1, resourcelocation);
+        }
+
+        return resourcelocation;
     }
 }
