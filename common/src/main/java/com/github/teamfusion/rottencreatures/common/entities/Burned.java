@@ -36,8 +36,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class Burned extends Zombie {
-    private static final AttributeModifier CRAZY_MODIFIER = new AttributeModifier(UUID.fromString("a0ffa7a6-1210-466a-a9a1-31909417a99e"), "Crazy attribute boost", 0.5F, AttributeModifier.Operation.MULTIPLY_BASE);
-    private static final AttributeModifier OBSIDIAN_MODIFIER = new AttributeModifier(UUID.fromString("cf2ce4af-4807-4896-aaad-1c077a87e9bf"), "Obsidian attribute boost", 1.0F, AttributeModifier.Operation.MULTIPLY_BASE);
+    private static final AttributeModifier CRAZY_MODIFIER = new AttributeModifier(
+        UUID.fromString("a0ffa7a6-1210-466a-a9a1-31909417a99e"),
+        "Crazy attribute boost",
+        0.5F,
+        AttributeModifier.Operation.MULTIPLY_BASE
+    );
+    private static final AttributeModifier OBSIDIAN_MODIFIER = new AttributeModifier(
+        UUID.fromString("cf2ce4af-4807-4896-aaad-1c077a87e9bf"),
+        "Obsidian attribute boost",
+        1.0F,
+        AttributeModifier.Operation.MULTIPLY_BASE
+    );
     private static final EntityDataAccessor<Boolean> DATA_IS_OBSIDIAN = SynchedEntityData.defineId(Burned.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_IS_CRAZY = SynchedEntityData.defineId(Burned.class, EntityDataSerializers.BOOLEAN);
 
@@ -56,7 +66,12 @@ public class Burned extends Zombie {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Zombie.createAttributes().add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D).add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ATTACK_DAMAGE, 4.0D).add(Attributes.ARMOR, 4.0D);
+        return Zombie.createAttributes()
+            .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.0D)
+            .add(Attributes.MAX_HEALTH, 22.0)
+            .add(Attributes.MOVEMENT_SPEED, 0.2)
+            .add(Attributes.ATTACK_DAMAGE, 4.0)
+            .add(Attributes.ARMOR, 4.0);
     }
 
     @Override
@@ -68,7 +83,9 @@ public class Burned extends Zombie {
 
     @Override
     protected ResourceLocation getDefaultLootTable() {
-        return this.isObsidian() ? OBSIDIAN_LOOT : super.getDefaultLootTable();
+        return this.isObsidian()
+            ? OBSIDIAN_LOOT
+            : super.getDefaultLootTable();
     }
 
     @Override
@@ -79,19 +96,40 @@ public class Burned extends Zombie {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        if (this.getHealth() <= 10.0D && !this.isCrazy()) this.setCrazy(true);
+
+        if (this.getHealth() <= 10.0 && !this.isCrazy()) {
+            this.setCrazy(true);
+        }
     }
 
     @Override
     public void aiStep() {
         super.aiStep();
         if (this.random.nextInt(10) == 0) {
-            this.level.addParticle(this.isObsidian() ? ParticleTypes.FALLING_OBSIDIAN_TEAR : ParticleTypes.FALLING_LAVA, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(
+                this.isObsidian() ? ParticleTypes.FALLING_OBSIDIAN_TEAR : ParticleTypes.FALLING_LAVA,
+                this.getRandomX(0.5),
+                this.getRandomY(),
+                this.getRandomZ(0.5),
+                0.0,
+                0.0,
+                0.0
+            );
         }
 
         if (this.isCrazy()) {
             if (this.random.nextInt(10) == 0) {
-                this.level.addParticle(this.isObsidian() ? (this.random.nextBoolean() ? ParticleTypes.SMOKE : ParticleTypes.LARGE_SMOKE) : ParticleTypes.LAVA, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+                this.level.addParticle(
+                    this.isObsidian()
+                        ? (this.random.nextBoolean() ? ParticleTypes.SMOKE : ParticleTypes.LARGE_SMOKE)
+                        : ParticleTypes.LAVA,
+                    this.getRandomX(0.5),
+                    this.getRandomY(),
+                    this.getRandomZ(0.5),
+                    0.0,
+                    0.0,
+                    0.0
+                );
             }
         }
     }
@@ -99,8 +137,14 @@ public class Burned extends Zombie {
     @Override
     public void tick() {
         if (!this.level.isClientSide && this.isAlive() && !this.isNoAi()) {
-            if (this.isInWaterOrBubble() && !this.isObsidian()) this.setObsidian(true);
-            if (this.isInLava() && this.isObsidian()) this.setObsidian(false);
+            boolean inWater = this.isInWaterOrBubble();
+            boolean inLava = this.isInLava();
+
+            if (inWater && !this.isObsidian()) {
+                this.setObsidian(true);
+            } else if (inLava && this.isObsidian()) {
+                this.setObsidian(false);
+            }
         }
 
         super.tick();
@@ -112,8 +156,8 @@ public class Burned extends Zombie {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return super.getHurtSound(damageSource);
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return super.getHurtSound(source);
     }
 
     @Override
@@ -123,13 +167,14 @@ public class Burned extends Zombie {
 
     @Override
     public boolean doHurtTarget(Entity entity) {
-        boolean hurt = super.doHurtTarget(entity);
-        if (hurt && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living && !this.isObsidian()) {
+        boolean hurtTarget = super.doHurtTarget(entity);
+
+        if (hurtTarget && this.getMainHandItem().isEmpty() && entity instanceof LivingEntity living && !this.isObsidian()) {
             float modifier = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
-            living.setSecondsOnFire(3 * (int)modifier);
+            living.setSecondsOnFire(3 * (int) modifier);
         }
 
-        return hurt;
+        return hurtTarget;
     }
 
     @Override
@@ -162,17 +207,24 @@ public class Burned extends Zombie {
 
     public void setObsidian(boolean obsidian) {
         this.getEntityData().set(DATA_IS_OBSIDIAN, obsidian);
+
         if (!this.level.isClientSide) {
             List<AttributeInstance> instances = new ArrayList<>();
             instances.add(this.getAttribute(Attributes.ATTACK_DAMAGE));
             instances.add(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE));
+
             for (AttributeInstance instance : instances) {
                 instance.removeModifier(OBSIDIAN_MODIFIER);
-                if (obsidian) instance.addTransientModifier(OBSIDIAN_MODIFIER);
+
+                if (obsidian) {
+                    instance.addTransientModifier(OBSIDIAN_MODIFIER);
+                }
             }
         }
 
-        if (obsidian) this.level.levelEvent(1501, this.blockPosition(), 0);
+        if (obsidian) {
+            this.level.levelEvent(1501, this.blockPosition(), 0);
+        }
     }
 
     public boolean isCrazy() {
@@ -181,25 +233,38 @@ public class Burned extends Zombie {
 
     public void setCrazy(boolean crazy) {
         this.getEntityData().set(DATA_IS_CRAZY, crazy);
+
         if (!this.level.isClientSide) {
             List<AttributeInstance> instances = new ArrayList<>();
             instances.add(this.getAttribute(Attributes.ATTACK_DAMAGE));
             instances.add(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE));
+
             for (AttributeInstance instance : instances) {
                 instance.removeModifier(CRAZY_MODIFIER);
-                if (crazy) instance.addTransientModifier(CRAZY_MODIFIER);
+
+                if (crazy) {
+                    instance.addTransientModifier(CRAZY_MODIFIER);
+                }
             }
         }
     }
 
     @Override
-    public void travel(Vec3 vec3) {
+    public void travel(Vec3 vector) {
         this.setSpeed(this.getMoveSpeed());
-        super.travel(vec3);
+        super.travel(vector);
     }
 
     public float getMoveSpeed() {
-        return (float)this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isObsidian() ? 0.5F : this.isCrazy() ? 1.5F : 1.0F);
+        float speedMultiplier = 1.0F;
+
+        if (this.isObsidian()) {
+            speedMultiplier = 0.5F;
+        } else if (this.isCrazy()) {
+            speedMultiplier = 1.5F;
+        }
+
+        return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * speedMultiplier;
     }
 
     @Override
@@ -213,7 +278,10 @@ public class Burned extends Zombie {
 
     @Override @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
-        if (this.random.nextFloat() <= 0.05F) this.setCrazy(true);
+        if (this.random.nextFloat() <= 0.05F) {
+            this.setCrazy(true);
+        }
+
         return super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
     }
 }

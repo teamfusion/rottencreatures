@@ -1,6 +1,7 @@
 package com.github.teamfusion.rottencreatures.mixin.common;
 
-import com.github.teamfusion.rottencreatures.ConfigEntries;
+import com.github.teamfusion.rottencreatures.CommonConfig;
+import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.entities.Immortal;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
@@ -39,7 +40,7 @@ public abstract class ServerLevelMixin {
             BlockPos pos = this.findLightningTargetAround($this.getBlockRandomPos(x, 0, z, 15));
             if ($this.isRainingAt(pos)) {
                 DifficultyInstance difficulty = $this.getCurrentDifficultyAt(pos);
-                boolean canSpawn = $this.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && $this.random.nextDouble() < (double)difficulty.getEffectiveDifficulty() * ConfigEntries.IMMORTAL_CHANCE.value() && !$this.getBlockState(pos.below()).is(Blocks.LIGHTNING_ROD);
+                boolean canSpawn = $this.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && $this.random.nextDouble() < (double)difficulty.getEffectiveDifficulty() * RottenCreatures.CONFIG.immortalChance.get() && !$this.getBlockState(pos.below()).is(Blocks.LIGHTNING_ROD);
                 if (canSpawn) {
                     Immortal immortal = RCEntityTypes.IMMORTAL.get().create($this);
                     immortal.setPos(pos.getX(), pos.getY(), pos.getZ());

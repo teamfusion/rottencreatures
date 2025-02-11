@@ -7,17 +7,9 @@ loom {
 }
 
 dependencies {
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-}
-
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
-        }
-    }
-
-    repositories {
-    }
+    modApi "flatDir:Platform-common-1.19.2-1.2.0"
 }

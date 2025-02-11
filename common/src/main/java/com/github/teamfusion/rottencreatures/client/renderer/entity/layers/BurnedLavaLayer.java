@@ -15,8 +15,8 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class BurnedLavaLayer extends RenderLayer<Burned, BurnedModel> {
-    private static final ResourceLocation BURNED_LAVA_LOCATION = new ResourceLocation(RottenCreatures.MOD_ID, "textures/entity/burned/burned_lava_layer.png");
-    private static final ResourceLocation CRAZY_LAVA_LOCATION = new ResourceLocation(RottenCreatures.MOD_ID, "textures/entity/burned/burned_crazy_lava_layer.png");
+    private static final ResourceLocation BURNED_LAVA_LOCATION = RottenCreatures.resource("textures/entity/burned/burned_lava_layer.png");
+    private static final ResourceLocation CRAZY_LAVA_LOCATION = RottenCreatures.resource("textures/entity/burned/burned_crazy_lava_layer.png");
 
     public BurnedLavaLayer(RenderLayerParent<Burned, BurnedModel> parent) {
         super(parent);

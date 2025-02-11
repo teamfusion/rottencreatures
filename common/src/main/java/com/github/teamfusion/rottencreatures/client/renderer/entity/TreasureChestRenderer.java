@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.client.renderer.entity;
 
 import com.github.teamfusion.rottencreatures.RottenCreatures;
-import com.github.teamfusion.rottencreatures.client.model.LayerBuilder;
+import com.github.teamfusion.rottencreatures.client.RCModelLayers;
 import com.github.teamfusion.rottencreatures.client.model.TreasureChestModel;
 import com.github.teamfusion.rottencreatures.common.entities.TreasureChest;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,10 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class TreasureChestRenderer<T extends TreasureChest> extends LivingEntityRenderer<T, TreasureChestModel<T>> {
-    public static final LayerBuilder LAYER = LayerBuilder.of("treasure_chest");
-
     public TreasureChestRenderer(EntityRendererProvider.Context context) {
-        super(context, new TreasureChestModel<>(context.bakeLayer(LAYER.getMain())), 0.2F);
+        super(context, new TreasureChestModel<>(context.bakeLayer(RCModelLayers.TREASURE_CHEST)), 0.2F);
     }
 
     @Override
@@ -23,6 +21,6 @@ public class TreasureChestRenderer<T extends TreasureChest> extends LivingEntity
 
     @Override
     public ResourceLocation getTextureLocation(TreasureChest entity) {
-        return new ResourceLocation(RottenCreatures.MOD_ID, "textures/entity/treasure_chest.png");
+        return RottenCreatures.resource("textures/entity/treasure_chest.png");
     }
 }

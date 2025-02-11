@@ -27,8 +27,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class TntBarrelBlock extends Block {
     public static final BooleanProperty UNSTABLE = BlockStateProperties.UNSTABLE;
@@ -41,6 +40,7 @@ public class TntBarrelBlock extends Block {
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState onState, boolean bl) {
         if (onState.is(state.getBlock())) return;
+
         if (level.hasNeighborSignal(pos)) {
             explode(level, pos, true);
             level.removeBlock(pos, false);
@@ -64,8 +64,8 @@ public class TntBarrelBlock extends Block {
     @Override
     public void wasExploded(Level level, BlockPos pos, Explosion explosion) {
         if (!level.isClientSide) {
-            PrimedTntBarrel tnt = new PrimedTntBarrel(level, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, explosion.getSourceMob());
-            tnt.setFuse((short)(level.random.nextInt(tnt.getFuse() / 4) + tnt.getFuse() / 8));
+            PrimedTntBarrel tnt = createPrimedTntBarrel(level, pos, explosion.getSourceMob());
+            tnt.setFuse((short) (level.random.nextInt(tnt.getFuse() / 4) + tnt.getFuse() / 8));
             level.addFreshEntity(tnt);
         }
     }
@@ -78,12 +78,9 @@ public class TntBarrelBlock extends Block {
         explode(level, pos, entity, false);
     }
 
-    /**
-     * primes the tnt barrel block and checks if it should explode with a delay or instantly
-     */
     private static void explode(Level level, BlockPos pos, @Nullable LivingEntity entity, boolean immediately) {
         if (!level.isClientSide) {
-            PrimedTntBarrel tnt = new PrimedTntBarrel(level, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, entity);
+            PrimedTntBarrel tnt = createPrimedTntBarrel(level, pos, entity);
             if (immediately) tnt.setFuse(0);
             level.addFreshEntity(tnt);
             level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -113,13 +110,14 @@ public class TntBarrelBlock extends Block {
         if (stack.is(Items.FIREWORK_ROCKET)) {
             Direction direction = hitResult.getDirection().getOpposite();
             if (!level.isClientSide) {
-                FireworkRocketEntity firework = new FireworkRocketEntity(level, stack, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, true);
+                FireworkRocketEntity firework = new FireworkRocketEntity(level, stack, (double) pos.getX() + 0.5, pos.getY(), (double) pos.getZ() + 0.5, true);
                 ((FireworkRocketEntityAccessor)firework).setLifetime(80);
+
                 int offset = stack.getOrCreateTagElement("Fireworks").getByte("Flight") - 1;
-                firework.shoot(direction.getStepX(), direction.getStepY() + (offset * 0.125D), direction.getStepZ(), 0.5F, 1.0F);
+                firework.shoot(direction.getStepX(), direction.getStepY() + (offset * 0.125), direction.getStepZ(), 0.5F, 1.0F);
                 level.addFreshEntity(firework);
 
-                PrimedTntBarrel tnt = new PrimedTntBarrel(level, (double)pos.getX() + 0.5D, pos.getY(), (double)pos.getZ() + 0.5D, player);
+                PrimedTntBarrel tnt = createPrimedTntBarrel(level, pos, player);
                 tnt.startRiding(firework);
                 level.addFreshEntity(tnt);
 
@@ -138,9 +136,10 @@ public class TntBarrelBlock extends Block {
         return super.use(state, level, pos, player, hand, hitResult);
     }
 
-    /**
-     * if a projectile on fire reaches the block, it marks it an unstable and primes it
-     */
+    private static PrimedTntBarrel createPrimedTntBarrel(Level level, BlockPos pos, LivingEntity owner) {
+        return new PrimedTntBarrel(level, (double) pos.getX() + 0.5, pos.getY(), (double) pos.getZ() + 0.5, owner);
+    }
+
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hitResult, Projectile projectile) {
         if (!level.isClientSide) {
@@ -153,9 +152,6 @@ public class TntBarrelBlock extends Block {
         }
     }
 
-    /**
-     * prevents the block dropping on explosion
-     */
     @Override
     public boolean dropFromExplosion(Explosion explosion) {
         return false;

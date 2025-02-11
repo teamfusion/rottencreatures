@@ -14,8 +14,8 @@ import net.minecraft.world.item.ItemStack;
  * fabric only! forge does not support ModifyArgs yet, don't be like forge..
  */
 public class SpearItemRenderer {
-    public static final ModelResourceLocation INVENTORY_MODEL = new ModelResourceLocation(new ResourceLocation(RottenCreatures.MOD_ID, "spear"), "inventory");
-    public static final ModelResourceLocation INVENTORY_HANDHELD_MODEL = new ModelResourceLocation(new ResourceLocation(RottenCreatures.MOD_ID, "spear_in_hand"), "inventory");
+    public static final ModelResourceLocation INVENTORY_MODEL = new ModelResourceLocation(RottenCreatures.resource("spear"), "inventory");
+    public static final ModelResourceLocation INVENTORY_HANDHELD_MODEL = new ModelResourceLocation(RottenCreatures.resource("spear_in_hand"), "inventory");
 
     public static BakedModel renderItem(ItemStack stack, ItemTransforms.TransformType type) {
         boolean isInventory = type == ItemTransforms.TransformType.GUI || type == ItemTransforms.TransformType.GROUND || type == ItemTransforms.TransformType.FIXED;

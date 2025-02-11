@@ -50,10 +50,10 @@ public final class ModelGenerator extends FabricModelProvider {
     }
 
     private static ModelTemplate create(String key) {
-        return new ModelTemplate(Optional.of(new ResourceLocation(RottenCreatures.MOD_ID, "block/" + key)), Optional.empty());
+        return new ModelTemplate(Optional.of(RottenCreatures.resource("block/" + key)), Optional.empty());
     }
 
     private static ModelTemplate create(Block block) {
-        return new ModelTemplate(Optional.of(new ResourceLocation(RottenCreatures.MOD_ID, "block/" + Registry.BLOCK.getKey(block).getPath())), Optional.empty());
+        return new ModelTemplate(Optional.of(RottenCreatures.resource("block/" + Registry.BLOCK.getKey(block).getPath())), Optional.empty());
     }
 }

@@ -23,7 +23,7 @@ public record LootBuilder(String key) {
     }
 
     public ResourceLocation build(String type) {
-        return BuiltInLootTablesAccessor.callRegister(new ResourceLocation(RottenCreatures.MOD_ID, "entities/" + this.key() + "/" + type));
+        return BuiltInLootTablesAccessor.callRegister(RottenCreatures.resource("entities/" + this.key() + "/" + type));
     }
 
     /**

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(MobEffect.class)
 public interface MobEffectAccessor {
     @Invoker("<init>")
-    static MobEffect createMobEffect(MobEffectCategory mobEffectCategory, int i) {
+    static MobEffect createMobEffect(MobEffectCategory category, int color) {
         throw new UnsupportedOperationException();
     }
 }

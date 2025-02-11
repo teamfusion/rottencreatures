@@ -9,16 +9,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(PotionBrewing.class)
 public interface PotionBrewingAccessor {
     @Invoker
-    static void callAddContainerRecipe(Item item, Item item2, Item item3) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Invoker
-    static void callAddContainer(Item item) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Invoker
     static void callAddMix(Potion potion, Item item, Potion potion2) {
         throw new UnsupportedOperationException();
     }

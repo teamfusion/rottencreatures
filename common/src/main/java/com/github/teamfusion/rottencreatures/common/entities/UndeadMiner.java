@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.common.entities;
 
-import com.github.teamfusion.rottencreatures.ConfigEntries;
+import com.github.teamfusion.rottencreatures.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.LootBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -152,7 +152,7 @@ public class UndeadMiner extends Zombie {
     }
 
     public static boolean checkUndeadMinerSpawnRules(EntityType<UndeadMiner> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || !level.canSeeSky(pos)) && pos.getY() <= ConfigEntries.UNDEAD_MINER_DEPTH.value();
+        return checkMonsterSpawnRules(type, level, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || !level.canSeeSky(pos)) && pos.getY() <= RottenCreatures.CONFIG.undeadMinerDepth.get();
 
     }
 

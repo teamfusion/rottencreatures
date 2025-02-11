@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.client.renderer.entity.layers;
 
+import com.github.teamfusion.rottencreatures.client.RCModelLayers;
 import com.github.teamfusion.rottencreatures.client.model.ImmortalModel;
-import com.github.teamfusion.rottencreatures.client.model.LayerBuilder;
 import com.github.teamfusion.rottencreatures.common.entities.Immortal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -21,12 +21,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class DashAttackLayer<T extends Immortal> extends RenderLayer<T, ImmortalModel<T>> {
-    public static final LayerBuilder LAYER = LayerBuilder.of("dash_attack");
     private final ModelPart box;
 
     public DashAttackLayer(RenderLayerParent<T, ImmortalModel<T>> renderLayerParent, EntityModelSet modelSet) {
         super(renderLayerParent);
-        this.box = modelSet.bakeLayer(LAYER.getMain()).getChild("box");
+        this.box = modelSet.bakeLayer(RCModelLayers.IMMORTAL_DASH).getChild("box");
     }
 
     public static LayerDefinition createLayer() {
