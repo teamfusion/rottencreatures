@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.datagen.client;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -38,10 +38,14 @@ public final class ModelGenerator extends FabricModelProvider {
         gen.generateFlatItem(RCItems.GLACIAL_HUNTER_SPAWN_EGG.get(), SPAWN_EGG);
         gen.generateFlatItem(RCItems.DEAD_BEARD_SPAWN_EGG.get(), SPAWN_EGG);
         gen.generateFlatItem(RCItems.IMMORTAL_SPAWN_EGG.get(), SPAWN_EGG);
+        gen.generateFlatItem(RCItems.SCARAB_SPAWN_EGG.get(), SPAWN_EGG);
+        gen.generateFlatItem(RCItems.HUNTER_WOLF_SPAWN_EGG.get(), SPAWN_EGG);
+        gen.generateFlatItem(RCItems.SKELETON_LACKEY_SPAWN_EGG.get(), SPAWN_EGG);
+        gen.generateFlatItem(RCItems.ZOMBIE_LACKEY_SPAWN_EGG.get(), SPAWN_EGG);
+        gen.generateFlatItem(RCItems.ZAP_SPAWN_EGG.get(), SPAWN_EGG);
         gen.generateFlatItem(RCItems.MAGMA_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCItems.FROZEN_ROTTEN_FLESH.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCItems.CORRUPTED_WART.get(), ModelTemplates.FLAT_ITEM);
-        gen.generateFlatItem(RCItems.TREASURE_CHEST.get(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(RCBlocks.TNT_BARREL.get().asItem(), create(RCBlocks.TNT_BARREL.get()));
     }
 

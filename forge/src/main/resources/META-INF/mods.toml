@@ -21,8 +21,15 @@ license = "All Rights Reserved"
     side = "BOTH"
 
 [[dependencies.rottencreatures]]
+    modId = "platform"
+    mandatory = true
+    versionRange = "[1.2.5,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.rottencreatures]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.18.2,)"
+    versionRange = "[1.19.2,)"
     ordering = "NONE"
     side = "BOTH"

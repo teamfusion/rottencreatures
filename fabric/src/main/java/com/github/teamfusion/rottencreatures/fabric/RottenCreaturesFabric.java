@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.fabric;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.fabricmc.api.ModInitializer;
 
 public class RottenCreaturesFabric implements ModInitializer {

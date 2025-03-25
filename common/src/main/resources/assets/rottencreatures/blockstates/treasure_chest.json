@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "rottencreatures:block/treasure_chest"
+    }
+  }
+}

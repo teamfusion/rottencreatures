@@ -1,0 +1,181 @@
+{
+  "burned_idle": {
+    "sounds": [
+      "rottencreatures:mob/burned/idle1",
+      "rottencreatures:mob/burned/idle2",
+      "rottencreatures:mob/burned/idle3"
+    ],
+    "subtitle": "subtitles.rottencreatures.burned_idle"
+  },
+  "burned_hurt": {
+    "sounds": [
+      "rottencreatures:mob/burned/hurt1",
+      "rottencreatures:mob/burned/hurt2",
+      "rottencreatures:mob/burned/hurt3"
+    ],
+    "subtitle": "subtitles.rottencreatures.burned_hurt"
+  },
+  "burned_death": {
+    "sounds": [
+      "rottencreatures:mob/burned/death"
+    ],
+    "subtitle": "subtitles.rottencreatures.burned_death"
+  },
+
+  "frostbitten_idle": {
+    "sounds": [
+      "rottencreatures:mob/frostbitten/idle1",
+      "rottencreatures:mob/frostbitten/idle2",
+      "rottencreatures:mob/frostbitten/idle3"
+    ],
+    "subtitle": "subtitles.rottencreatures.frostbitten_idle"
+  },
+  "frostbitten_hurt": {
+    "sounds": [
+      "rottencreatures:mob/frostbitten/hurt1",
+      "rottencreatures:mob/frostbitten/hurt2"
+    ],
+    "subtitle": "subtitles.rottencreatures.frostbitten_hurt"
+  },
+  "frostbitten_death": {
+    "sounds": [
+      "rottencreatures:mob/frostbitten/death"
+    ],
+    "subtitle": "subtitles.rottencreatures.frostbitten_death"
+  },
+
+  "swampy_idle": {
+    "sounds": [
+      "rottencreatures:mob/swampy/idle1",
+      "rottencreatures:mob/swampy/idle2",
+      "rottencreatures:mob/swampy/idle3"
+    ],
+    "subtitle": "subtitles.rottencreatures.swampy_idle"
+  },
+  "swampy_hurt": {
+    "sounds": [
+      "rottencreatures:mob/swampy/hurt1",
+      "rottencreatures:mob/swampy/hurt2"
+    ],
+    "subtitle": "subtitles.rottencreatures.swampy_hurt"
+  },
+  "swampy_death": {
+    "sounds": [
+      "rottencreatures:mob/swampy/death"
+    ],
+    "subtitle": "subtitles.rottencreatures.swampy_death"
+  },
+
+  "mummy_idle": {
+    "sounds": [
+      "rottencreatures:mob/mummy/idle1",
+      "rottencreatures:mob/mummy/idle2",
+      "rottencreatures:mob/mummy/idle3"
+    ],
+    "subtitle": "subtitles.rottencreatures.mummy_idle"
+  },
+  "mummy_hurt": {
+    "sounds": [
+      "rottencreatures:mob/mummy/hurt1",
+      "rottencreatures:mob/mummy/hurt2"
+    ],
+    "subtitle": "subtitles.rottencreatures.mummy_hurt"
+  },
+  "mummy_death": {
+    "sounds": [
+      "rottencreatures:mob/mummy/death1",
+      "rottencreatures:mob/mummy/death2"
+    ],
+    "subtitle": "subtitles.rottencreatures.mummy_death"
+  },
+
+  "glacial_hunter_idle": {
+    "sounds": [
+      "rottencreatures:mob/glacial_hunter/idle1",
+      "rottencreatures:mob/glacial_hunter/idle2",
+      "rottencreatures:mob/glacial_hunter/idle3"
+    ],
+    "subtitle": "subtitles.rottencreatures.glacial_hunter_idle"
+  },
+  "glacial_hunter_hurt": {
+    "sounds": [
+      "rottencreatures:mob/glacial_hunter/hurt1",
+      "rottencreatures:mob/glacial_hunter/hurt2"
+    ],
+    "subtitle": "subtitles.rottencreatures.glacial_hunter_hurt"
+  },
+  "glacial_hunter_death": {
+    "sounds": [
+      "rottencreatures:mob/glacial_hunter/death1",
+      "rottencreatures:mob/glacial_hunter/death2"
+    ],
+    "subtitle": "subtitles.rottencreatures.glacial_hunter_death"
+  },
+
+  "dead_beard_call": {
+    "sounds": [
+      "rottencreatures:mob/dead_beard/call1",
+      "rottencreatures:mob/dead_beard/call2"
+    ],
+    "subtitle": "subtitles.rottencreatures.dead_beard_call"
+  },
+  "dead_beard_idle": {
+    "sounds": [
+      "rottencreatures:mob/dead_beard/idle1",
+      "rottencreatures:mob/dead_beard/idle2"
+    ],
+    "subtitle": "subtitles.rottencreatures.dead_beard_idle"
+  },
+  "dead_beard_hurt": {
+    "sounds": [
+      "rottencreatures:mob/dead_beard/hurt"
+    ],
+    "subtitle": "subtitles.rottencreatures.dead_beard_hurt"
+  },
+  "dead_beard_death": {
+    "sounds": [
+      "rottencreatures:mob/dead_beard/death"
+    ],
+    "subtitle": "subtitles.rottencreatures.dead_beard_death"
+  },
+  
+  "immortal_angry": {
+    "sounds": [
+      "rottencreatures:mob/immortal/angry1",
+      "rottencreatures:mob/immortal/angry2",
+      "rottencreatures:mob/immortal/angry3"
+    ],
+    "subtitle": "subtitles.rottencreatures.immortal_angry"
+  },
+  "immortal_heal": {
+    "sounds": [
+      "rottencreatures:mob/immortal/heal"
+    ],
+    "subtitle": "subtitles.rottencreatures.immortal_heal"
+  },
+  "immortal_electroshock": {
+    "sounds": [
+      "rottencreatures:mob/immortal/electroshock1",
+      "rottencreatures:mob/immortal/electroshock2"
+    ],
+    "subtitle": "subtitles.rottencreatures.immortal_electroshock"
+  },
+  "immortal_idle": {
+    "sounds": [
+      "rottencreatures:mob/immortal/idle"
+    ],
+    "subtitle": "subtitles.rottencreatures.immortal_idle"
+  },
+  "immortal_hurt": {
+    "sounds": [
+      "rottencreatures:mob/immortal/hurt"
+    ],
+    "subtitle": "subtitles.rottencreatures.immortal_hurt"
+  },
+  "immortal_death": {
+    "sounds": [
+      "rottencreatures:mob/immortal/death"
+    ],
+    "subtitle": "subtitles.rottencreatures.immortal_death"
+  }
+}

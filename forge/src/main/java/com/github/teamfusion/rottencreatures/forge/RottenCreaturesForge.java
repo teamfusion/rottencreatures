@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.forge;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod(RottenCreatures.MOD_ID)

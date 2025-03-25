@@ -1,0 +1,42 @@
+{
+  "parent": "rottencreatures:root",
+  "criteria": {
+    "killed_immortal": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "rottencreatures:immortal"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.rottencreatures.high_tension.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:lightning_rod"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.rottencreatures.high_tension.title"
+    }
+  },
+  "requirements": [
+    [
+      "killed_immortal"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

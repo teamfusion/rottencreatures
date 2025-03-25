@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.datagen.common;
 
-import com.github.teamfusion.rottencreatures.RottenCreatures;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.common.registries.RCBlocks;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
 import com.google.common.collect.Sets;
@@ -62,16 +62,26 @@ public class RecipeGenerator extends RecipeProvider {
     }
 
     public static void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(RCItems.CORRUPTED_WART.get()).define('W', Items.NETHER_WART).define('F', RCItems.FROZEN_ROTTEN_FLESH.get())
-                .pattern(" W ")
-                .pattern("WFW")
-                .pattern(" W ")
-                .unlockedBy("has_nether_wart", has(Items.NETHER_WART)).unlockedBy("has_frozen_rotten_flesh", has(RCItems.FROZEN_ROTTEN_FLESH.get())).save(consumer);
-        ShapedRecipeBuilder.shaped(RCBlocks.TNT_BARREL.get()).define('G', Items.GUNPOWDER).define('B', Items.BARREL)
-                .pattern("GGG")
-                .pattern("GBG")
-                .pattern("GGG")
-                .unlockedBy("has_gunpowder", has(Items.GUNPOWDER)).unlockedBy("has_barrel", has(Items.BARREL)).save(consumer);
+        ShapedRecipeBuilder.shaped(RCItems.CORRUPTED_WART.get())
+            .define('W', Items.NETHER_WART)
+            .define('F', RCItems.FROZEN_ROTTEN_FLESH.get())
+            .pattern(" W ")
+            .pattern("WFW")
+            .pattern(" W ")
+            .unlockedBy("has_nether_wart", has(Items.NETHER_WART))
+            .unlockedBy("has_frozen_rotten_flesh", has(RCItems.FROZEN_ROTTEN_FLESH.get()))
+            .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RCBlocks.TNT_BARREL.get())
+            .define('G', Items.GUNPOWDER)
+            .define('B', Items.BARREL)
+            .pattern("GGG")
+            .pattern("GBG")
+            .pattern("GGG")
+            .unlockedBy("has_gunpowder", has(Items.GUNPOWDER))
+            .unlockedBy("has_barrel", has(Items.BARREL))
+            .save(consumer);
+
         simpleCookingRecipe(consumer, "smoking", RecipeSerializer.SMOKING_RECIPE, 100, RCItems.FROZEN_ROTTEN_FLESH.get(), Items.ROTTEN_FLESH, 0.1F);
         simpleCookingRecipe(consumer, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING_RECIPE, 600, RCItems.FROZEN_ROTTEN_FLESH.get(), Items.ROTTEN_FLESH, 0.1F);
     }

@@ -1,0 +1,33 @@
+package com.github.teamfusion.rottencreatures.client.rendering.renderer.entities.deadbeard;
+
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
+import com.github.teamfusion.rottencreatures.client.registries.RCModelLayers;
+import com.github.teamfusion.rottencreatures.client.rendering.model.entities.DeadBeardModel;
+import com.github.teamfusion.rottencreatures.common.level.entities.living.deadbeard.DeadBeard;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.resources.ResourceLocation;
+
+public class DeadBeardRenderer<T extends DeadBeard> extends HumanoidMobRenderer<T, DeadBeardModel<T>> {
+    public DeadBeardRenderer(EntityRendererProvider.Context context) {
+        super(context, new DeadBeardModel<>(context.bakeLayer(RCModelLayers.DEAD_BEARD)), 1.0F);
+        this.addLayer(new HeldTntBarrelLayer<>(this));
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(T mob) {
+        return RottenCreatures.resource("textures/entity/dead_beard.png");
+    }
+
+    @Override
+    protected void setupRotations(T deadBeard, PoseStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
+        super.setupRotations(deadBeard, matrices, animationProgress, bodyYaw, tickDelta);
+        if ((double) deadBeard.animationSpeed >= 0.01) {
+            float timestamp = deadBeard.animationPosition - deadBeard.animationSpeed * (1.0F - tickDelta) + 6.0F;
+            float degreeModifier = (Math.abs(timestamp % 13.0F - 6.5F) - 3.25F) / 3.25F;
+            matrices.mulPose(Vector3f.ZP.rotationDegrees(6.5F * degreeModifier));
+        }
+    }
+}

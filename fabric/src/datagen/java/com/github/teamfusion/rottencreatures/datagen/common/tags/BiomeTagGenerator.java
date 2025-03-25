@@ -1,13 +1,13 @@
 package com.github.teamfusion.rottencreatures.datagen.common.tags;
 
-import com.github.teamfusion.rottencreatures.data.RCBiomeTags;
+import com.github.teamfusion.rottencreatures.core.data.tags.RCBiomeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
-public class BiomeTagGenerator extends TagsProvider<Biome> {
+public class BiomeTagGenerator extends DeferredTagsProvider<Biome> {
     public BiomeTagGenerator(FabricDataGenerator generator) {
         super(generator, BuiltinRegistries.BIOME);
     }

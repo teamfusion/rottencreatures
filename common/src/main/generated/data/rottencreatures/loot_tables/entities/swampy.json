@@ -15,17 +15,19 @@
                 "min": 0.0
               },
               "function": "minecraft:set_count"
-            },
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
-              },
-              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:rotten_flesh"
+        }
+      ],
+      "functions": [
+        {
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 1.0,
+            "min": 0.0
+          },
+          "function": "minecraft:looting_enchant"
         }
       ],
       "rolls": 1.0
@@ -34,12 +36,12 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
           "chance": 0.5,
           "condition": "minecraft:random_chance_with_looting",
           "looting_multiplier": 0.01
+        },
+        {
+          "condition": "minecraft:killed_by_player"
         }
       ],
       "entries": [
