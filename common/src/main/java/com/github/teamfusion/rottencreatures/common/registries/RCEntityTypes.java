@@ -1,21 +1,21 @@
 package com.github.teamfusion.rottencreatures.common.registries;
 
 import com.blackgear.platform.core.helper.EntityRegistry;
-import com.github.teamfusion.rottencreatures.core.RottenCreatures;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.deadbeard.DeadBeard;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.glacialhunter.GlacialHunter;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.glacialhunter.HunterWolf;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.immortal.Immortal;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.mummy.Mummy;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.burned.Burned;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.frostbitten.Frostbitten;
 import com.github.teamfusion.rottencreatures.common.level.entities.PrimedTntBarrel;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.lackey.SkeletonLackey;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.scarab.Scarab;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.swampy.Swampy;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.undeadminer.UndeadMiner;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.zap.Zap;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.lackey.ZombieLackey;
+import com.github.teamfusion.rottencreatures.common.level.entities.burned.Burned;
+import com.github.teamfusion.rottencreatures.common.level.entities.deadbeard.DeadBeard;
+import com.github.teamfusion.rottencreatures.common.level.entities.frostbitten.Frostbitten;
+import com.github.teamfusion.rottencreatures.common.level.entities.glacialhunter.GlacialHunter;
+import com.github.teamfusion.rottencreatures.common.level.entities.glacialhunter.HunterWolf;
+import com.github.teamfusion.rottencreatures.common.level.entities.immortal.Immortal;
+import com.github.teamfusion.rottencreatures.common.level.entities.lackey.SkeletonLackey;
+import com.github.teamfusion.rottencreatures.common.level.entities.lackey.ZombieLackey;
+import com.github.teamfusion.rottencreatures.common.level.entities.mummy.Mummy;
+import com.github.teamfusion.rottencreatures.common.level.entities.scarab.Scarab;
+import com.github.teamfusion.rottencreatures.common.level.entities.swampy.Swampy;
+import com.github.teamfusion.rottencreatures.common.level.entities.undeadminer.UndeadMiner;
+import com.github.teamfusion.rottencreatures.common.level.entities.zap.Zap;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 

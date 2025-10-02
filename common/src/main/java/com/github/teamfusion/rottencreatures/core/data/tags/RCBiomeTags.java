@@ -2,12 +2,12 @@ package com.github.teamfusion.rottencreatures.core.data.tags;
 
 import com.blackgear.platform.common.data.TagRegistry;
 import com.github.teamfusion.rottencreatures.core.RottenCreatures;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
 public class RCBiomeTags {
-    public static final TagRegistry<Biome> TAGS = TagRegistry.create(Registry.BIOME_REGISTRY, RottenCreatures.MOD_ID);
+    public static final TagRegistry<Biome> TAGS = TagRegistry.create(Registries.BIOME, RottenCreatures.MOD_ID);
 
     public static final TagKey<Biome> CAN_BURNED_SPAWN_ON = TAGS.register("can_burned_spawn_on");
     public static final TagKey<Biome> CAN_FROSTBITTEN_SPAWN_ON = TAGS.register("can_frostbitten_spawn_on");

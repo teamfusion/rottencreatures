@@ -1,14 +1,9 @@
 {
   "schemaVersion": 1,
-
   "id": "rottencreatures",
   "version": "${version}",
-  "license": "All Rights Reserved",
-
-  "name": "Rotten Creatures",
-  "icon": "assets/rottencreatures/icon.png",
+  "name": "RottenCreatures",
   "description": "Rotten Creatures is a mod that aims to add lots of fun new zombie variants to the game!",
-
   "authors": [
     "RPorotos",
     "Team Fusion"
@@ -18,24 +13,27 @@
     "Auxilliary"
   ],
   "contact": {
-    "homepage": "https://github.com/teamfusion/rottencreatures",
-    "sources": "https://github.com/teamfusion/rottencreatures/issues"
+    "sources": "https://github.com/teamfusion/rottencreatures"
   },
-
+  "license": "ARR",
+  "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.teamfusion.rottencreatures.fabric.RottenCreaturesFabric"
+      "com.github.teamfusion.rottencreatures.core.fabric.RottenCreaturesFabric"
+    ],
+    "fabric-datagen": [
+      "com.github.teamfusion.rottencreatures.data.DataGenerator"
     ]
   },
   "mixins": [
-    "rottencreatures.mixins.json",
-    "rottencreatures-common.mixins.json"
+    "rottencreatures.mixins.json"
   ],
-
   "depends": {
-    "fabric": "*",
-    "platform": ">=1.2.4",
-    "minecraft": ">=1.18.2"
+    "fabricloader": ">=0.16.12",
+    "minecraft": "~1.21.1",
+    "platform": ">=1.2.10.2",
+    "java": ">=21",
+    "fabric-api": "*"
   }
 }

@@ -4,11 +4,12 @@ import com.github.teamfusion.rottencreatures.common.level.entities.PrimedTntBarr
 import com.github.teamfusion.rottencreatures.core.mixin.access.FireworkRocketEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.Fireworks;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -56,18 +58,18 @@ public class TntBarrelBlock extends Block {
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && !player.isCreative() && state.getValue(UNSTABLE)) {
             explode(level, pos, false);
         }
 
-        super.playerWillDestroy(level, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
     public void wasExploded(Level level, BlockPos pos, Explosion explosion) {
         if (!level.isClientSide) {
-            PrimedTntBarrel tnt = createPrimedTntBarrel(level, pos, explosion.getSourceMob());
+            PrimedTntBarrel tnt = createPrimedTntBarrel(level, pos, explosion.getIndirectSourceEntity());
             tnt.setFuse((short) (level.random.nextInt(tnt.getFuse() / 4) + tnt.getFuse() / 8));
             level.addFreshEntity(tnt);
         }
@@ -92,51 +94,53 @@ public class TntBarrelBlock extends Block {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        ItemStack stack = player.getItemInHand(hand);
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(Items.FLINT_AND_STEEL) || stack.is(Items.FIRE_CHARGE)) {
             explode(level, pos, player);
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
             Item item = stack.getItem();
             if (!player.isCreative()) {
                 if (stack.is(Items.FLINT_AND_STEEL)) {
-                    stack.hurtAndBreak(1, player, user -> user.broadcastBreakEvent(hand));
+                    stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                 } else {
                     stack.shrink(1);
                 }
             }
 
             player.awardStat(Stats.ITEM_USED.get(item));
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (stack.is(Items.FIREWORK_ROCKET)) {
             Direction direction = hitResult.getDirection().getOpposite();
             if (!level.isClientSide) {
                 FireworkRocketEntity firework = new FireworkRocketEntity(level, stack, (double) pos.getX() + 0.5, pos.getY(), (double) pos.getZ() + 0.5, true);
-                ((FireworkRocketEntityAccessor)firework).setLifetime(80);
+                ((FireworkRocketEntityAccessor) firework).setLifetime(80);
 
-                int offset = stack.getOrCreateTagElement("Fireworks").getByte("Flight") - 1;
-                firework.shoot(direction.getStepX(), direction.getStepY() + (offset * 0.125), direction.getStepZ(), 0.5F, 1.0F);
-                level.addFreshEntity(firework);
+                Fireworks fireworks = stack.get(DataComponents.FIREWORKS);
+                if (fireworks != null) {
+                    int offset = fireworks.flightDuration() - 1;
+                    firework.shoot(direction.getStepX(), direction.getStepY() + (offset * 0.125), direction.getStepZ(), 0.5F, 1.0F);
+                    level.addFreshEntity(firework);
 
-                PrimedTntBarrel tnt = createPrimedTntBarrel(level, pos, player);
-                tnt.startRiding(firework);
-                level.addFreshEntity(tnt);
+                    PrimedTntBarrel tnt = createPrimedTntBarrel(level, pos, player);
+                    tnt.startRiding(firework);
+                    level.addFreshEntity(tnt);
 
-                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
+                    level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 
-                level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.gameEvent(player, GameEvent.PRIME_FUSE, pos);
+                    level.playSound(null, tnt.getX(), tnt.getY(), tnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.gameEvent(player, GameEvent.PRIME_FUSE, pos);
+                }
             }
 
             if (!player.isCreative()) stack.shrink(1);
 
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        return super.use(state, level, pos, player, hand, hitResult);
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     private static PrimedTntBarrel createPrimedTntBarrel(Level level, BlockPos pos, LivingEntity owner) {

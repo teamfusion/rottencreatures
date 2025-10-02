@@ -1,40 +1,29 @@
 package com.github.teamfusion.rottencreatures.common.registries;
 
 import com.blackgear.platform.core.CoreRegistry;
+import com.blackgear.platform.core.RegistryHolder;
 import com.github.teamfusion.rottencreatures.core.RottenCreatures;
-import com.github.teamfusion.rottencreatures.core.mixin.access.PotionBrewingAccessor;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.Potions;
-
-import java.util.function.Supplier;
 
 public class RCPotions {
-    public static final CoreRegistry<Potion> POTIONS = CoreRegistry.create(Registry.POTION, RottenCreatures.MOD_ID);
+    public static final CoreRegistry<Potion> POTIONS = CoreRegistry.create(BuiltInRegistries.POTION, RottenCreatures.MOD_ID);
 
-    public static final Supplier<Potion> CORRUPTED = POTIONS.register(
+    public static final RegistryHolder<Potion> CORRUPTED = POTIONS.registerHolder(
         "corrupted",
         Potion::new
     );
-    public static final Supplier<Potion> FREEZE = POTIONS.register(
+    public static final RegistryHolder<Potion> FREEZE = POTIONS.registerHolder(
         "freeze",
-        () -> new Potion(new MobEffectInstance(RCMobEffects.FREEZE.get(), 400))
+        () -> new Potion(new MobEffectInstance(RCMobEffects.FREEZE.getHolder().get(), 400))
     );
-    public static final Supplier<Potion> LONG_FREEZE = POTIONS.register(
+    public static final RegistryHolder<Potion> LONG_FREEZE = POTIONS.registerHolder(
         "long_freeze",
-        () -> new Potion(new MobEffectInstance(RCMobEffects.FREEZE.get(), 800))
+        () -> new Potion(new MobEffectInstance(RCMobEffects.FREEZE.getHolder().get(), 800))
     );
-    public static final Supplier<Potion> STRONG_FREEZE = POTIONS.register(
+    public static final RegistryHolder<Potion> STRONG_FREEZE = POTIONS.registerHolder(
         "strong_freeze",
-        () -> new Potion(new MobEffectInstance(RCMobEffects.FREEZE.get(), 200, 1))
+        () -> new Potion(new MobEffectInstance(RCMobEffects.FREEZE.getHolder().get(), 200, 1))
     );
-
-    public static void registerPotionMixes() {
-        PotionBrewingAccessor.callAddMix(Potions.WATER, RCItems.CORRUPTED_WART.get(), RCPotions.CORRUPTED.get());
-        PotionBrewingAccessor.callAddMix(RCPotions.CORRUPTED.get(), RCItems.FROZEN_ROTTEN_FLESH.get(), RCPotions.FREEZE.get());
-        PotionBrewingAccessor.callAddMix(RCPotions.FREEZE.get(), Items.REDSTONE, RCPotions.LONG_FREEZE.get());
-        PotionBrewingAccessor.callAddMix(RCPotions.FREEZE.get(), Items.GLOWSTONE_DUST, RCPotions.STRONG_FREEZE.get());
-    }
 }

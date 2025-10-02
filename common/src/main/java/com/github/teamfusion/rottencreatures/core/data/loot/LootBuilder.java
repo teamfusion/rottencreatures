@@ -2,18 +2,21 @@ package com.github.teamfusion.rottencreatures.core.data.loot;
 
 import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import com.github.teamfusion.rottencreatures.core.mixin.access.BuiltInLootTablesAccessor;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -22,12 +25,12 @@ public record LootBuilder(String key) {
         return new LootBuilder(key);
     }
 
-    public ResourceLocation build(String type) {
-        return BuiltInLootTablesAccessor.callRegister(RottenCreatures.resource("entities/" + this.key() + "/" + type));
+    public ResourceKey<LootTable> build(String type) {
+        return BuiltInLootTablesAccessor.callRegister(ResourceKey.create(Registries.LOOT_TABLE, RottenCreatures.resource("entities/" + this.key() + "/" + type)));
     }
 
-    public ResourceLocation build() {
-        return BuiltInLootTablesAccessor.callRegister(RottenCreatures.resource("entities/" + this.key()));
+    public ResourceKey<LootTable> build() {
+        return BuiltInLootTablesAccessor.callRegister(ResourceKey.create(Registries.LOOT_TABLE, RottenCreatures.resource("entities/" + this.key())));
     }
 
     /**
@@ -62,8 +65,8 @@ public record LootBuilder(String key) {
     /**
      * define the multiplier applied when looting is used
      */
-    public static LootItemFunction.Builder looting(int min, int max) {
-        return LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(min, max));
+    public static LootItemFunction.Builder looting(HolderLookup.Provider registries, int min, int max) {
+        return EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(min, max));
     }
 
     /**
@@ -76,8 +79,8 @@ public record LootBuilder(String key) {
     /**
      * define the chance of dropping along with applying a looting multiplier
      */
-    public static LootItemCondition.Builder chanceWithLooting(float chance, float loot) {
-        return LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(chance, loot);
+    public static LootItemCondition.Builder chanceWithLooting(HolderLookup.Provider registries, float chance, float loot) {
+        return LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, loot);
     }
 
     /**

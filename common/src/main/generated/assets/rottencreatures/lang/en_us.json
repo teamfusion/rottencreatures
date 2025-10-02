@@ -18,7 +18,7 @@
   "block.rottencreatures.swampy_head": "Swampy Head",
   "block.rottencreatures.tnt_barrel": "TNT Barrel",
   "block.rottencreatures.treasure_chest": "Treasure Chest",
-  "block.rottencreatures.treasure_chest.cannot_open": "You cannot open %s treasure!",
+  "block.rottencreatures.treasure_chest.cannot_open": "You cannot open %s's treasure!",
   "block.rottencreatures.treasure_chest.hidden_contents": "The contents of this chest are hidden...",
   "block.rottencreatures.treasure_chest.locked": "This treasure chest is locked!",
   "block.rottencreatures.undead_miner_head": "Undead Miner Head",

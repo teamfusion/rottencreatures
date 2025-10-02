@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+issueTrackerURL = "https://github.com/teamfusion/rottencreatures/issues"
+license = "ARR"
+
+[[mods]]
+    modId = "rottencreatures"
+    version = "${version}"
+    displayName = "RottenCreatures"
+    authors = "RPorotos, Team Fusion"
+    description = "Rotten Creatures is a mod that aims to add lots of fun new zombie variants to the game!"
+    logoFile = "icon.png"
+
+[[dependencies.rottencreatures]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "[21.1,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.rottencreatures]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "[1.21.1,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.rottencreatures]]
+    modId = "platform"
+    type = "required"
+    versionRange = "[1.2.10.2,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[mixins]]
+config = "rottencreatures.mixins.json"

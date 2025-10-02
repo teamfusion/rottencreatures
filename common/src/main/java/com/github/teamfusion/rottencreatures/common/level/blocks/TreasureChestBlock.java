@@ -3,23 +3,31 @@ package com.github.teamfusion.rottencreatures.common.level.blocks;
 import com.github.teamfusion.rottencreatures.common.level.blockentities.TreasureChestBlockEntity;
 import com.github.teamfusion.rottencreatures.core.data.LangConstants;
 import com.mojang.authlib.GameProfile;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,7 +41,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -52,6 +60,11 @@ public class TreasureChestBlock extends BaseEntityBlock {
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     private static final VoxelShape SHAPE = TreasureChestBlock.box(3.0, 0.0, 3.0, 13.0, 7.0, 13.0);
 
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(TreasureChestBlock::new);
+    }
+
     public TreasureChestBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
@@ -62,7 +75,7 @@ public class TreasureChestBlock extends BaseEntityBlock {
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
     }
 
@@ -83,15 +96,60 @@ public class TreasureChestBlock extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (placer instanceof Player player && blockEntity instanceof TreasureChestBlockEntity chest) {
-            chest.setOwnerUUID(player.getUUID());
-
-            // Transfer stored items from ItemStack if it has NBT data
-            CompoundTag compoundTag = stack.getTagElement("BlockEntityTag");
-            if (compoundTag != null && compoundTag.contains("Item")) {
-                chest.load(compoundTag);
+        if (level.getBlockEntity(pos) instanceof TreasureChestBlockEntity chest) {
+            // Set owner if placer is a player
+            if (placer instanceof Player player) {
+                chest.setOwnerUUID(player.getUUID());
             }
+
+            // Get custom data
+            CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+            if (customData == null || customData.isEmpty()) {
+                return;
+            }
+
+            CompoundTag tag = customData.copyTag();
+
+            // Load items
+            if (tag.contains(TreasureChestBlockEntity.TAG_ITEMS, Tag.TAG_LIST)) {
+                ListTag itemsList = tag.getList(TreasureChestBlockEntity.TAG_ITEMS, Tag.TAG_COMPOUND);
+
+                for (int i = 0; i < itemsList.size(); i++) {
+                    CompoundTag itemTag = itemsList.getCompound(i);
+
+                    if (!itemTag.contains("id", Tag.TAG_STRING)) {
+                        continue;
+                    }
+
+                    try {
+                        String id = itemTag.getString("id");
+                        int count = itemTag.contains("Count", Tag.TAG_INT) ? itemTag.getInt("Count") : 1;
+
+                        Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
+                        ItemStack itemStack = new ItemStack(item, count);
+
+                        // Apply custom data if present
+                        if (itemTag.contains("tag", Tag.TAG_COMPOUND)) {
+                            itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(itemTag.getCompound("tag")));
+                        }
+
+                        if (!itemStack.isEmpty()) {
+                            chest.getItems().add(itemStack);
+                        }
+                    } catch (Exception ignored) {
+                        // Silently skip problematic items
+                    }
+                }
+
+                chest.recalculateTotalCount();
+            }
+
+            // Load owner UUID if not set by placer
+            if (chest.getOwnerUUID() == null && tag.hasUUID(TreasureChestBlockEntity.TAG_OWNER_UUID)) {
+                chest.setOwnerUUID(tag.getUUID(TreasureChestBlockEntity.TAG_OWNER_UUID));
+            }
+
+            chest.setChanged();
         }
     }
 
@@ -119,13 +177,13 @@ public class TreasureChestBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
         if (!(level.getBlockEntity(pos) instanceof TreasureChestBlockEntity chest)) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         // Check if player is owner, if not display message
@@ -137,16 +195,15 @@ public class TreasureChestBlock extends BaseEntityBlock {
                     .map(GameProfile::getName)
                     .orElse("someone");
 
-                player.displayClientMessage(Component.translatable(LangConstants.TREASURE_CHEST_CANNOT_OPEN, Component.literal(ownerName + "'s").withStyle(ChatFormatting.GOLD)), true);
+                player.displayClientMessage(Component.translatable(LangConstants.TREASURE_CHEST_CANNOT_OPEN, Component.literal(ownerName).withStyle(ChatFormatting.GOLD)), true);
             } else {
                 player.displayClientMessage(Component.translatable(LangConstants.TREASURE_CHEST_LOCKED), true);
             }
 
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         boolean isOpen = state.getValue(OPEN);
-        ItemStack heldItem = player.getItemInHand(hand);
 
         // If chest is closed and player is opening it
         if (!isOpen) {
@@ -157,23 +214,22 @@ public class TreasureChestBlock extends BaseEntityBlock {
             // If it contains items, spit them out
             if (chest.hasContents()) {
                 NonNullList<ItemStack> storedItems = chest.removeAllItems();
-                for (ItemStack stack : storedItems) {
-                    spawnItemEntity(level, pos, stack);
+                for (ItemStack items : storedItems) {
+                    spawnItemEntity(level, pos, items);
                 }
             }
         }
         // If chest is already open
         else {
-            // If player is holding an item, try to store it
-            if (!heldItem.isEmpty()) {
-                if (heldItem.getItem() instanceof BlockItem block && !block.canFitInsideContainerItems()) {
-                    return InteractionResult.PASS;
+            if (!stack.isEmpty()) {
+                if (stack.getItem() instanceof BlockItem block && !block.canFitInsideContainerItems()) {
+                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }
 
-                int amountToAdd = addItemsToContainer(chest, heldItem);
+                int amountToAdd = addItemsToContainer(chest, stack);
 
                 // Get the replaced items when adding this amount
-                NonNullList<ItemStack> replacedItems = chest.addItemsWithReplacement(heldItem.copy(), amountToAdd);
+                NonNullList<ItemStack> replacedItems = chest.addItemsWithReplacement(stack.copy(), amountToAdd);
 
                 // Spawn any replaced items
                 for (ItemStack replacedItem : replacedItems) {
@@ -181,10 +237,10 @@ public class TreasureChestBlock extends BaseEntityBlock {
                 }
 
                 // Always shrink by the amount we tried to add
-                heldItem.shrink(amountToAdd);
+                stack.shrink(amountToAdd);
                 level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
 
-                return InteractionResult.CONSUME;
+                return ItemInteractionResult.CONSUME;
             }
             // If player clicks with empty hand, close the chest
             else {
@@ -194,7 +250,7 @@ public class TreasureChestBlock extends BaseEntityBlock {
         }
 
         player.awardStat(Stats.OPEN_CHEST);
-        return InteractionResult.CONSUME;
+        return ItemInteractionResult.CONSUME;
     }
 
     private static int addItemsToContainer(TreasureChestBlockEntity chest, ItemStack heldItem) {
@@ -221,18 +277,46 @@ public class TreasureChestBlock extends BaseEntityBlock {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (blockEntity instanceof TreasureChestBlockEntity chest) {
-            ItemStack drop = new ItemStack(this);
             if (chest.hasContents()) {
-                CompoundTag nbt = new CompoundTag();
-                CompoundTag blockEntityNbt = new CompoundTag();
-                chest.saveAdditional(blockEntityNbt);
-                nbt.put("BlockEntityTag", blockEntityNbt);
-                drop.setTag(nbt);
+                ItemStack drop = new ItemStack(this);
+                CompoundTag customTag = new CompoundTag();
+                ListTag itemsList = new ListTag();
+
+                for (ItemStack stack : chest.getItems()) {
+                    if (!stack.isEmpty()) {
+                        CompoundTag itemTag = new CompoundTag();
+                        itemTag.putString("id", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+                        itemTag.putInt("Count", stack.getCount());
+
+                        // Save custom data if present
+                        CustomData data = stack.get(DataComponents.CUSTOM_DATA);
+                        if (data != null && !data.isEmpty()) {
+                            itemTag.put("tag", data.copyTag());
+                        }
+
+                        itemsList.add(itemTag);
+                    }
+                }
+
+                if (!itemsList.isEmpty()) {
+                    customTag.put(TreasureChestBlockEntity.TAG_ITEMS, itemsList);
+                }
+
+                // Save owner UUID
+                if (chest.getOwnerUUID() != null) {
+                    customTag.putUUID(TreasureChestBlockEntity.TAG_OWNER_UUID, chest.getOwnerUUID());
+                }
+
+                // Set custom data
+                if (!customTag.isEmpty()) {
+                    drop.set(DataComponents.CUSTOM_DATA, CustomData.of(customTag));
+                }
+
+                return Collections.singletonList(drop);
             }
-            return Collections.singletonList(drop);
         }
 
         return super.getDrops(state, builder);
@@ -284,24 +368,59 @@ public class TreasureChestBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof TreasureChestBlockEntity chest) {
-            if (!level.isClientSide && player.isCreative() && chest.hasContents()) {
+            if ((player.isCreative() || chest.isOwner(player.getUUID())) && chest.hasContents()) {
                 ItemStack itemStack = new ItemStack(this);
-                CompoundTag nbt = new CompoundTag();
-                CompoundTag blockEntityNbt = new CompoundTag();
-                chest.saveAdditional(blockEntityNbt);
-                nbt.put("BlockEntityTag", blockEntityNbt);
-                itemStack.setTag(nbt);
+                CompoundTag customTag = new CompoundTag();
 
+                // Handle the chest contents
+                if (!chest.getItems().isEmpty()) {
+                    ListTag itemsList = new ListTag();
+
+                    for (ItemStack stack : chest.getItems()) {
+                        if (!stack.isEmpty()) {
+                            CompoundTag itemTag = new CompoundTag();
+                            // Use registry key to get the proper item ID format
+                            itemTag.putString("id", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+                            itemTag.putInt("Count", stack.getCount());
+
+                            // Save custom data if present
+                            CustomData data = stack.get(DataComponents.CUSTOM_DATA);
+                            if (data != null && !data.isEmpty()) {
+                                itemTag.put("tag", data.copyTag());
+                            }
+
+                            itemsList.add(itemTag);
+                        }
+                    }
+
+                    if (!itemsList.isEmpty()) {
+                        customTag.put(TreasureChestBlockEntity.TAG_ITEMS, itemsList);
+                    }
+                }
+
+                // Save owner UUID
+                if (chest.getOwnerUUID() != null) {
+                    customTag.putUUID(TreasureChestBlockEntity.TAG_OWNER_UUID, chest.getOwnerUUID());
+                }
+
+                // Set custom data on item stack
+                if (!customTag.isEmpty()) {
+                    itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(customTag));
+                }
+
+                // Drop the item
                 ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, itemStack);
                 itemEntity.setDefaultPickUpDelay();
                 level.addFreshEntity(itemEntity);
+
+                // Clear the chest
+                chest.removeAllItems();
             }
         }
-
-        super.playerWillDestroy(level, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override

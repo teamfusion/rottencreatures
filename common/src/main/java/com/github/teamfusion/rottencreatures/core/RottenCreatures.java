@@ -13,15 +13,15 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
-public class RottenCreatures {
+public final class RottenCreatures {
     public static final String MOD_ID = "rottencreatures";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final CommonConfig CONFIG = Environment.registerSafeConfig(MOD_ID, ModConfig.Type.COMMON, CommonConfig::new);
     public static final ModInstance INSTANCE = ModInstance.create(MOD_ID)
-        .common(CommonSetup::setup)
-        .postCommon(CommonSetup::asyncSetup)
         .client(ClientSetup::setup)
         .postClient(ClientSetup::asyncSetup)
+        .common(CommonSetup::setup)
+        .postCommon(CommonSetup::asyncSetup)
         .build();
 
     public static void bootstrap() {
@@ -33,6 +33,8 @@ public class RottenCreatures {
         RCBlocks.BLOCKS.register();
         RCBlockEntityTypes.BLOCK_ENTITIES.register();
 
+        RCCreativeModeTabs.CREATIVE_TABS.register();
+
         RCMobEffects.EFFECTS.register();
         RCEntityTypes.ENTITIES.register();
 
@@ -43,6 +45,6 @@ public class RottenCreatures {
     }
 
     public static ResourceLocation resource(String path) {
-        return new ResourceLocation(RottenCreatures.MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(RottenCreatures.MOD_ID, path);
     }
 }

@@ -1,26 +1,41 @@
 package com.github.teamfusion.rottencreatures.common.level.entities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.portal.DimensionTransition;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class PrimedTntBarrel extends Entity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PrimedTntBarrel.class, EntityDataSerializers.INT);
+    private static final ExplosionDamageCalculator USED_PORTAL_DAMAGE_CALCULATOR = new ExplosionDamageCalculator() {
+        @Override
+        public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
+            return !state.is(Blocks.NETHER_PORTAL) && super.shouldBlockExplode(explosion, reader, pos, state, power);
+        }
+
+        @Override
+        public Optional<Float> getBlockExplosionResistance(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, FluidState fluid) {
+            return state.is(Blocks.NETHER_PORTAL) ? Optional.empty() : super.getBlockExplosionResistance(explosion, reader, pos, state, fluid);
+        }
+    };
     @Nullable private LivingEntity owner;
+    private boolean usedPortal;
 
     public PrimedTntBarrel(EntityType<?> type, Level level) {
         super(type, level);
@@ -30,7 +45,7 @@ public class PrimedTntBarrel extends Entity {
     public PrimedTntBarrel(Level level, double x, double y, double z, @Nullable LivingEntity owner) {
         this(RCEntityTypes.TNT_BARREL.get(), level);
         this.setPos(x, y, z);
-        double offset = level.random.nextDouble() * 6.3F;
+        double offset = level.random.nextDouble() * (double) (Mth.PI * 2F);
         this.setDeltaMovement(-Math.sin(offset) * 0.02, 0.2F, -Math.cos(offset) * 0.02);
         this.setFuse(80);
         this.xo = x;
@@ -40,8 +55,8 @@ public class PrimedTntBarrel extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_FUSE_ID, 80);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DATA_FUSE_ID, 80);
     }
 
     @Override
@@ -55,7 +70,15 @@ public class PrimedTntBarrel extends Entity {
     }
 
     @Override
+    protected double getDefaultGravity() {
+        return 0.04;
+    }
+
+    @Override
     public void tick() {
+        this.handlePortal();
+        this.applyGravity();
+
         if (!this.isNoGravity()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0.0, -0.04, 0.0));
         }
@@ -63,7 +86,7 @@ public class PrimedTntBarrel extends Entity {
         this.move(MoverType.SELF, this.getDeltaMovement());
         this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
 
-        if (this.onGround) {
+        if (this.onGround()) {
             this.setDeltaMovement(this.getDeltaMovement().multiply(0.7, -0.5, 0.7));
         }
 
@@ -72,13 +95,13 @@ public class PrimedTntBarrel extends Entity {
 
         if (cooldown <= 0) {
             this.discard();
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 this.explode();
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();
-            if (this.level.isClientSide) {
-                this.level.addParticle(
+            if (this.level().isClientSide) {
+                this.level().addParticle(
                     ParticleTypes.SMOKE,
                     this.getX(),
                     this.getY() + 0.5,
@@ -90,7 +113,7 @@ public class PrimedTntBarrel extends Entity {
     }
 
     private void explode() {
-        this.level.explode(this, this.getX(), this.getY(0.0625), this.getZ(), 4.0F, Explosion.BlockInteraction.BREAK);
+        this.level().explode(this, Explosion.getDefaultDamageSource(this.level(), this), this.usedPortal ? USED_PORTAL_DAMAGE_CALCULATOR : null, this.getX(), this.getY(0.0625), this.getZ(), 4.0F, false, Level.ExplosionInteraction.TNT);
     }
 
     @Override
@@ -109,8 +132,11 @@ public class PrimedTntBarrel extends Entity {
     }
 
     @Override
-    protected float getEyeHeight(Pose pose, EntityDimensions dimensions) {
-        return 0.15F;
+    public void restoreFrom(Entity entity) {
+        super.restoreFrom(entity);
+        if (entity instanceof PrimedTntBarrel barrel) {
+            this.owner = barrel.owner;
+        }
     }
 
     public void setFuse(int delay) {
@@ -121,8 +147,17 @@ public class PrimedTntBarrel extends Entity {
         return this.entityData.get(DATA_FUSE_ID);
     }
 
+    public void setUsedPortal(boolean usedPortal) {
+        this.usedPortal = usedPortal;
+    }
+
     @Override
-    public Packet<?> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this);
+    public Entity changeDimension(DimensionTransition transition) {
+        Entity entity = super.changeDimension(transition);
+        if (entity instanceof PrimedTntBarrel barrel) {
+            barrel.setUsedPortal(true);
+        }
+
+        return entity;
     }
 }

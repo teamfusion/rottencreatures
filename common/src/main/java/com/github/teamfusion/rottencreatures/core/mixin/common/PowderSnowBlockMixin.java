@@ -1,6 +1,6 @@
 package com.github.teamfusion.rottencreatures.core.mixin.common;
 
-import com.github.teamfusion.rottencreatures.common.level.entities.living.burned.Burned;
+import com.github.teamfusion.rottencreatures.common.level.entities.burned.Burned;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;

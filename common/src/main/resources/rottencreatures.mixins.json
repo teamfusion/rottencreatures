@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "package": "com.github.teamfusion.rottencreatures.core.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "client.HumanoidArmorLayerMixin"
+  ],
+  "mixins": [
+    "access.BuiltInLootTablesAccessor",
+    "access.FireworkRocketEntityAccessor",
+    "access.MobEffectAccessor",
+    "common.ExplosionMixin",
+    "common.ItemStackMixin",
+    "common.LavaCauldronBlockMixin",
+    "common.LayeredCauldronBlockMixin",
+    "common.LivingEntityMixin",
+    "common.PotionBrewingMixin",
+    "common.PowderSnowBlockMixin",
+    "common.ServerLevelMixin",
+    "common.VillagerHostilesSensorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

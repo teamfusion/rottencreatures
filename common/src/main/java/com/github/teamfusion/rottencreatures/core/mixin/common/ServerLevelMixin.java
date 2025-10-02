@@ -1,9 +1,9 @@
 package com.github.teamfusion.rottencreatures.core.mixin.common;
 
-import com.github.teamfusion.rottencreatures.core.RottenCreatures;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.immortal.Immortal;
+import com.github.teamfusion.rottencreatures.common.level.entities.immortal.Immortal;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
@@ -63,7 +63,7 @@ public abstract class ServerLevelMixin {
         LivingEntity entity = self.getNearestPlayer(TargetingConditions.forNonCombat().range(64), pos.getX(), pos.getY(), pos.getZ());
         if (entity == null) return;
 
-        boolean hasEffect = entity.hasEffect(RCMobEffects.CHANNELLED.get()) && self.random.nextFloat() <= 0.02F * entity.getEffect(RCMobEffects.CHANNELLED.get()).getAmplifier() + 1;
+        boolean hasEffect = entity.hasEffect(RCMobEffects.CHANNELLED.getHolder().get()) && self.random.nextFloat() <= 0.02F * entity.getEffect(RCMobEffects.CHANNELLED.getHolder().get()).getAmplifier() + 1;
 
         if (hasEffect && self.canSeeSky(entity.blockPosition())) {
             cir.setReturnValue(entity.blockPosition());

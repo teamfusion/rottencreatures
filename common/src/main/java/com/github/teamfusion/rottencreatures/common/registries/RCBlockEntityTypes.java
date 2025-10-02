@@ -2,9 +2,9 @@ package com.github.teamfusion.rottencreatures.common.registries;
 
 import com.blackgear.platform.core.helper.BlockEntityRegistry;
 import com.blackgear.platform.core.helper.BlockEntityTypeBuilder;
-import com.github.teamfusion.rottencreatures.core.RottenCreatures;
-import com.github.teamfusion.rottencreatures.common.level.blockentities.ZombieSkullBlockEntity;
 import com.github.teamfusion.rottencreatures.common.level.blockentities.TreasureChestBlockEntity;
+import com.github.teamfusion.rottencreatures.common.level.blockentities.ZombieSkullBlockEntity;
+import com.github.teamfusion.rottencreatures.core.RottenCreatures;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.function.Supplier;

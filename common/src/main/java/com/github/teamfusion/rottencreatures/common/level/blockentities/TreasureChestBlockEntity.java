@@ -2,6 +2,7 @@ package com.github.teamfusion.rottencreatures.common.level.blockentities;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCBlockEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -10,11 +11,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class TreasureChestBlockEntity extends BlockEntity {
-    private static final int MAX_ITEMS = 64;
-    private final NonNullList<ItemStack> items = NonNullList.create();
+    public static final int MAX_ITEMS = 64;
+    public static final String TAG_ITEMS = "Items";
+    public static final String TAG_OWNER_UUID = "OwnerUUID";
+    public static final String TAG_MAX_STACK_SIZE = "MaxStackSize";
+    private NonNullList<ItemStack> items = NonNullList.create();
     private int totalCount = 0;
     private UUID ownerUUID;
     public int maxStackSize = MAX_ITEMS;
@@ -24,62 +29,67 @@ public class TreasureChestBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        ListTag itemsList = new ListTag();
+    public void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
 
-        for (ItemStack stack : items) {
-            CompoundTag itemTag = new CompoundTag();
-            stack.save(itemTag);
-            itemsList.add(itemTag);
+        // Save items directly as a list tag like in your original implementation
+        if (!this.items.isEmpty()) {
+            ListTag itemsList = new ListTag();
+            for (ItemStack stack : this.items) {
+                CompoundTag itemTag = new CompoundTag();
+                stack.save(provider, itemTag);
+                itemsList.add(itemTag);
+            }
+            tag.put(TAG_ITEMS, itemsList);
         }
 
-        tag.put("Items", itemsList);
-        tag.putInt("ItemCount", totalCount);
-        tag.putInt("MaxStackSize", maxStackSize);
-
-        if (ownerUUID != null) {
-            tag.putUUID("Owner", ownerUUID);
+        // Save other data
+        if (this.ownerUUID != null) {
+            tag.putUUID(TAG_OWNER_UUID, this.ownerUUID);
         }
+        if (this.maxStackSize != MAX_ITEMS) {
+            tag.putInt(TAG_MAX_STACK_SIZE, this.maxStackSize);
+        }
+
+        tag.putInt("ItemCount", totalCount); // Save the total count for backward compatibility
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        items.clear();
-        totalCount = 0;
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        this.items = NonNullList.create();
 
-        if (tag.contains("Items", Tag.TAG_LIST)) {
-            ListTag itemsList = tag.getList("Items", Tag.TAG_COMPOUND);
+        // Load items from list tag like in your original implementation
+        if (tag.contains(TAG_ITEMS, Tag.TAG_LIST)) {
+            ListTag itemsList = tag.getList(TAG_ITEMS, Tag.TAG_COMPOUND);
             for (int i = 0; i < itemsList.size(); i++) {
                 CompoundTag itemTag = itemsList.getCompound(i);
-                ItemStack stack = ItemStack.of(itemTag);
-                if (!stack.isEmpty()) {
-                    items.add(stack);
-                    totalCount += stack.getCount();
-                }
-            }
-        } else if (tag.contains("Item", Tag.TAG_COMPOUND)) {
-            // Legacy support
-            ItemStack stack = ItemStack.of(tag.getCompound("Item"));
-            if (!stack.isEmpty()) {
-                items.add(stack);
-                totalCount = stack.getCount();
+                Optional<ItemStack> stack = ItemStack.parse(registries, itemTag);
+                stack.ifPresent(itemStack -> this.items.add(itemStack));
             }
         }
 
-        // Load or set the max stack size
-        if (tag.contains("MaxStackSize")) {
-            maxStackSize = tag.getInt("MaxStackSize");
-        } else if (!items.isEmpty()) {
-            // If no saved max stack size, but we have items, use the first item's stack size
-            maxStackSize = Math.min(items.get(0).getMaxStackSize(), MAX_ITEMS);
+        // Load other data
+        if (tag.hasUUID(TAG_OWNER_UUID)) {
+            this.ownerUUID = tag.getUUID(TAG_OWNER_UUID);
+        }
+
+        // Load max stack size with appropriate fallbacks
+        if (tag.contains(TAG_MAX_STACK_SIZE, Tag.TAG_INT) && !this.items.isEmpty()) {
+            this.maxStackSize = tag.getInt(TAG_MAX_STACK_SIZE);
+        } else if (!this.items.isEmpty()) {
+            this.maxStackSize = this.items.getFirst().getMaxStackSize();
         } else {
-            maxStackSize = MAX_ITEMS; // Default
+            this.maxStackSize = MAX_ITEMS;
         }
 
-        if (tag.hasUUID("Owner")) {
-            ownerUUID = tag.getUUID("Owner");
+        this.recalculateTotalCount();
+    }
+
+    public void recalculateTotalCount() {
+        this.totalCount = 0;
+        for (ItemStack stack : this.items) {
+            this.totalCount += stack.getCount();
         }
     }
 
@@ -91,12 +101,6 @@ public class TreasureChestBlockEntity extends BlockEntity {
         return !items.isEmpty() && totalCount != 0;
     }
 
-    /**
-     * Try to add an item to the chest, potentially replacing old items if needed
-     * @param stack The stack to add
-     * @param count How many to try to add
-     * @return The items that were replaced, or empty if no replacement occurred
-     */
     public NonNullList<ItemStack> addItemsWithReplacement(ItemStack stack, int count) {
         if (stack.isEmpty() || count <= 0) {
             return NonNullList.create();
@@ -105,140 +109,119 @@ public class TreasureChestBlockEntity extends BlockEntity {
         NonNullList<ItemStack> replacedItems = NonNullList.create();
         int itemMaxStackSize = stack.getMaxStackSize();
 
-        // If the chest is empty, set the maxStackSize based on the first item
         if (items.isEmpty()) {
             maxStackSize = itemMaxStackSize;
             addItem(stack, Math.min(count, maxStackSize));
-            return replacedItems; // Nothing replaced
+            recalculateTotalCount();
+            this.setChanged();
+            return replacedItems;
         }
 
-        // If we're trying to add an item with a different max stack size, replace all items
         if (items.get(0).getMaxStackSize() != itemMaxStackSize) {
             replacedItems.addAll(removeAllItems());
             maxStackSize = itemMaxStackSize;
             addItem(stack, Math.min(count, maxStackSize));
+            recalculateTotalCount();
+            this.setChanged();
             return replacedItems;
         }
 
         int toAdd = Math.min(count, maxStackSize);
         int spaceLeft = maxStackSize - totalCount;
 
-        // If there's space available, just add without replacing
         if (spaceLeft >= toAdd) {
-            // Try to merge with existing stacks first
+            int added = 0;
             for (int i = 0; i < items.size() && toAdd > 0; i++) {
                 ItemStack existingStack = items.get(i);
-                if (ItemStack.isSameItemSameTags(existingStack, stack)) {
+                if (ItemStack.isSameItemSameComponents(existingStack, stack)) {
                     int canAdd = Math.min(toAdd, existingStack.getMaxStackSize() - existingStack.getCount());
                     if (canAdd > 0) {
                         existingStack.grow(canAdd);
                         toAdd -= canAdd;
-                        totalCount += canAdd;
-                        this.setChanged();
+                        added += canAdd;
                     }
                 }
             }
+            totalCount += added;
 
-            // Add as new stacks if needed
             if (toAdd > 0) {
                 addItem(stack, toAdd);
             }
-        }
+            this.setChanged();
+        } else {
+            int itemsToReplaceCount = toAdd - spaceLeft;
+            int currentReplacedCount = 0;
+            NonNullList<ItemStack> actuallyReplaced = NonNullList.create();
 
-        // No space available - need to replace items
-        else {
-            // First try to replace non-matching items (FIFO)
-            int itemsReplaced = 0;
-            int remainingToAdd = toAdd;
-
-            // First pass: try to replace non-matching items
-            for (int i = 0; i < items.size() && itemsReplaced < toAdd && remainingToAdd > 0; i++) {
+            for (int i = 0; i < items.size() && currentReplacedCount < itemsToReplaceCount; ) {
                 ItemStack oldStack = items.get(i);
-
-                // Skip items that match what we're adding
-                if (ItemStack.isSameItemSameTags(oldStack, stack)) {
+                if (ItemStack.isSameItemSameComponents(oldStack, stack)) {
+                    i++;
                     continue;
                 }
 
-                int toRemove = Math.min(oldStack.getCount(), remainingToAdd);
+                int canRemove = Math.min(oldStack.getCount(), itemsToReplaceCount - currentReplacedCount);
+                ItemStack removedPortion = oldStack.split(canRemove);
+                actuallyReplaced.add(removedPortion);
+                currentReplacedCount += canRemove;
+                totalCount -= canRemove;
 
-                if (toRemove == oldStack.getCount()) {
-                    // Remove the entire stack
-                    ItemStack replacedStack = oldStack.copy();
+                if (oldStack.isEmpty()) {
                     items.remove(i);
-                    i--; // Adjust index since we removed an item
-                    replacedItems.add(replacedStack);
-                    totalCount -= toRemove;
                 } else {
-                    // Remove part of the stack
-                    ItemStack replacedStack = oldStack.copy();
-                    replacedStack.setCount(toRemove);
-                    replacedItems.add(replacedStack);
-                    oldStack.shrink(toRemove);
-                    totalCount -= toRemove;
-                }
-
-                itemsReplaced += toRemove;
-                remainingToAdd -= toRemove;
-            }
-
-            // If we still need to replace more items, now replace matching items (FIFO)
-            if (remainingToAdd > 0) {
-                while (totalCount + remainingToAdd > maxStackSize && !items.isEmpty()) {
-                    ItemStack oldStack = items.get(0);
-                    int toRemove = Math.min(oldStack.getCount(), totalCount + remainingToAdd - maxStackSize);
-
-                    if (toRemove == oldStack.getCount()) {
-                        // Remove the entire stack
-                        items.remove(0);
-                        replacedItems.add(oldStack);
-                        totalCount -= toRemove;
-                    } else {
-                        // Remove part of the stack
-                        ItemStack replacedStack = oldStack.copy();
-                        replacedStack.setCount(toRemove);
-                        replacedItems.add(replacedStack);
-                        oldStack.shrink(toRemove);
-                        totalCount -= toRemove;
-                    }
-
-                    itemsReplaced += toRemove;
-                    remainingToAdd -= toRemove;
+                    i++;
                 }
             }
 
-            // Now add the new items - first try to merge with existing
-            remainingToAdd = toAdd;
-            for (int i = 0; i < items.size() && remainingToAdd > 0; i++) {
+            for (int i = 0; i < items.size() && currentReplacedCount < itemsToReplaceCount; ) {
+                ItemStack oldStack = items.get(i);
+                int canRemove = Math.min(oldStack.getCount(), itemsToReplaceCount - currentReplacedCount);
+                ItemStack removedPortion = oldStack.split(canRemove);
+                actuallyReplaced.add(removedPortion);
+                currentReplacedCount += canRemove;
+                totalCount -= canRemove;
+
+                if (oldStack.isEmpty()) {
+                    items.remove(i);
+                } else {
+                    i++;
+                }
+            }
+
+            int added = 0;
+            for (int i = 0; i < items.size() && toAdd > 0; i++) {
                 ItemStack existingStack = items.get(i);
-                if (ItemStack.isSameItemSameTags(existingStack, stack)) {
-                    int canAdd = Math.min(remainingToAdd, existingStack.getMaxStackSize() - existingStack.getCount());
+                if (ItemStack.isSameItemSameComponents(existingStack, stack)) {
+                    int canAdd = Math.min(toAdd, existingStack.getMaxStackSize() - existingStack.getCount());
                     if (canAdd > 0) {
                         existingStack.grow(canAdd);
-                        remainingToAdd -= canAdd;
-                        totalCount += canAdd;
-                        this.setChanged();
+                        toAdd -= canAdd;
+                        added += canAdd;
                     }
                 }
             }
+            totalCount += added;
 
-            // Add remaining as new stack if needed
-            if (remainingToAdd > 0) {
-                addItem(stack, remainingToAdd);
+            if (toAdd > 0) {
+                addItem(stack, toAdd);
             }
+
+            replacedItems.addAll(actuallyReplaced);
+            this.setChanged();
         }
 
-        // Clean up empty stacks
         items.removeIf(ItemStack::isEmpty);
+        recalculateTotalCount();
 
         return replacedItems;
     }
 
     private void addItem(ItemStack stack, int count) {
+        if (stack.isEmpty() || count <= 0) return;
+
         int itemMaxStackSize = stack.getMaxStackSize();
         int toAdd = count;
 
-        // For items with maxStackSize=1, we need to add multiple separate stacks
         while (toAdd > 0) {
             ItemStack newStack = stack.copy();
             int stackSize = Math.min(toAdd, itemMaxStackSize);
@@ -255,7 +238,7 @@ public class TreasureChestBlockEntity extends BlockEntity {
         result.addAll(items);
         items.clear();
         totalCount = 0;
-        maxStackSize = MAX_ITEMS; // Reset max stack size when emptied
+        maxStackSize = MAX_ITEMS;
         this.setChanged();
         return result;
     }

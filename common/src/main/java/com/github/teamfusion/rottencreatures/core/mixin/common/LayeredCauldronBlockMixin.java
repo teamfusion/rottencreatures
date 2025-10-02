@@ -1,10 +1,9 @@
 package com.github.teamfusion.rottencreatures.core.mixin.common;
 
-import com.github.teamfusion.rottencreatures.common.level.entities.living.burned.Burned;
+import com.github.teamfusion.rottencreatures.common.level.entities.burned.Burned;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
@@ -15,14 +14,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Map;
-
 @Mixin(LayeredCauldronBlock.class)
 public abstract class LayeredCauldronBlockMixin extends AbstractCauldronBlock {
     @Shadow protected abstract void handleEntityOnFireInside(BlockState blockState, Level level, BlockPos blockPos);
 
-    public LayeredCauldronBlockMixin(Properties properties, Map<Item, CauldronInteraction> map) {
-        super(properties, map);
+    public LayeredCauldronBlockMixin(Properties properties, CauldronInteraction.InteractionMap interactions) {
+        super(properties, interactions);
     }
 
     /**

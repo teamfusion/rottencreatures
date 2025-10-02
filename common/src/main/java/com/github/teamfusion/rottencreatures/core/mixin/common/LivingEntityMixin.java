@@ -1,6 +1,7 @@
 package com.github.teamfusion.rottencreatures.core.mixin.common;
 
 import com.github.teamfusion.rottencreatures.common.registries.RCMobEffects;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -17,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
-    @Shadow public abstract boolean hasEffect(MobEffect mobEffect);
-    @Shadow public abstract @Nullable MobEffectInstance getEffect(MobEffect mobEffect);
+    @Shadow public abstract boolean hasEffect(Holder<MobEffect> effect);
+    @Shadow public abstract @Nullable MobEffectInstance getEffect(Holder<MobEffect> effect);
 
     public LivingEntityMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -30,7 +31,7 @@ public abstract class LivingEntityMixin extends Entity {
      */
     @Override
     public boolean isFullyFrozen() {
-        return super.isFullyFrozen() || this.hasEffect(RCMobEffects.FREEZE.get());
+        return super.isFullyFrozen() || this.hasEffect(RCMobEffects.FREEZE.getHolder().get());
     }
 
     /**
@@ -39,7 +40,7 @@ public abstract class LivingEntityMixin extends Entity {
      */
     @Override
     public int getTicksFrozen() {
-        return this.hasEffect(RCMobEffects.FREEZE.get()) ? this.getEffect(RCMobEffects.FREEZE.get()).getDuration() : super.getTicksFrozen();
+        return this.hasEffect(RCMobEffects.FREEZE.getHolder().get()) ? this.getEffect(RCMobEffects.FREEZE.getHolder().get()).getDuration() : super.getTicksFrozen();
     }
 
     /**
@@ -48,7 +49,7 @@ public abstract class LivingEntityMixin extends Entity {
      */
     @Inject(method = "canFreeze", at = @At("TAIL"), cancellable = true)
     private void rc$canFreeze(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue((!this.hasEffect(RCMobEffects.FREEZE.get()) || (this.hasEffect(RCMobEffects.FREEZE.get()) && this.isInPowderSnow)) && cir.getReturnValue());
+        cir.setReturnValue((!this.hasEffect(RCMobEffects.FREEZE.getHolder().get()) || (this.hasEffect(RCMobEffects.FREEZE.getHolder().get()) && this.isInPowderSnow)) && cir.getReturnValue());
     }
 
     /**
@@ -57,7 +58,7 @@ public abstract class LivingEntityMixin extends Entity {
      */
     @Inject(method = "jumpFromGround", at = @At("HEAD"), cancellable = true)
     private void rc$jumpFromGround(CallbackInfo ci) {
-        if (this.hasEffect(RCMobEffects.FREEZE.get())) ci.cancel();
+        if (this.hasEffect(RCMobEffects.FREEZE.getHolder().get())) ci.cancel();
     }
 
     /**
@@ -66,7 +67,7 @@ public abstract class LivingEntityMixin extends Entity {
      */
     @Inject(method = "onEffectRemoved", at = @At("TAIL"))
     private void rc$onEffectRemoved(MobEffectInstance instance, CallbackInfo ci) {
-        if (instance.getEffect() == RCMobEffects.FREEZE.get() && !this.isInPowderSnow) {
+        if (instance.getEffect() == RCMobEffects.FREEZE.getHolder().get() && !this.isInPowderSnow) {
             this.setTicksFrozen(0);
         }
     }

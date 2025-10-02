@@ -19,7 +19,7 @@ public class ExplosionMixin {
     /**
      * checks for the owner of the PrimedTntBarrel
      */
-    @Inject(method = "getSourceMob", at = @At("TAIL"), cancellable = true)
+    @Inject(method = "getIndirectSourceEntity", at = @At("TAIL"), cancellable = true)
     private void getSource(CallbackInfoReturnable<LivingEntity> cir) {
         if (this.source instanceof PrimedTntBarrel barrel) {
             cir.setReturnValue(barrel.getOwner());

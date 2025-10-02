@@ -1,70 +1,68 @@
 package com.github.teamfusion.rottencreatures.common;
 
-import com.blackgear.platform.common.IntegrationHandler;
-import com.blackgear.platform.common.entity.EntityFactory;
+import com.blackgear.platform.common.integration.BlockIntegration;
+import com.blackgear.platform.common.integration.MobIntegration;
 import com.blackgear.platform.common.worldgen.modifier.BiomeManager;
 import com.blackgear.platform.core.ParallelDispatch;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.deadbeard.DeadBeard;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.glacialhunter.GlacialHunter;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.immortal.Immortal;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.mummy.Mummy;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.burned.Burned;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.frostbitten.Frostbitten;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.lackey.SkeletonLackey;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.scarab.Scarab;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.swampy.Swampy;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.undeadminer.UndeadMiner;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.zap.Zap;
-import com.github.teamfusion.rottencreatures.common.level.entities.living.lackey.ZombieLackey;
+import com.github.teamfusion.rottencreatures.common.level.entities.burned.Burned;
+import com.github.teamfusion.rottencreatures.common.level.entities.deadbeard.DeadBeard;
+import com.github.teamfusion.rottencreatures.common.level.entities.frostbitten.Frostbitten;
+import com.github.teamfusion.rottencreatures.common.level.entities.glacialhunter.GlacialHunter;
+import com.github.teamfusion.rottencreatures.common.level.entities.immortal.Immortal;
+import com.github.teamfusion.rottencreatures.common.level.entities.lackey.SkeletonLackey;
+import com.github.teamfusion.rottencreatures.common.level.entities.lackey.ZombieLackey;
+import com.github.teamfusion.rottencreatures.common.level.entities.mummy.Mummy;
+import com.github.teamfusion.rottencreatures.common.level.entities.scarab.Scarab;
+import com.github.teamfusion.rottencreatures.common.level.entities.swampy.Swampy;
+import com.github.teamfusion.rottencreatures.common.level.entities.undeadminer.UndeadMiner;
+import com.github.teamfusion.rottencreatures.common.level.entities.zap.Zap;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.common.registries.RCItems;
-import com.github.teamfusion.rottencreatures.common.registries.RCPotions;
 import com.github.teamfusion.rottencreatures.common.worldgen.WorldGeneration;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 public class CommonSetup {
     public static void setup() {
-        EntityFactory.registerMobAttributes(CommonSetup::registerMobAttributes);
+        MobIntegration.registerIntegrations(CommonSetup::mobIntegrations);
     }
 
     public static void asyncSetup(ParallelDispatch dispatch) {
-        BiomeManager.add(WorldGeneration::setupMobSpawns);
-        EntityFactory.registerSpawnPlacements(CommonSetup::registerSpawnPlacement);
-        IntegrationHandler.addFuel(RCItems.MAGMA_ROTTEN_FLESH.get(), 67);
-        RCPotions.registerPotionMixes();
+        dispatch.enqueueWork(() -> {
+            BiomeManager.add(WorldGeneration::setupMobSpawns);
+            BlockIntegration.registerIntegrations(event -> event.registerFuelItem(RCItems.MAGMA_ROTTEN_FLESH.get(), 67));
+            CommonGameEvents.bootstrap();
+        });
     }
 
-    public static void registerMobAttributes(EntityFactory.EntityAttributesEvent event) {
-        event.register(RCEntityTypes.BURNED, Burned::createAttributes);
-        event.register(RCEntityTypes.FROSTBITTEN, Frostbitten::createAttributes);
-        event.register(RCEntityTypes.SWAMPY, Swampy::createAttributes);
-        event.register(RCEntityTypes.UNDEAD_MINER, UndeadMiner::createAttributes);
-        event.register(RCEntityTypes.MUMMY, Mummy::createAttributes);
-        event.register(RCEntityTypes.GLACIAL_HUNTER, GlacialHunter::createAttributes);
-        event.register(RCEntityTypes.HUNTER_WOLF, Wolf::createAttributes);
-        event.register(RCEntityTypes.SCARAB, Scarab::createAttributes);
-        event.register(RCEntityTypes.DEAD_BEARD, DeadBeard::createAttributes);
-        event.register(RCEntityTypes.ZOMBIE_LACKEY, ZombieLackey::createAttributes);
-        event.register(RCEntityTypes.SKELETON_LACKEY, SkeletonLackey::createAttributes);
-        event.register(RCEntityTypes.IMMORTAL, Immortal::createAttributes);
-        event.register(RCEntityTypes.ZAP, Zap::createAttributes);
-    }
+    private static void mobIntegrations(MobIntegration.Event event) {
+        event.registerAttributes(RCEntityTypes.BURNED, Burned::createAttributes);
+        event.registerAttributes(RCEntityTypes.FROSTBITTEN, Frostbitten::createAttributes);
+        event.registerAttributes(RCEntityTypes.SWAMPY, Swampy::createAttributes);
+        event.registerAttributes(RCEntityTypes.UNDEAD_MINER, UndeadMiner::createAttributes);
+        event.registerAttributes(RCEntityTypes.MUMMY, Mummy::createAttributes);
+        event.registerAttributes(RCEntityTypes.GLACIAL_HUNTER, GlacialHunter::createAttributes);
+        event.registerAttributes(RCEntityTypes.HUNTER_WOLF, Wolf::createAttributes);
+        event.registerAttributes(RCEntityTypes.SCARAB, Scarab::createAttributes);
+        event.registerAttributes(RCEntityTypes.DEAD_BEARD, DeadBeard::createAttributes);
+        event.registerAttributes(RCEntityTypes.ZOMBIE_LACKEY, ZombieLackey::createAttributes);
+        event.registerAttributes(RCEntityTypes.SKELETON_LACKEY, SkeletonLackey::createAttributes);
+        event.registerAttributes(RCEntityTypes.IMMORTAL, Immortal::createAttributes);
+        event.registerAttributes(RCEntityTypes.ZAP, Zap::createAttributes);
 
-    public static void registerSpawnPlacement(EntityFactory.EntityPlacementEvent event) {
-        event.register(RCEntityTypes.BURNED, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Burned::checkBurnedSpawnRules);
-        event.register(RCEntityTypes.FROSTBITTEN, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Frostbitten::checkFrostbittenSpawnRules);
-        event.register(RCEntityTypes.SWAMPY, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Swampy::checkSwampySpawnRules);
-        event.register(RCEntityTypes.UNDEAD_MINER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, UndeadMiner::checkUndeadMinerSpawnRules);
-        event.register(RCEntityTypes.GLACIAL_HUNTER, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GlacialHunter::checkGlacialHunterSpawnRules);
-        event.register(RCEntityTypes.MUMMY, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mummy::checkMummySpawnRules);
-        event.register(RCEntityTypes.SCARAB, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
-        event.register(RCEntityTypes.DEAD_BEARD, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DeadBeard::checkDeadBeardSpawnRules);
-        event.register(RCEntityTypes.ZOMBIE_LACKEY, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
-        event.register(RCEntityTypes.SKELETON_LACKEY, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
-        event.register(RCEntityTypes.IMMORTAL, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
-        event.register(RCEntityTypes.ZAP, SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.registerPlacement(RCEntityTypes.BURNED, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Burned::checkBurnedSpawnRules);
+        event.registerPlacement(RCEntityTypes.FROSTBITTEN, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Frostbitten::checkFrostbittenSpawnRules);
+        event.registerPlacement(RCEntityTypes.SWAMPY, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Swampy::checkSwampySpawnRules);
+        event.registerPlacement(RCEntityTypes.UNDEAD_MINER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, UndeadMiner::checkUndeadMinerSpawnRules);
+        event.registerPlacement(RCEntityTypes.GLACIAL_HUNTER, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GlacialHunter::checkGlacialHunterSpawnRules);
+        event.registerPlacement(RCEntityTypes.MUMMY, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mummy::checkMummySpawnRules);
+        event.registerPlacement(RCEntityTypes.SCARAB, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.registerPlacement(RCEntityTypes.DEAD_BEARD, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DeadBeard::checkDeadBeardSpawnRules);
+        event.registerPlacement(RCEntityTypes.ZOMBIE_LACKEY, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.registerPlacement(RCEntityTypes.SKELETON_LACKEY, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.registerPlacement(RCEntityTypes.IMMORTAL, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.registerPlacement(RCEntityTypes.ZAP, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
     }
 }

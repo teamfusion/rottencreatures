@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:zombie",
+    "minecraft:zombie_villager",
+    "minecraft:drowned",
+    "minecraft:husk",
+    "rottencreatures:swampy",
+    "rottencreatures:undead_miner",
+    "rottencreatures:mummy",
+    "rottencreatures:zombie_lackey"
+  ]
+}
