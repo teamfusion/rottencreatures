@@ -267,7 +267,18 @@ public class Burned extends Zombie {
     public float getMoveSpeed() {
         // Apply speed modifiers depending on the state.
         // if Obsidian then change the speed to 50%, if Crazy then change the speed to 150%
-        return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isObsidian() ? 0.5F : this.isCrazy() ? 1.5F : 1.0F);
+        float speed = (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED);
+        if (this.isObsidian()) {
+            return speed * 0.5F;
+        } else if (this.isCrazy()) {
+            if (this.isBaby()) {
+                return speed * 1.5F;
+            }
+
+            return speed * 2.5F;
+        } else {
+            return speed;
+        }
     }
 
     @Override

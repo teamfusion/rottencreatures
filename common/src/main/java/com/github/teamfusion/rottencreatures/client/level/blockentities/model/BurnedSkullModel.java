@@ -26,19 +26,18 @@ public class BurnedSkullModel extends SkullModelBase {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
 
-        root.addOrReplaceChild(
-            "head",
+        root.addOrReplaceChild("head",
             CubeListBuilder.create()
                 .texOffs(0, 0)
                 .addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F)
-                .texOffs(32, 2)
-                .addBox(-3.5F, -7.0F, -3.75F, 7.0F, 7.0F, 7.0F)
-                .texOffs(60, 0)
-                .addBox(-4.5F, -8.5F, -4.5F, 9.0F, 9.0F, 9.0F),
+                .texOffs(32, 0)
+                .addBox(-4.5F, -8.5F, -4.5F, 9.0F, 9.0F, 9.0F)
+                .texOffs(44, 18)
+                .addBox(-3.5F, -7.0F, -3.5F, 7.0F, 7.0F, 1.0F),
             PartPose.ZERO
         );
 
-        return LayerDefinition.create(mesh, 96, 64);
+        return LayerDefinition.create(mesh, 120, 48);
     }
     
     @Override

@@ -1,6 +1,7 @@
 package com.github.teamfusion.rottencreatures.common;
 
 import com.blackgear.platform.common.events.EntityEvents;
+import com.blackgear.platform.core.util.event.CancellableResult;
 import com.github.teamfusion.rottencreatures.common.registries.RCEntityTypes;
 import com.github.teamfusion.rottencreatures.core.data.tags.RCEntityTypeTags;
 import net.minecraft.world.Difficulty;
@@ -20,7 +21,8 @@ public class CommonGameEvents {
             if (entity instanceof Mob mob && rollConversionChance(mob)) {
                 attemptEnvironmentalConversion(mob);
             }
-            return true;
+
+            return CancellableResult.PASS;
         });
     }
 

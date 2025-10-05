@@ -1,7 +1,7 @@
 package com.github.teamfusion.rottencreatures.client.level.entities.model;
 
 import com.blackgear.platform.client.animator.MathAnimator;
-import com.github.teamfusion.rottencreatures.client.level.entities.animation.ScarabAnimations;
+import com.github.teamfusion.rottencreatures.client.level.entities.animation.LegacyScarabAnimations;
 import com.github.teamfusion.rottencreatures.common.level.entities.scarab.Scarab;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -155,9 +155,9 @@ public class ScarabModel<T extends Scarab> extends HierarchicalModel<T> {
         boolean isInAir = !entity.onGround() && !entity.isInWaterOrBubble();
 
         if (isInAir) {
-            MathAnimator.animate(this, animationProgress, ScarabAnimations.FLYING);
+            MathAnimator.animate(this, animationProgress, LegacyScarabAnimations.FLYING);
         } else if (isMoving) {
-            MathAnimator.animate(this, animationProgress, ScarabAnimations.WALK);
+            MathAnimator.animate(this, animationProgress, LegacyScarabAnimations.WALK);
         }
     }
 }

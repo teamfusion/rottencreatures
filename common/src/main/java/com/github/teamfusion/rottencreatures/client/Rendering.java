@@ -52,8 +52,10 @@ public class Rendering {
 
         event.register(RCModelLayers.BURNED, BurnedModel::createBodyLayer);
         event.register(RCModelLayers.BURNED_HEAD, BurnedSkullModel::createMobHeadLayer);
-        event.register(RCModelLayers.BURNED_INNER_ARMOR, () -> innerArmorLayer);
-        event.register(RCModelLayers.BURNED_OUTER_ARMOR, () -> outerArmorLayer);
+        event.register(RCModelLayers.BURNED_INNER_ARMOR, () -> BurnedModel.createArmorLayer(innerArmor));
+        event.register(RCModelLayers.BURNED_OUTER_ARMOR, () -> BurnedModel.createArmorLayer(new CubeDeformation(0.95F)));
+//        event.register(RCModelLayers.BURNED_INNER_ARMOR, () -> innerArmorLayer);
+//        event.register(RCModelLayers.BURNED_OUTER_ARMOR, () -> outerArmorLayer);
 
         event.register(RCModelLayers.FROSTBITTEN, FrostbittenModel::createBodyLayer);
         event.register(RCModelLayers.FROSTBITTEN_HEAD, FrostbittenSkullModel::createMobHeadLayer);
