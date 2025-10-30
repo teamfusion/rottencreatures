@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "rottencreatures:burned",
+    "rottencreatures:frostbitten",
+    "rottencreatures:swampy",
+    "rottencreatures:undead_miner",
+    "rottencreatures:mummy",
+    "rottencreatures:glacial_hunter",
+    "rottencreatures:dead_beard",
+    "rottencreatures:zombie_lackey",
+    "rottencreatures:immortal",
+    "rottencreatures:zap"
+  ]
+}
