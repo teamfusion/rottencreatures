@@ -12,7 +12,7 @@ public class ClientSetup {
     }
 
     public static void asyncSetup(ParallelDispatch dispatch) {
-        GameRendering.registerHandHeldModels(Rendering::handHeldModels);
+        GameRendering.registerHandHeldModels(Rendering::handHeldModelRegistry);
         GameRendering.registerSkullRenderers(Rendering::skullRendererRegistry);
         GameRendering.registerBlockRenderers(Rendering::blockRendererRegistry);
     }

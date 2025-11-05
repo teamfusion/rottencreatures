@@ -38,6 +38,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class Rendering {
     public static final ResourceLocation SPEAR_HANDHELD_MODEL = RottenCreatures.resource("spear_in_hand");
+    public static final ResourceLocation SPEAR_BASE_MODEL = RottenCreatures.resource("spear");
 
     public static void modelLayerRegistry(GameRendering.ModelLayerEvent event) {
         CubeDeformation none = CubeDeformation.NONE;
@@ -54,8 +55,6 @@ public class Rendering {
         event.register(RCModelLayers.BURNED_HEAD, BurnedSkullModel::createMobHeadLayer);
         event.register(RCModelLayers.BURNED_INNER_ARMOR, () -> BurnedModel.createArmorLayer(innerArmor));
         event.register(RCModelLayers.BURNED_OUTER_ARMOR, () -> BurnedModel.createArmorLayer(new CubeDeformation(0.95F)));
-//        event.register(RCModelLayers.BURNED_INNER_ARMOR, () -> innerArmorLayer);
-//        event.register(RCModelLayers.BURNED_OUTER_ARMOR, () -> outerArmorLayer);
 
         event.register(RCModelLayers.FROSTBITTEN, FrostbittenModel::createBodyLayer);
         event.register(RCModelLayers.FROSTBITTEN_HEAD, FrostbittenSkullModel::createMobHeadLayer);
@@ -164,7 +163,7 @@ public class Rendering {
         event.registerSkullTexture(SkullTypes.ZAP, RottenCreatures.resource("textures/entity/zap.png"));
     }
 
-    public static void handHeldModels(GameRendering.HandHeldModelEvent event) {
-        event.register(RCItems.SPEAR.get(), SPEAR_HANDHELD_MODEL);
+    public static void handHeldModelRegistry(GameRendering.HandHeldModelEvent event) {
+        event.register(RCItems.SPEAR.get(), SPEAR_BASE_MODEL, SPEAR_HANDHELD_MODEL);
     }
 }
