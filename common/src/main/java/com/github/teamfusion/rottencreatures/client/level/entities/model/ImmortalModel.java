@@ -27,6 +27,5 @@ public class ImmortalModel<T extends Immortal> extends HumanoidModel<T> {
     @Override
     public void setupAnim(T immortal, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         super.setupAnim(immortal, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
-        this.rightArm.xRot = -90;
     }
 }
