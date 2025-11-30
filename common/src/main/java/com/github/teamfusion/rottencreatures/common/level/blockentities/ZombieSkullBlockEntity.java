@@ -1,11 +1,15 @@
 package com.github.teamfusion.rottencreatures.common.level.blockentities;
 
+import com.github.teamfusion.rottencreatures.client.registries.*;
 import com.github.teamfusion.rottencreatures.common.registries.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.*;
+import net.minecraft.sounds.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -22,6 +26,29 @@ public class ZombieSkullBlockEntity extends SkullBlockEntity {
             RCBlocks.ZAP_HEAD.get(), RCBlocks.ZAP_WALL_HEAD.get()
     );
 
+    private static final Map<Block, ResourceLocation> SOUND_MAP = Map.ofEntries(
+            Map.entry(RCBlocks.BURNED_HEAD.get(), RCSoundEvents.BURNED_IDLE.get().getLocation()),
+            Map.entry(RCBlocks.BURNED_WALL_HEAD.get(), RCSoundEvents.BURNED_IDLE.get().getLocation()),
+
+            Map.entry(RCBlocks.FROSTBITTEN_HEAD.get(), RCSoundEvents.FROSTBITTEN_IDLE.get().getLocation()),
+            Map.entry(RCBlocks.FROSTBITTEN_WALL_HEAD.get(), RCSoundEvents.FROSTBITTEN_IDLE.get().getLocation()),
+
+            Map.entry(RCBlocks.SWAMPY_HEAD.get(), RCSoundEvents.SWAMPY_IDLE.get().getLocation()),
+            Map.entry(RCBlocks.SWAMPY_WALL_HEAD.get(), RCSoundEvents.SWAMPY_IDLE.get().getLocation()),
+
+            Map.entry(RCBlocks.MUMMY_HEAD.get(), RCSoundEvents.MUMMY_IDLE.get().getLocation()),
+            Map.entry(RCBlocks.MUMMY_WALL_HEAD.get(), RCSoundEvents.MUMMY_IDLE.get().getLocation()),
+
+            Map.entry(RCBlocks.GLACIAL_HUNTER_HEAD.get(), RCSoundEvents.GLACIAL_HUNTER_IDLE.get().getLocation()),
+            Map.entry(RCBlocks.GLACIAL_HUNTER_WALL_HEAD.get(), RCSoundEvents.GLACIAL_HUNTER_IDLE.get().getLocation()),
+
+            Map.entry(RCBlocks.DEAD_BEARD_HEAD.get(), RCSoundEvents.DEAD_BEARD_IDLE.get().getLocation()),
+            Map.entry(RCBlocks.DEAD_BEARD_WALL_HEAD.get(), RCSoundEvents.DEAD_BEARD_IDLE.get().getLocation()),
+
+            Map.entry(RCBlocks.IMMORTAL_HEAD.get(), RCSoundEvents.IMMORTAL_IDLE.get().getLocation()),
+            Map.entry(RCBlocks.IMMORTAL_WALL_HEAD.get(), RCSoundEvents.IMMORTAL_IDLE.get().getLocation())
+    );
+
     public ZombieSkullBlockEntity(BlockPos pos, BlockState state) {
         super(pos, state);
     }
@@ -29,6 +56,14 @@ public class ZombieSkullBlockEntity extends SkullBlockEntity {
     @Override
     public boolean isValidBlockState(BlockState blockState) {
         return VALIDBLOCKS.contains(blockState.getBlock());
+    }
+
+    // Grabs the sound from the list and if its null (as some don't have custom sounds) it returns the default zombie sound.
+    // Makes the class a bit messy with these two big lists but oh well.
+    @Override
+    public @Nullable ResourceLocation getNoteBlockSound() {
+        ResourceLocation resourceLocation = SOUND_MAP.get(getBlockState().getBlock());
+        return resourceLocation == null ? SoundEvents.ZOMBIE_AMBIENT.getLocation() : resourceLocation;
     }
 
     @Override
